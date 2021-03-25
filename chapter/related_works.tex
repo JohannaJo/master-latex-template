@@ -1,4 +1,7 @@
 \chapter{Related Works}
+
+Frazer and Pitt introduced the LRN algorithm for learning from entailments, \cite{DBLP:conf/icml/FrazierP93} which was a version of the HORN algorithm introduced by Alguin et al. \cite{DBLP:journals/ml/AngluinFP92} with some modifications. The difference is that the queries and counterexamples in the LRN algorithm are not variable assignments, but rather Horn clauses that may or may not be entailed by the target. The type of learning in the HORN algorithm is called \emph{learning from examples}, which the LRN algorithm uses \emph{learning from entailment}.
+
 It has been shown that the HORN algorithm can be used to learn rules represented in the description logic DL-Lite in polynomial time by the number of queries and the size of the queries. \cite{DL_lite} 
 
 In the paper "Extracting Horn Theories with Queries and Counterexamples" \todo{Add source when \newline paper is published} Anlguin's HORN algorithm was used to query a trained neural network. The neural network had been trained on positive and negative examples of a Horn sentence and so the HORN algorithm was used as a form of neural network verification. If the output of the algorithm indeed matched the target HORN sentence, then one could verify that the neural network had a learnt a reliable representation of the Horn sentence.
