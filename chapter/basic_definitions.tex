@@ -1,16 +1,27 @@
 \chapter{Basic Definitions}
 
+%\newcommand{dltext}[1]{\centerline{\textsf{#1}\newline}}
+
 \subsection{Knowledge Graphs}
 A \gls{kg} is a type of directed graph which captures the semantic connections between concepts in a database. Entities are represented as nodes, and relations between entities as edges. For example, the knowledge that "Amy is the daughter of Bo, and Bo is a woman" can be represented by the knowledge graph in fig 1.
 
-\begin{tikzpicture}[edge from parent/.style={draw,-latex}]
-\node[circle,draw, ](z){$Amy$}
-\node[circle,draw, right = 1.5 of a](b){$Bo$}
-\draw[->, line width= 1] (a) --  (b);
-\end{tikzpicture}
+%\begin{tikzpicture}[edge from parent/.style={draw,-latex}]
+%\node[circle,draw, ](z){$Amy$}
+%\node[circle,draw, right = 1.5 of a](b){$Bo$}
+%\draw[->, line width= 1] (a) --  (b);
+%\end{tikzpicture}
 
+An ontology is a schema for how knowledge should be organized. An example of a ontology rule could be "Daughters are female". Ontologies aid domain experts in building consistent knowledge graphs. For example, the ontology rule mentioned would lead to the expansion of the knowledge graph in figure 1 with the additional fact that "Amy is female".
 
+\subsection{Ontology language}
+A widely used formal language for expressing ontologies is the \gls{owl}. In OWL "Daughters are female" could be formally expressed as:
 
+\centerline{\textsf{SubClassOf(Daughter Female)}}
+Information expressed in OWL can be used to draw new conclusions. For example if we know that an individual \emph{Amy} is a daughter, then we can conclude that Amy is a female. In OWL, the fact that Amy is in the class of females can be expressed as:
 
+\centerline{\textsf{ClassAssertion(Female amy)}}
+The task of reaching such conclusions is called reasoning, and which conclusions can be drawn is specified by the \gls{w3c}. It specifies the \emph{semantics} of OWL, but does not present algorithms for how to derive inferences in practice. Sound and complete reasoning in OWL is of high complexity\todo{add s0urce}, and therefore when the standard was updated to OWL 2 in 2009, it introduced sublanguages. These restrict expressivity in order to simplify the reasoning task. One of these languages is OWL 2 QL, which is based on a \gls{DL} language called DL-Lite. OWL 2 QL is intended as a language to enable easier queries to databases. The ontoogy language we will use is DL-Lite$_{\mathcal{R}, horn}^{\exists}$, which is a member of the DL-Lite family.
+
+\subsection{Description Logics}
 
 ontology language, syntax, semantics
