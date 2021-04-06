@@ -1,0 +1,16 @@
+\chapter{Basic Definitions}
+
+\subsection{Knowledge Graphs}
+A \gls{kg} is a type of directed graph which captures the semantic connections between concepts in a database. Entities are represented as nodes, and relations between entities as edges. For example, the knowledge that "Amy is the daughter of Bo, and Bo is a woman" can be represented by the knowledge graph in fig 1.
+
+\begin{tikzpicture}[edge from parent/.style={draw,-latex}]
+\node[circle,draw, ](z){$Amy$}
+\node[circle,draw, right = 1.5 of a](b){$Bo$}
+\draw[->, line width= 1] (a) --  (b);
+\end{tikzpicture}
+
+
+
+
+
+ontology language, syntax, semantics
