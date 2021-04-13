@@ -38,18 +38,26 @@ A DL-Lite$_{\mathcal{R}, horn}^{\exists}$ ontology is captured by finite inclusi
 
 If we have two CIs $C\sqsubseteq D$ and $D \sqsubseteq C$ then we can abbreviate it to $C \equiv D$. Likewise for RIs $r$ and $s$, we can use $r\equiv s$ to denote $r\sqsubseteq s$ and $s \sqsubseteq r$. These are known as \emph{concept equivalences (CEs)} and \emph{role equivalences (REs)}.
 
-\todo{add Baader et al source (Ozaki paper)}
+% SEMANTICS
 \subsubsection{Semantics of DL-Lite$_{\mathcal{R}, horn}^{\exists}$}
-An \emph{interpretation} $\mathcal{I} = (\Delta^{\mathcal{I}}, \cdot^{\mathcal{I}})$ consists of a non-empty set (the \emph{domain}) and a mapping $\cdot^{\mathcal{I}}$ that:
+We will now briefly cover the semantics of DL-Lite$_{\mathcal{R}, horn}^{\exists}$ ontologies \cite{baader_horrocks_lutz_sattler_2017}. An \emph{interpretation} $\mathcal{I} = (\Delta^{\mathcal{I}}, \cdot^{\mathcal{I}})$ consists of a non-empty set (the \emph{domain}) and a mapping $\cdot^{\mathcal{I}}$ that:
 \begin{itemize}
     \item assigns every concept name $A$ to $A^{\mathcal{I}}$, where $A^{\mathcal{I}}\sqsubseteq \Delta^{\mathcal{I}}$
     \item assigns every role name $r$ to  $r^{\mathcal{I}}$, where $r^{\mathcal{I}}\sqsubseteq \Delta^{\mathcal{I}}\times \Delta^{\mathcal{I}}$
 \end{itemize}
 An inverse role $r = s^-$ has the interpretation $r^{\mathcal{I}}=\{(d, d') | (d,d')\in s^{\mathcal{I}}\}$. A concept expression $C$ has an interpretation $C^{\mathcal{I}}$ defined inductively by
-\begin{list}
+\begin{itemize}
     \item $ \top^{\mathcal{I}} = \Delta^{\mathcal{I}} $
-    \item $ (C_{1} \sqcap C_{2})^{\mathcal{I}}= C_{1}^{\mathcal{I}} \cap C_{1}^{\mathcal{I}} $
-    \item $ (\exists r.C)^{\mathcal{I}} = \{d\in \Delta ^{\mathcal{I}} | \text{there exists } d' \in C^{\mathcal{I}} \text{with} (d,d')\in r^{\mathcal{I}}\} $
-\end{list}
+    \item $ (C_{1} \sqcap C_{2})^{\mathcal{I}} = C_{1}^{\mathcal{I}} \cap C_{2}^{\mathcal{I}} $
+    \item $ (\exists r.C)^{\mathcal{I}} = \{d\in \Delta ^{\mathcal{I}}\;|\; \exists d' \in C^{\mathcal{I}}, \; (d,d')\in r^{\mathcal{I}}\} $
+\end{itemize}
 
-ontology language, syntax, semantics
+Interpretations can \emph{satisfy} concept expressions and role expressions, meaning that they fulfill the "requirements" of the rules. An interpretation $\mathcal{I}$ satisfies a:
+\begin{itemize}
+    \item \emph{concept expression} $C$ if $C^{\mathcal{I}} \neq \emptyset$
+    \item \emph{concept inclusion} $C \sqsubseteq D$ if $C^{\mathcal{I}} \subseteq D^{\mathcal{I}}$
+    \item \emph{role expression} $r$ if $r^{\mathcal{I}} \neq \emptyset$
+    \item \emph{role inclusion } $r \sqsubseteq s$ if $r^{\mathcal{I}}  \subseteq s^{\mathcal{I}}$
+\end{itemize}
+
+If $\mathcal{I}$ satisfies all CIs and RIs in an ontology $\mathcal{T}$, then it is a \emph{model} of $\mathcal{T}$. If for every model of $\mathcal{T}$ a CI or an RI $\alpha$ is satisfied, then $\mathcal{T}$ \emph{entails} $\alpha$. This can be written as $\mathcal{T} \models \alpha$.
