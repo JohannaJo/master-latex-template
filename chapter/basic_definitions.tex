@@ -2,8 +2,8 @@
 
 %\newcommand{dltext}[1]{\centerline{\textsf{#1}\newline}}
 
-\subsection{Knowledge Graphs}
-A \gls{kg} is a type of directed graph which captures the semantic connections between information in a database. Entities are represented as graph nodes, and relations between entities as graph edges. For example, the knowledge that "Amy is the daughter of Bo, and Bo is a woman" can be represented by the knowledge graph in fig 1.\todo{Add figure}
+\section{Knowledge Graphs}
+A \gls{kg} is a type of directed graph which captures the semantic connections between information in a database. Entities are represented as graph nodes, and relations between entities as graph edges. For example, the knowledge that 'Amy is the daughter of Bo, and Bo is a woman' can be represented by the knowledge graph in fig 1.\todo{Add figure}
 
 %\begin{tikzpicture}[edge from parent/.style={draw,-latex}]
 %\node[circle,draw, ](z){$Amy$}
@@ -11,39 +11,39 @@ A \gls{kg} is a type of directed graph which captures the semantic connections b
 %\draw[->, line width= 1] (a) --  (b);
 %\end{tikzpicture}
 
- Knowledge graphs can be structured into two sets, \emph{TBox} and \emph{ABox}. The ABox consists of assertions, while the TBox consists of terminological axioms. The ABox contains information about specific individuals, while the TBox describe rules that apply to all individuals. A TBox is also referred to an \emph{ontology}. An example of a ontology rule could be "Daughters are female". Ontologies can aid domain experts in building consistent knowledge graphs. For example, the ontology rule mentioned would lead to the expansion of the knowledge graph in figure 1 with the additional fact that "Amy is female".
+ Knowledge graphs can be structured into two sets, \emph{TBox} and \emph{ABox}. The ABox consists of assertions, while the TBox consists of terminological axioms. The ABox contains information about specific individuals, while the TBox describe rules that apply to all individuals. A TBox is also referred to an \emph{ontology}. An example of a ontology rule could be "Daughters are female". Ontologies can aid domain experts in building consistent knowledge graphs. For example, the ontology rule mentioned would lead to the expansion of the knowledge graph in figure 1 with the additional fact that 'Amy is female'.
 
-\subsection{Ontology language}
+\section{Ontology language}
 A widely used formal language for expressing ontologies is the \gls{owl}. In OWL "Daughters are female" could be formally expressed as:
 
 \centerline{\textsf{SubClassOf(Daughter Female)}}
 Information expressed in OWL can be used to draw new conclusions. For example if we know that an individual \emph{Amy} is a daughter, then we can makes the same conclusions as earlier about Amy being female. In OWL, the fact that Amy is in the class of females can be expressed as:
 
 \centerline{\textsf{ClassAssertion(Female amy)}}
-The task of reaching such conclusions is called reasoning and the type of conclusions can be drawn is specified by the \gls{w3c}. It specifies the \emph{semantics} of OWL, but does not present algorithms for how to derive inferences in practice. Sound and complete reasoning in OWL is of high complexity \cite{Krotzsch2012}. Therefore, when the standard was updated to OWL 2 in 2009, it introduced restricted sublanguages to address this problem. These sublanguages restrict expressivity in order to simplify the reasoning task. One of these languages is OWL 2 QL, which is based on a \gls{dl} language called DL-Lite. OWL 2 QL is intended as a language to enable easier queries to databases. The ontology language we will use is DL-Lite$_{\mathcal{R}, horn}^{\exists}$, which is a member of the DL-Lite family.
+The task of reaching such conclusions is called reasoning and the type of conclusions can be drawn is specified by the \gls{w3c}. It specifies the \emph{semantics} of OWL, but does not present algorithms for how to derive inferences in practice. Sound and complete reasoning in OWL is of high complexity \citeauthor{Krotzsch2012}. Therefore, when the standard was updated to OWL 2 in 2009, it introduced restricted sublanguages to address this problem. These sublanguages restrict expressivity in order to simplify the reasoning task. One of these languages is OWL 2 QL, which is based on a \gls{dl} language called DL-Lite. OWL 2 QL is intended as a language to enable easier queries to databases. The ontology language we will use is DL-Lite$_{\mathcal{R}, horn}^{\exists}$, which is a member of the DL-Lite family.
 
-\subsection{DL-Lite$_{\mathcal{R}, horn}^{\exists}$}
+\section{DL-Lite$_{\mathcal{R}, horn}^{\exists}$}
 \glspl{dl} are a family of formal languages for knowledge representation and reasoning. \glspl{dl} are generally less expressive than \gls{fol}, but more expressive than \gls{pl}. We introduce the syntax and semantics of  DL-Lite$_{\mathcal{R}, horn}^{\exists}$.
 
-DL-Lite$_{\mathcal{R}, horn}^{\exists}$ uses unary and binary predicates, which represent concept names and role names respectively. Concept names are denoted by uppercase letters (A, B, etc) , while role names are denoted by lowercase letters (r, s, etc). Let \textsf{N\textsubscript{C}} and \textsf{N\textsubscript{R}} respectively be countably infinite sets of concept names and role names. An \emph{inverse role} for some relation $r \in \textsf{N\textsubscript{R}}$ is $r^-$, where $r^-$ semantically is the converse role of $r$. A \emph{role expression} is a role name or an inverse role. While there is only one role constructor in DL-Lite$_{\mathcal{R}, horn}^{\exists}$, there are multiple concept constructors: $\top$ (everything), $\sqcap$ (conjunction), and $\exists r.C$ (existential restriction). A \emph{concept expression} $C$ is defined as:
+DL-Lite$_{\mathcal{R}, horn}^{\exists}$ uses unary and binary predicates, which represent concept names and role names respectively. Concept names are denoted by uppercase letters ($A$, $B$, etc) , while role names are denoted by lowercase letters ($r$, $s$, etc). Let \textsf{N\textsubscript{C}} and \textsf{N\textsubscript{R}} respectively be countably infinite sets of concept names and role names. An \emph{inverse role} for some relation $r \in \textsf{N\textsubscript{R}}$ is $r^-$, where $r^-$ semantically is the converse role of $r$. A \emph{role expression} is a role name or an inverse role. While there is only one role constructor in DL-Lite$_{\mathcal{R}, horn}^{\exists}$, there are multiple concept constructors: $\top$ (everything), $\sqcap$ (conjunction), and $\exists r.C$ (existential restriction). A \emph{concept expression} $C$ is defined as:
 \[C \quad:=\quad \top\quad|\quad A \quad|\quad C\sqcap D\quad |\quad \exists r.C\]
 where $D$ is another concept expression, $A\in \textsf{N\textsubscript{C}}$ and $r \in \textsf{N\textsubscript{R}}$. A \emph{basic concept} is a concept name or concept expression in the form $\exists r.\top$, where $r \in \textsf{N\textsubscript{R}}$. \todo{add some examples}
 
 A DL-Lite$_{\mathcal{R}, horn}^{\exists}$ ontology is captured by finite inclusions between concept expressions and roles. These are defined as: 
 \begin{itemize}
     \setlength\itemsep{1em}
-    \item A \emph{Role inclusions (RIs)}, which are of the form $r\sqsubseteq s$, where $r$ and $s$ are role expressions.
-    \item A \emph{Concept inclusions (CIs)}, which are of the form $B_1 \sqcap ... \sqcap B_n \sqsubseteq C$, where $B_1, ..., B_n$ are basic concepts and $C$ is a concept expression.
+    \item \emph{Role inclusions (RIs)}, which are of the form $r\sqsubseteq s$, where $r$ and $s$ are role expressions.
+    \item \emph{Concept inclusions (CIs)}, which are of the form $B_1 \sqcap ... \sqcap B_n \sqsubseteq C$, where $B_1, ..., B_n$ are basic concepts and $C$ is a concept expression.
 \end{itemize}
 
 If we have two CIs $C\sqsubseteq D$ and $D \sqsubseteq C$ then we can abbreviate it to $C \equiv D$. Note that in this case both $C$ and $D$ would need to be a basic concept or a conjunction of basic concepts. Similarly for RIs $r$ and $s$, we can use $r\equiv s$ to denote $r\sqsubseteq s$ and $s \sqsubseteq r$. These are known as \emph{concept equivalences (CEs)} and \emph{role equivalences (REs)}.
 
 % SEMANTICS
-\subsubsection{Semantics of DL-Lite$_{\mathcal{R}, horn}^{\exists}$}
+\subsection{Semantics of DL-Lite$_{\mathcal{R}, horn}^{\exists}$}
 We will now briefly cover the semantics of DL-Lite$_{\mathcal{R}, horn}^{\exists}$ ontologies \cite{baader_horrocks_lutz_sattler_2017}. An \emph{interpretation} $\mathcal{I} = (\Delta^{\mathcal{I}}, \cdot^{\mathcal{I}})$ consists of a non-empty set $\Delta^{\mathcal{I}}$ (the \emph{domain}) and a mapping $\cdot^{\mathcal{I}}$ that:
 \begin{itemize}
-    \item assigns every concept name $A$ to $A^{\mathcal{I}}$, where $A^{\mathcal{I}}\sqsubseteq \Delta^{\mathcal{I}}$
-    \item assigns every role name $r$ to  $r^{\mathcal{I}}$, where $r^{\mathcal{I}}\sqsubseteq \Delta^{\mathcal{I}}\times \Delta^{\mathcal{I}}$
+    \item assigns every concept name $A$ to $A^{\mathcal{I}}$, where $A^{\mathcal{I}}\subseteq \Delta^{\mathcal{I}}$
+    \item assigns every role name $r$ to  $r^{\mathcal{I}}$, where $r^{\mathcal{I}}\subseteq \Delta^{\mathcal{I}}\times \Delta^{\mathcal{I}}$
 \end{itemize}
 An inverse role $r = s^-$ has the interpretation $r^{\mathcal{I}}=\{(d, d') | (d,d')\in s^{\mathcal{I}}\}$. A concept expression $C$ has an interpretation $C^{\mathcal{I}}$ defined inductively by
 \begin{itemize}
