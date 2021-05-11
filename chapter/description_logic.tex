@@ -1,0 +1,25 @@
+\chapter{Description Logic}
+
+%\newcommand{dltext}[1]{\centerline{\textsf{#1}\newline}}
+
+\section{Motivation behind DLs}
+\gls{dls} are a family of languages used in knowledge representation and reasoning. The name represents two central aspects to this language group: \emph{description}, formal expression of knowledge, and  \emph{logic} for it's logic-based semantics. DLs are used to represent domain knowledge in a well-structured and easily interpretable way. Domain knowledge is seperated into two components in DL, a \emph{terminological} part, called a TBox, and an \emph{assertional} part, called an ABox. The TBox represents knowledge about the structure of the domain, while the ABox has knowledge about specific instances. For example the fact that \emph{cats are  mammals} would be a TBox statement, while \emph{Leo is a cat} would be an ABox statement, as here we are making an assertion about the individual Leo. The combination of a TBox and an ABox is called a \emph{knowledge base} (KB).
+As the semantics of DLs are logic-based it is clear when a statement is \emph{entained} by a KB. For example the two examples given above entail that Leo is a mammal. More importantly, this reasoning task can be automated in a DL KB. Reasoning tasks are performed with respect to the entire KB, which gives this language great power, but also comes with a computational cost. Therefore an important area of research has been to find DLs that strike a balance between expressiveness and the computational complexity of reasoning.
+
+
+The two main criteria for a reasoner is that it is decidable and tractable (always correctly completed in a time that is polynomial with respect to the size of the KB).
+
+\section{Syntax}
+In DL one works with three different types of "building blocks":
+\begin{itemize}
+        \item \textit{Individuals} are specific concepts related to an instance
+    \item \textit{Concepts} are a set of elements and can be viewed as unary predicates
+    \item \textit{Roles} can be viewed as binary predicates and represent relations between elements
+\end{itemize}
+
+The description logic Attributive Concept Language with Complements (ALC) is the basis for many DLs, and will be used to introduce the basic syntax commonly used in DLs.
+
+
+
+\section{Semantics}
+
