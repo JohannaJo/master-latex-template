@@ -10,16 +10,103 @@ As the semantics of DLs are logic-based it is clear when a statement is \emph{en
 The two main criteria for a reasoner is that it is decidable and tractable (always correctly completed in a time that is polynomial with respect to the size of the KB).
 
 \section{Syntax}
+The description logic Attributive Concept Language with Complements ($\mathcal{ALC}$) is the basis for many DLs, and will be used to introduce the basic syntax and semantics commonly used in DLs.
+
 In DL one works with three different types of "building blocks":
 \begin{itemize}
-        \item \textit{Individuals} are specific concepts related to an instance
-    \item \textit{Concepts} are a set of elements and can be viewed as unary predicates
-    \item \textit{Roles} can be viewed as binary predicates and represent relations between elements
+    \item \textit{Individuals} are specific concepts related to an instance.
+    \item \textit{Concepts} are a set of elements and can be viewed as unary predicates. The set a concept represents is called its \textit{extension}.
+    \item \textit{Roles} can be viewed as binary predicates and represent relations between elements.
+\end{itemize}
+\textit{Concept names} and \textit{role names} are respectively treated as unary and binary predicates and are \textit{atomic concepts}. Other atomic concepts in \mathcal{ALC} are $\top$ and $\bot$. In contrast, concepts and roles are \textit{complex concepts} (also called \textit{compound concepts}). A compound concept is constructed using at least one of the available operators in $\mathcal{ALC}$: $\neg$, $\sqcap$, $\sqcup$, $\forall$, $\exists$. Given that $C$ and $D$ are concepts and $R$ is a role, ALC allows the following complex concepts:
+\begin{itemize}
+    \item $\neg C$, \textit{negation}, everything that is not in the extension of $C$,
+    \item $C\sqcap D$, \textit{conjunctio}, the elements that are in the extension of both $C$ and $D$,
+    \item $C\sqcup D$, \textit{disjunction}, the elements that are in the extension of both $C$ and $D$, or either,
+    \item $\forall R.C$, \textit{value restriction}, everything that is related by a $R$ role, is related to a $C$ concept,
+    \item $\exists R.C$, \textit{existential restriction}, a concept (at least one) that is related by a $R$ role, is related to a $C$ concept,
 \end{itemize}
 
-The description logic Attributive Concept Language with Complements (ALC) is the basis for many DLs, and will be used to introduce the basic syntax commonly used in DLs.
-
-
+In ACL we allow:
+\begin{itemize}
+    \item ABox assertions: $C(a)$ and $R(a, b)$,
+    \item TBox assertions: $C \sqsubseteq D$,
+\end{itemize}
+where where $a$ and $b$ are individuals, $C$ and $D$ are concepts, and $R$ is a role.
 
 \section{Semantics}
+In DLs, the semantics are defined by interpreting concepts as sets of individuals and roles as sets of pairs of individuals. The semantics of complex concepts and roles is defined in terms of the atomic concepts and roles.
 
+
+We will now briefly cover the semantics of $\mathcal{ALC}$. An \emph{interpretation} $\mathcal{I} = (\Delta^{\mathcal{I}}, \cdot^{\mathcal{I}})$ consists of a non-empty set $\Delta^{\mathcal{I}}$ (the \emph{domain}) and a mapping $\cdot^{\mathcal{I}}$ that:
+\begin{itemize}
+    \item assigns every individual $a$ to an element $a^{\mathcal{I}}\in \Delta^{\mathcal{I}}$,
+    \item assigns every concept name $A$ to $A^{\mathcal{I}}$, where $A^{\mathcal{I}}\subseteq \Delta^{\mathcal{I}}$,
+    \item assigns every role name $r$ to  $r^{\mathcal{I}}$, where $r^{\mathcal{I}}\subseteq \Delta^{\mathcal{I}}\times \Delta^{\mathcal{I}}$,
+\end{itemize}
+
+such that the interpretation of $\top$, $\bot$ and a complex concept $C$ is defined inductively as:
+\begin{itemize}
+    \item $ \top^{\mathcal{I}} = \Delta^{\mathcal{I}} $,
+    \item $ \bot^{\mathcal{I}} = \emptyset $,
+    \item $(\neg C)^{\mathcal{I}} = \Delta^{\mathcal{I}} \backslash C^{\mathcal{I}} $,
+    \item $ (C_{1} \sqcap C_{2})^{\mathcal{I}} = C_{1}^{\mathcal{I}} \cap C_{2}^{\mathcal{I}} $,
+    \item $ (C_{1} \sqcup C_{2})^{\mathcal{I}} = C_{1}^{\mathcal{I}} \cup C_{2}^{\mathcal{I}} $,
+    \item $ (\forall r.C)^{\mathcal{I}} = \{d\in \Delta ^{\mathcal{I}}\;|\; \forall d' \in C^{\mathcal{I}}, \; (d,d')\in r^{\mathcal{I}}\} $,
+    \item $ (\exists r.C)^{\mathcal{I}} = \{d\in \Delta ^{\mathcal{I}}\;|\; \exists d' \in C^{\mathcal{I}}, \; (d,d')\in r^{\mathcal{I}}\} $.
+\end{itemize}
+
+
+Interpretations can \emph{satisfy} a entities in $\mathcal{ALC}$, meaning that they fulfill the "requirements" to make the statement true. We write $\mathcal{I} \models x$ to say that $\mathcal{I}$ satisfies $x$. An interpretation $\mathcal{I}$ satisfies
+\begin{itemize}
+    \item $C(a)$ iff $a^{\mathcal{I}} \in C^{\mathcal{I}}$,
+    \item $R(a,b)$ iff $(a^{\mathcal{I}},b^{\mathcal{I}})  \in R^{\mathcal{I}}$,
+    \item $C \sqsubseteq D$ iff $C^{\mathcal{I}} \subseteq D^{\mathcal{I}}$,
+    \item $R \sqsubseteq S$ iff $R^{\mathcal{I}}  \subseteq S^{\mathcal{I}}$.
+    \item TBox $\mathcal{T}$ iff $\forall \Phi \in \mathcal{T}$, $\mathcal{I} \models \Phi$,
+    \item ABox $\mathcal{A}$ iff $\forall \phi \in \mathcal{T}$, $\mathcal{I} \models \phi$,
+    \item KB $\mathcal{K} = (\mathcal{T}, \mathcal{A})$ iff $\mathcal{I} \models \mathcal{T}$ and $\mathcal{I} \models \mathcal{A}$.
+
+\end{itemize} \todo{add examples}
+
+
+\section{Reasoning Problems}
+Given a set of interpretations $I$ and a $\mathcal{ALC}$ TBox $\mathcal{T}$ such that $\forall \mathcal{I} \in I, \mathcal{I}\models \mathcal{T}$ the following questions are of interest:
+\begin{itemize}
+    \item Given a concept $C \in \mathcal{T}$, is $C$ satisfiable? I.e. is there an interpretation $\mathcal{I} \in I$ such that $\mathcal{I} \models C$?)
+    \item Given two concepts $C, D \in \mathcal{T}$, is $C$ subsumed by $D$? I.e. is there an interpretation $\mathcal{I} \in I$ such that $C^\mathcal{I} \subseteq D^\mathcal{I}$?
+    \item Given two concepts $C, D \in \mathcal{T}$, are $C$ and $D$ equivalent? I.e. is there an interpretation $\mathcal{I} \in I$ such that $C^\mathcal{I} \subseteq D^\mathcal{I}$ and $D^\mathcal{I} \subseteq C^\mathcal{I}$?
+    \item Given two concepts $C, D \in \mathcal{T}$, are $C$ and $D$ disjoint? I.e. is there an interpretation $\mathcal{I} \in I$ such that $C^\mathcal{I} \cap D^\mathcal{I} = \emptyset$?
+\end{itemize}
+
+Similarly, for an $\mathcal{ALC}$ KB $\mathcal{K} = (\mathcal{T}, \mathcal{A})$ we are interested in the questions:
+\begin{itemize}
+    \item Is there an interpretations that satisfies $\mathcal{K}$? I.e. does $\mathcal{K}$ have a model?
+    \item Given a concept $C$ and an individual $a$, does $\mathcal{K}$ entail $C(a)$? I.e. is there a model $\mathcal{I}$ of $\mathcal{K}$ that satisfies $C(a)$?
+    \item Given a concept $C$, find all individuals $a$ such that a model $\mathcal{I}$ of $\mathcal{K}$ satisfies $C(a)$. I.e. given a concept $C$, find all individuals $a$ entailed by $\mathcal{K}$.
+\end{itemize}
+
+The more operators one allows in a logic the more complicated the TBox becomes, and usually the complexity for reasoning in the language increases. See \href{http://www.cs.man.ac.uk/~ezolin/dl/}{Complexity of reasoning in Description Logics} for an interactive look at the complexity of different DLs.
+
+\section{Naming conventions}
+
+As we have seen $\mathcal{ALC}$ is the \textit{Attribute Language with general Complement}. The $\mathcal{C}$ actually denotes an extension of a more restrictive language $\mathcal{AL}$. $\mathcal{ALC}$ extends $\mathcal{AL}$ by allowing complex concept negation. The labelling of DLs starts with one of the basic logics $\mathcal{AL}$ (attribute language), $\mathcal{EL}$ (existantial language) or $\mathcal{FL}$ (frame based description language), followed by the following possible extensions:
+\begin{itemize}
+    \item $\mathcal{H}$: Role hierarchies
+    \item $\mathcal{R}$: Complex role hierarchies
+    \item $\mathcal{E}$: Full existential qualification, i.e. existential restrictions man have fillers other than $\top$.
+    \item $\mathcal{O}$: Closed classes
+    \item $\mathcal{I}$: Inverted roles
+    \item $\mathcal{N}$: Cardinality restrictions
+    \item ... \todo{Should these \newline extensions be \newline explained more \newline in detail?}
+\end{itemize}
+
+
+
+\section{Common restricted languages}
+
+\subsection{$\mathcal{EL}$}
+
+\subsection{DL-Lite}
+
+\subsection{$\mathcal{RL}$}
