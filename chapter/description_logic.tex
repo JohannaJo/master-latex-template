@@ -3,8 +3,8 @@
 %\newcommand{dltext}[1]{\centerline{\textsf{#1}\newline}}
 
 \section{Motivation behind DLs}
-\gls{dls} are a family of languages used in knowledge representation and reasoning. The name represents two central aspects to this language group: \emph{description}, formal expression of knowledge, and  \emph{logic} for it's logic-based semantics. DLs are used to represent domain knowledge in a well-structured and easily interpretable way. Domain knowledge is seperated into two components in DL, a \emph{terminological} part, called a TBox, and an \emph{assertional} part, called an ABox. The TBox represents knowledge about the structure of the domain, while the ABox has knowledge about specific instances. For example the fact that \emph{cats are  mammals} would be a TBox statement, while \emph{Leo is a cat} would be an ABox statement, as here we are making an assertion about the individual Leo. The combination of a TBox and an ABox is called a \emph{knowledge base} (KB).
-As the semantics of DLs are logic-based it is clear when a statement is \emph{entained} by a KB. For example the two examples given above entail that Leo is a mammal. More importantly, this reasoning task can be automated in a DL KB. Reasoning tasks are performed with respect to the entire KB, which gives this language great power, but also comes with a computational cost. Therefore an important area of research has been to find DLs that strike a balance between expressiveness and the computational complexity of reasoning.
+\gls{dls} are a family of languages used in knowledge representation and reasoning. The name represents two central aspects to this language group: \emph{description}, formal expression of knowledge, and  \emph{logic}, for it's logic-based semantics. DLs are used to represent domain knowledge in a well-structured and easily interpretable way. Domain knowledge is seperated into two components in DL, a \emph{terminological} part, called a TBox, and an \emph{assertional} part, called an ABox. The TBox represents knowledge about the structure of the domain, while the ABox has knowledge about specific instances. For example the fact that \emph{cats are  mammals} would be a TBox statement, while \emph{Leo is a cat} would be an ABox statement, as here we are making an assertion about the individual Leo. The combination of a TBox and an ABox is called a \emph{knowledge base} (KB).
+As the semantics of DLs are logic-based it is clear when a statement is \emph{entailed} by a KB. For instance the two examples given above entail that Leo is a mammal. More importantly, this reasoning task can be automated in a DL KB. Reasoning tasks are performed with respect to the entire KB, which gives this language great power, but also comes with a computational cost. Therefore an important area of research has been to find DLs that strike a balance between expressiveness and the computational complexity of reasoning.
 
 
 The two main criteria for a reasoner is that it is decidable and tractable (always correctly completed in a time that is polynomial with respect to the size of the KB).
@@ -12,22 +12,22 @@ The two main criteria for a reasoner is that it is decidable and tractable (alwa
 \section{Syntax}
 The description logic Attributive Concept Language with Complements ($\mathcal{ALC}$) is the basis for many DLs, and will be used to introduce the basic syntax and semantics commonly used in DLs.
 
-In DL one works with three different types of "building blocks":
+In DL one works with three different types of ``building blocks'':
 \begin{itemize}
-    \item \textit{Individuals} are specific concepts related to an instance.
-    \item \textit{Concepts} are a set of elements and can be viewed as unary predicates. The set a concept represents is called its \textit{extension}.
-    \item \textit{Roles} can be viewed as binary predicates and represent relations between elements.
+    \item \textit{individuals} are specific concepts related to an instance,
+    \item \textit{concepts} are a set of elements and can be viewed as unary predicates. The set a concept represents is called its \textit{extension},
+    \item \textit{roles} can be viewed as binary predicates and represent relations between elements.
 \end{itemize}
-\textit{Concept names} and \textit{role names} are respectively treated as unary and binary predicates and are \textit{atomic concepts}. Other atomic concepts in \mathcal{ALC} are $\top$ and $\bot$. In contrast, concepts and roles are \textit{complex concepts} (also called \textit{compound concepts}). A compound concept is constructed using at least one of the available operators in $\mathcal{ALC}$: $\neg$, $\sqcap$, $\sqcup$, $\forall$, $\exists$. Given that $C$ and $D$ are concepts and $R$ is a role, ALC allows the following complex concepts:
+\textit{Concept names} and \textit{role names} are treated respectively as unary and binary predicates and are \textit{atomic concepts}. Other atomic concepts in $\mathcal{ALC}$ are $\top$ and $\bot$. In contrast, concepts and roles are \textit{complex concepts} (also called \textit{compound concepts}). A compound concept is constructed using at least one of the available operators in $\mathcal{ALC}$: $\neg$, $\sqcap$, $\sqcup$, $\forall$, $\exists$. Given that $C$ and $D$ are concepts and $R$ is a role, $\mathcal{ALC}$ allows the following complex concepts:
 \begin{itemize}
-    \item $\neg C$, \textit{negation}, everything that is not in the extension of $C$,
-    \item $C\sqcap D$, \textit{conjunctio}, the elements that are in the extension of both $C$ and $D$,
-    \item $C\sqcup D$, \textit{disjunction}, the elements that are in the extension of both $C$ and $D$, or either,
-    \item $\forall R.C$, \textit{value restriction}, everything that is related by a $R$ role, is related to a $C$ concept,
-    \item $\exists R.C$, \textit{existential restriction}, a concept (at least one) that is related by a $R$ role, is related to a $C$ concept,
+    \item $\neg C$ (\textit{negation}) everything that is not in the extension of $C$,
+    \item $C\sqcap D$ (\textit{conjunction}) the elements that are in the extension of both $C$ and $D$,
+    \item $C\sqcup D$ (\textit{disjunction}) the elements that are in the extension of both $C$ and $D$, or either,
+    \item $\forall R.C$ (\textit{universal restriction})  everything that is related by a $R$ role, is related to a $C$ concept,
+    \item $\exists R.C$ (\textit{existential restriction}) a concept (at least one) that is related by a $R$ role, is related to a $C$ concept,
 \end{itemize}
 
-In ACL we allow:
+In $\mathcal{ALC}$ we allow:
 \begin{itemize}
     \item ABox assertions: $C(a)$ and $R(a, b)$,
     \item TBox assertions: $C \sqsubseteq D$,
@@ -52,7 +52,7 @@ such that the interpretation of $\top$, $\bot$ and a complex concept $C$ is defi
     \item $(\neg C)^{\mathcal{I}} = \Delta^{\mathcal{I}} \backslash C^{\mathcal{I}} $,
     \item $ (C_{1} \sqcap C_{2})^{\mathcal{I}} = C_{1}^{\mathcal{I}} \cap C_{2}^{\mathcal{I}} $,
     \item $ (C_{1} \sqcup C_{2})^{\mathcal{I}} = C_{1}^{\mathcal{I}} \cup C_{2}^{\mathcal{I}} $,
-    \item $ (\forall r.C)^{\mathcal{I}} = \{d\in \Delta ^{\mathcal{I}}\;|\; \forall d' \in C^{\mathcal{I}}, \; (d,d')\in r^{\mathcal{I}}\} $,
+    \item $ (\forall r.C)^{\mathcal{I}} = \{d\in \Delta ^{\mathcal{I}}\;|\; \forall d' \in C^{\mathcal{I}}, \; (d,d')\in r^{\mathcal{I}}\} $, \todo{perhaps differentiate between set theory quantifiers and DL quantifiers?}
     \item $ (\exists r.C)^{\mathcal{I}} = \{d\in \Delta ^{\mathcal{I}}\;|\; \exists d' \in C^{\mathcal{I}}, \; (d,d')\in r^{\mathcal{I}}\} $.
 \end{itemize}
 
@@ -64,19 +64,19 @@ Interpretations can \emph{satisfy} a entities in $\mathcal{ALC}$, meaning that t
     \item $C \sqsubseteq D$ iff $C^{\mathcal{I}} \subseteq D^{\mathcal{I}}$,
     \item $R \sqsubseteq S$ iff $R^{\mathcal{I}}  \subseteq S^{\mathcal{I}}$.
     \item TBox $\mathcal{T}$ iff $\forall \Phi \in \mathcal{T}$, $\mathcal{I} \models \Phi$,
-    \item ABox $\mathcal{A}$ iff $\forall \phi \in \mathcal{T}$, $\mathcal{I} \models \phi$,
+    \item ABox $\mathcal{A}$ iff $\forall \phi \in \mathcal{A}$, $\mathcal{I} \models \phi$,
     \item KB $\mathcal{K} = (\mathcal{T}, \mathcal{A})$ iff $\mathcal{I} \models \mathcal{T}$ and $\mathcal{I} \models \mathcal{A}$.
 
-\end{itemize} \todo{add examples}
+\end{itemize}
 
 
 \section{Reasoning Problems}
-Given a set of interpretations $I$ and a $\mathcal{ALC}$ TBox $\mathcal{T}$ such that $\forall \mathcal{I} \in I, \mathcal{I}\models \mathcal{T}$ the following questions are of interest:
+Given a set of interpretations $\mathfrak{I}$ and a $\mathcal{ALC}$ TBox $\mathcal{T}$ such that $\forall \mathcal{I} \in \mathfrak{I}$, $\mathcal{I}\models \mathcal{T}$ the following questions are of interest:
 \begin{itemize}
-    \item Given a concept $C \in \mathcal{T}$, is $C$ satisfiable? I.e. is there an interpretation $\mathcal{I} \in I$ such that $\mathcal{I} \models C$?)
-    \item Given two concepts $C, D \in \mathcal{T}$, is $C$ subsumed by $D$? I.e. is there an interpretation $\mathcal{I} \in I$ such that $C^\mathcal{I} \subseteq D^\mathcal{I}$?
-    \item Given two concepts $C, D \in \mathcal{T}$, are $C$ and $D$ equivalent? I.e. is there an interpretation $\mathcal{I} \in I$ such that $C^\mathcal{I} \subseteq D^\mathcal{I}$ and $D^\mathcal{I} \subseteq C^\mathcal{I}$?
-    \item Given two concepts $C, D \in \mathcal{T}$, are $C$ and $D$ disjoint? I.e. is there an interpretation $\mathcal{I} \in I$ such that $C^\mathcal{I} \cap D^\mathcal{I} = \emptyset$?
+    \item Given a concept $C \in \mathcal{T}$, is $C$ satisfiable? I.e. is there an interpretation $\mathcal{I} \in \mathfrak{I}$ such that $\mathcal{I} \models C$?)
+    \item Given two concepts $C, D \in \mathcal{T}$, is $C$ subsumed by $D$? I.e. is there an interpretation $\mathcal{I} \in \mathfrak{I}$ such that $C^\mathcal{I} \subseteq D^\mathcal{I}$?
+    \item Given two concepts $C, D \in \mathcal{T}$, are $C$ and $D$ equivalent? I.e. is there an interpretation $\mathcal{I} \in \mathfrak{I}$ such that $C^\mathcal{I} \subseteq D^\mathcal{I}$ and $D^\mathcal{I} \subseteq C^\mathcal{I}$?
+    \item Given two concepts $C, D \in \mathcal{T}$, are $C$ and $D$ disjoint? I.e. is there an interpretation $\mathcal{I} \in \mathfrak{I}$ such that $C^\mathcal{I} \cap D^\mathcal{I} = \emptyset$?
 \end{itemize}
 
 Similarly, for an $\mathcal{ALC}$ KB $\mathcal{K} = (\mathcal{T}, \mathcal{A})$ we are interested in the questions:
@@ -86,7 +86,7 @@ Similarly, for an $\mathcal{ALC}$ KB $\mathcal{K} = (\mathcal{T}, \mathcal{A})$ 
     \item Given a concept $C$, find all individuals $a$ such that a model $\mathcal{I}$ of $\mathcal{K}$ satisfies $C(a)$. I.e. given a concept $C$, find all individuals $a$ entailed by $\mathcal{K}$.
 \end{itemize}
 
-The more operators one allows in a logic the more complicated the TBox becomes, and usually the complexity for reasoning in the language increases. See \href{http://www.cs.man.ac.uk/~ezolin/dl/}{Complexity of reasoning in Description Logics} for an interactive look at the complexity of different DLs.
+The more operators one allows in a logic the more complicated the TBox becomes, and usually the complexity for reasoning in the language increases. See \href{http://www.cs.man.ac.uk/~ezolin/dl/}{\textbf{Complexity of reasoning in Description Logics}} for an interactive look at the complexity of different DLs \cite{zolin_2013}.
 
 \section{Naming conventions}
 

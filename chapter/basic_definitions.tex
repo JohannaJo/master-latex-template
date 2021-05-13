@@ -3,7 +3,10 @@
 %\newcommand{dltext}[1]{\centerline{\textsf{#1}\newline}}
 
 \section{Knowledge Graphs}
-A \gls{kg} is a type of directed graph which captures the semantic connections between information in a database. Entities are represented as graph nodes, and relations between entities as graph edges. For example, the knowledge that 'Amy is the daughter of Bo, and Bo is a woman' can be represented by the knowledge graph in fig 1.\todo{Add figure}
+There is no single agreed upon definition of \glspl{kg} \cite{bergman_2019, bonatti2019knowledge, ehrlinger2016towards}. Definitions and usages vary from specific technical proposals to more general descriptions. In this thesis we will use the more inclusive definition similar to the one proposed by Hogan et al. \cite{hogan2020knowledge}, where we view a \gls{kg} as \textit{a graph of data intended to capture the semantic connections within real world knowledge, where nodes represent relevant entities and edges represent relations between these entities}. The type of graph may vary, i.e. it may be simple, directed, etc. The concept of ``knowledge'' has been widely debated in epistemology, but here we will use it to mean descriptive knowledge, meaning facts that can stated. Knowledge can be simple statements, such as ``Leo is a cat'', or quantified statements such as ``at least one cat is black''. KGs are not expressive enough for quantified statements, where ontologies or rules would be more appropriate. Additional knowledge can be inferred from KGs through inductive or deductive methods. For example from a KG containing the information that ``Leo is a cat'' and ``cats are mammals'', one can deductively infer that ``Leo is a mammal''. If all cats mentioned in the knowledge graph like to eat fish, then one can inductively infer ``cats like to eat fish''.
+
+
+%For example, the knowledge that 'Amy is the daughter of Bo, and Bo is a woman' can be represented by the knowledge graph in fig 1.\todo{Add figure}
 
 %\begin{tikzpicture}[edge from parent/.style={draw,-latex}]
 %\node[circle,draw, ](z){$Amy$}
@@ -11,9 +14,9 @@ A \gls{kg} is a type of directed graph which captures the semantic connections b
 %\draw[->, line width= 1] (a) --  (b);
 %\end{tikzpicture}
 
- Knowledge graphs can be structured into two sets, \emph{TBox} and \emph{ABox}. The ABox consists of assertions, while the TBox consists of terminological axioms. The ABox contains information about specific individuals, while the TBox describe rules that apply to all individuals. A TBox is also referred to an \emph{ontology}. An example of a ontology rule could be "Daughters are female". Ontologies can aid domain experts in building consistent knowledge graphs. For example, the ontology rule mentioned would lead to the expansion of the knowledge graph in figure 1 with the additional fact that 'Amy is female'.
+ %Knowledge graphs can be structured into two sets, \emph{TBox} and \emph{ABox}. The ABox consists of assertions, while the TBox consists of terminological axioms. The ABox contains information about specific individuals, while the TBox describe rules that apply to all individuals. A TBox is also referred to an \emph{ontology}. An example of a ontology rule could be "Daughters are female". Ontologies can aid domain experts in building consistent knowledge graphs. For example, the ontology rule mentioned would lead to the expansion of the knowledge graph in figure 1 with the additional fact that 'Amy is female'.
 
-\section{Ontology language}
+\section{Ontology language} \todo{make own section on OWL}
 A widely used formal language for expressing ontologies is the \gls{owl}. In OWL "Daughters are female" could be formally expressed as:
 
 \centerline{\textsf{SubClassOf(Daughter Female)}}
