@@ -7,12 +7,31 @@ There is no single agreed upon definition of \glspl{kg} \cite{bergman_2019, bona
 
 
 %For example, the knowledge that 'Amy is the daughter of Bo, and Bo is a woman' can be represented by the knowledge graph in fig 1.\todo{Add figure}
+\begin{figure}
+\centering
+\begin{tikzpicture}
+    \node[shape=circle,draw=red] (L) at (0,0) {Leo};
+    \node[shape=circle,draw=black] (C) at (3,0) {Cat};
+    \node[shape=circle,draw=black] (M) at (1.5,3) {Mammal};
 
-%\begin{tikzpicture}[edge from parent/.style={draw,-latex}]
-%\node[circle,draw, ](z){$Amy$}
-%\node[circle,draw, right = 1.5 of a](b){$Bo$}
-%\draw[->, line width= 1] (a) --  (b);
-%\end{tikzpicture}
+   % \path [->] (L) edge node[left] {$IsA$} (C);
+   \draw [->] (L) -- (C);
+   \draw [decoration={text along path,
+    text={is a},text align={center}},decorate]  (L) -- (C);
+    
+    \draw [->] (C) -- (M);
+   \draw [decoration={text along path,
+    text={subclass},text align={center}},decorate]  (M) -- (C);
+    
+    \draw [dotted, ->] (L) -- (M);
+   \draw [decoration={text along path,
+    text={is a},text align={center}},decorate]  (L) -- (M);
+    
+  
+\end{tikzpicture}
+
+\caption{Example of a knowledge graph, where the dotted line represents a relationship that can be inductively inferred.} \label{fig:KGexample}
+\end{figure}
 
 \section{Ontology language}
 A widely used formal language for expressing ontologies is the \gls{owl}. In OWL "Daughters are female" could be formally expressed as:
