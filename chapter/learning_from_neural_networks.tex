@@ -1,6 +1,15 @@
 \chapter{Learning from Neural Networks}
 
 %\newcommand{dltext}[1]{\centerline{\textsf{#1}\newline}}
+In this chapter we will look at how a neural network can represent a target formula in propositional logic, and how this target formula can be learned by querying the network.
+
+\section{Propositional Logic}
+We define $V$ to be a finite set of boolean variables. A \emph{literal} over $V$ is either a variable $v \in V$ or the negation of a variable $v$, written as $\neg v$. A \emph{clause} is a disjunction ($\vee$) of literals. A \emph{formula} over $V$ is a conjunction ($\wedge$) of clauses over $V$. A formula is said to be in \emph{conjunctive normal form}.
+
+An \emph{interpretation} $I$ over $V$ assignes truth values to all variables $v$ in $V$. A variable $v$ is \emph{satisfied} by $I$ if $v \in I$. If a variable is not in an interpretation $I$, then it is said to be \emph{falsified} by $I$. If a variable $v$ is falsified by $I$, then the literal $\neg v$ is satisfied by $I$. For a clause $c$ to be satisfied by an interpretation $I$ at least one literal in $c$ needs to be satisfied by $I$. For a formula $t$ to be satisfied by an interpretation $I$, each clause in the formula needs to be satisfied by $I$.
+
+If a interpretation satisfies variable, literal, clause or formula $x$, one can write this as $I \models x$. If an interpretation does not satisfy $x$ one writes $ I \not \models x $. If for every possible $I$, $I \models t$ implies $I \models c$, then $t$ \emph{entails} $c$. This can be written as $t \models c$.
+
 
 \section{Neural Networks}
 
