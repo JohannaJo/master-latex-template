@@ -1,9 +1,9 @@
-\chapter{Basic Definitions}
+\chapter{Knowledge Graphs and Ontologies}
 
 %\newcommand{dltext}[1]{\centerline{\textsf{#1}\newline}}
 
 \section{Knowledge Graphs}
-There is no single agreed upon definition of \glspl{kg} \cite{bergman_2019, bonatti2019knowledge, ehrlinger2016towards}. Definitions and usages vary from specific technical proposals to more general descriptions. In this thesis we will use the more inclusive definition similar to the one proposed by Hogan et al. \cite{hogan2020knowledge}, where we view a \gls{kg} as \textit{a graph of data intended to capture the semantic connections within real world knowledge, where nodes represent relevant entities and edges represent relations between these entities}. The type of graph may vary, i.e. it may be simple, directed, etc. The concept of ``knowledge'' has been widely debated in epistemology, but here we will use it to mean descriptive knowledge, meaning facts that can stated. Knowledge can be simple statements, such as ``Leo is a cat'', or quantified statements such as ``at least one cat is black''. KGs are not expressive enough for quantified statements, where ontologies or rules would be more appropriate. Additional knowledge can be inferred from KGs through inductive or deductive methods. For example from a KG containing the information that ``Leo is a cat'' and ``cats are mammals'', one can deductively infer that ``Leo is a mammal''. If all cats mentioned in the knowledge graph like to eat fish, then one can inductively infer ``cats like to eat fish''.
+There is no single agreed upon definition of \glspl{kg} \cite{bergman_2019, bonatti2019knowledge, ehrlinger2016towards}. Definitions and usages vary from specific technical proposals to more general descriptions. In this thesis we will use the more inclusive definition similar to the one proposed by Hogan et al. \cite{hogan2020knowledge}, where we view a \gls{kg} as \textit{a graph of data intended to capture the semantic connections within real world knowledge, where nodes represent relevant entities and edges represent relations between these entities}. The type of graph may vary, i.e. it may be simple, directed, etc. The concept of ``knowledge'' has been widely debated in epistemology, but here we will use it to mean descriptive knowledge, meaning facts that can be stated. Knowledge can be simple statements, such as ``Leo is a cat'', or quantified statements such as ``at least one cat is black''. KGs are not expressive enough for quantified statements, where ontologies or rules would be more appropriate. Additional knowledge can be inferred from KGs through inductive or deductive methods. For example from a KG containing the information that ``Leo is a cat'' and ``cats are mammals'', one can deductively infer that ``Leo is a mammal''. If all cats mentioned in the knowledge graph like to eat fish, then one can inductively infer ``cats like to eat fish''.
 
 
 %For example, the knowledge that 'Amy is the daughter of Bo, and Bo is a woman' can be represented by the knowledge graph in fig 1.\todo{Add figure}
@@ -30,14 +30,24 @@ There is no single agreed upon definition of \glspl{kg} \cite{bergman_2019, bona
   
 \end{tikzpicture}
 
-\caption{Example of a knowledge graph, where the dotted line represents a relationship that can be inductively inferred.} \label{fig:KGexample}
+\caption{Example of a knowledge graph, where the dotted line represents a relationship that can be deductively inferred.} \label{fig:KGexample}
 \end{figure}
 
-\section{Ontology language}
+
+\section{Web Ontology Language}
 A widely used formal language for expressing ontologies is the \gls{owl}. In OWL "Daughters are female" could be formally expressed as:
 
 \centerline{\textsf{SubClassOf(Daughter Female)}}
 Information expressed in OWL can be used to draw new conclusions. For example if we know that an individual \emph{Amy} is a daughter, then we can makes the same conclusions as earlier about Amy being female. In OWL, the fact that Amy is in the class of females can be expressed as:
 
 \centerline{\textsf{ClassAssertion(Female amy)}}
-The task of reaching such conclusions is called reasoning and the type of conclusions can be drawn is specified by the \gls{w3c}. It specifies the \emph{semantics} of OWL, but does not present algorithms for how to derive inferences in practice. Sound and complete reasoning in OWL is of high complexity \citeauthor{Krotzsch2012}. Therefore, when the standard was updated to OWL 2 in 2009, it introduced restricted sublanguages to address this problem. These sublanguages restrict expressivity in order to simplify the reasoning task. One of these languages is OWL 2 QL, which is based on a \gls{dl} language called DL-Lite. OWL 2 QL is intended as a language to enable easier queries to databases. The ontology language we will use is DL-Lite$_{\mathcal{R}, horn}^{\exists}$, which is a member of the DL-Lite family.
+The task of reaching such conclusions is called reasoning and the type of conclusions that can be drawn is specified by the \gls{w3c}. It specifies the \emph{semantics} of OWL, but does not present algorithms for how to derive inferences in practice. Sound and complete reasoning in OWL is of high complexity \cite{Krotzsch2012}. Therefore, when the standard was updated to OWL 2 in 2009, it introduced restricted sublanguages to address this problem. These sublanguages restrict expressivity in order to simplify the reasoning task. One of these languages is OWL 2 QL, which is based on a \gls{dl} language called DL-Lite. OWL 2 QL is intended as a language to enable easier queries to databases. The ontology language we will use is DL-Lite$_{\mathcal{R}, horn}^{\exists}$, which is a member of the DL-Lite family.
+
+
+
+\section{Description Logics}
+\gls{dls} are a family of languages used in knowledge representation and reasoning. They are generally less expressive than \gls{fol}, but more expressive than \gls{pl}. The name \textit{description logic} represents two central aspects to this language group: \emph{description}, formal expression of knowledge, and  \emph{logic}, for it's logic-based semantics. DLs are used to represent domain knowledge in a well-structured and easily interpretable way. Domain knowledge is seperated into two components in DL, a \emph{terminological} part, called a TBox, and an \emph{assertional} part, called an ABox. The TBox represents knowledge about the structure of the domain, while the ABox has knowledge about specific instances. For example the fact that \emph{cats are  mammals} would be a TBox statement, while \emph{Leo is a cat} would be an ABox statement, as here we are making an assertion about the individual Leo. The combination of a TBox and an ABox is called a \emph{knowledge base} (KB).
+As the semantics of DLs are logic-based it is clear when a statement is \emph{entailed} by a KB. For instance the two examples given above entail that Leo is a mammal. More importantly, this reasoning task can be automated in a DL KB. Reasoning tasks are performed with respect to the entire KB, which gives this language great power, but also comes with a computational cost. Therefore an important area of research has been to find DLs that strike a balance between expressiveness and the computational complexity of reasoning.
+
+
+The two main criteria for a reasoner is that it is decidable and tractable (always correctly completed in a time that is polynomial with respect to the size of the KB). The more operators one allows in a logic the more complicated the TBox becomes, and usually the complexity for reasoning in the language increases. See \href{http://www.cs.man.ac.uk/~ezolin/dl/}{\textbf{Complexity of reasoning in Description Logics}} for an interactive look at the complexity of different DLs \cite{zolin_2013}.
