@@ -1,18 +1,32 @@
 \chapter{Learning from Neural Networks}
 
 %\newcommand{dltext}[1]{\centerline{\textsf{#1}\newline}}
-In this chapter we will look at how a neural network can represent a target formula in propositional logic, and how this target formula can be learned by querying the network.
+In this chapter we will look at how a neural network can represent a Horn ontology, and how the rules of this ontology can be learned by querying the network.
 
 \section{Propositional Logic}
-We define $V$ to be a finite set of boolean variables. A \emph{literal} over $V$ is either a variable $v \in V$ or the negation of a variable $v$, written as $\neg v$. A \emph{clause} is a disjunction ($\vee$) of literals. A \emph{formula} over $V$ is a conjunction ($\wedge$) of clauses over $V$. A formula is said to be in \emph{conjunctive normal form}.
+\todo[inline]{Shoule  DL-Lite$_{\mathcal{R}, horn}^{\exists}$ be presented here instead?}
+We define $V$ to be a finite set of boolean variables. A \emph{literal} over $V$ is either a variable $v \in V$ or the negation of a variable $v$, written as $\neg v$. A \emph{clause} is a disjunction ($\vee$) of literals. A \emph{formula} over $V$ is a conjunction ($\wedge$) of clauses over $V$.
 
-An \emph{interpretation} $I$ over $V$ assignes truth values to all variables $v$ in $V$. A variable $v$ is \emph{satisfied} by $I$ if $v \in I$. If a variable is not in an interpretation $I$, then it is said to be \emph{falsified} by $I$. If a variable $v$ is falsified by $I$, then the literal $\neg v$ is satisfied by $I$. For a clause $c$ to be satisfied by an interpretation $I$ at least one literal in $c$ needs to be satisfied by $I$. For a formula $t$ to be satisfied by an interpretation $I$, each clause in the formula needs to be satisfied by $I$.
+An \emph{interpretation} $\mathcal{I}$ over $V$ assignes truth values to all variables $v$ in $V$. A variable $v$ is \emph{satisfied} by $\mathcal{I}$ if $v \in \mathcal{I}$. If a variable is not in an interpretation $\mathcal{I}$, then it is said to be \emph{falsified} by $\mathcal{I}$. If a variable $v$ is falsified by $\mathcal{I}$, then the literal $\neg v$ is satisfied by $\mathcal{I}$. For a clause $c$ to be satisfied by an interpretation $\mathcal{I}$ at least one literal in $c$ needs to be satisfied by $\mathcal{I}$. For a formula $t$ to be satisfied by an interpretation $\mathcal{I}$, each clause in the formula needs to be satisfied by $\mathcal{I}$.
 
-If a interpretation satisfies variable, literal, clause or formula $x$, one can write this as $I \models x$. If an interpretation does not satisfy $x$ one writes $ I \not \models x $. If for every possible $I$, $I \models t$ implies $I \models c$, then $t$ \emph{entails} $c$. This can be written as $t \models c$.
+If a interpretation satisfies variable, literal, clause or formula $x$, one can write this as $\mathcal{I} \models x$. If an interpretation does not satisfy $x$ one writes $\mathcal{I} \not \models x $. If for every possible $\mathcal{I}$, $\mathcal{I} \models t$ implies $\mathcal{I} \models c$, then $t$ \emph{entails} $c$. This can be written as $t \models c$.
 
 
 \section{Neural Networks}
+In this work neural networks can be understood as a way of representing a target formula $t$. The input to a neural network model $N$ is a $|V|$ dimensional vector with all its values in the range $\{0, 1\}$. This input represents an interpretation $\mathcal{I}$, where 0 and 1 denote the truth values assigned to the variables in $V$. More specifically, by $\mathsf{vector}(\mathcal{I})$ we denote the vector in the $|V|$ dimensional space where each entry at position $i$ is 1 if variable $v_i \in V$ is in the interpretation $\mathcal{I}$, and 0 otherwise. So $N$ is a function which takes as input an interpretation $\mathcal{I}$ represented as a vector and outputs the satisfiability of the target formula $t$ under $\mathcal{I}$.
+To train the neural network a dataset of the format $(\mathsf{vector}(\mathcal{I}), l)$ is used. $l$ is either 0 or 1, indicating whether or not the interpretation $\mathcal{I}$ satisfies the target $t$. For every neural network trained on such a dataset there is a formula $t_n$ such that $N(\mathsf{vector}(\mathcal{I})) = 1$ iff $\mathcal{I} \models t_N$.
+
 
 \section{Querying Neural Networks}
+\todo[inline]{Should the learning framework be defined here? Ie set of all formulas and all interpretations}
 
-\section{Extracting HORN Ontologies from Neural Networks}
+With a neural network $N$ as an alternative representation of a target formula $t_N$, we look at how querying the neural network can lead us to exactly identify the target. We do this by following Angluin's approach of posing queries to two kinds of oracles \cite{DBLP:journals/ml/AngluinFP92}. A \emph{membership oracle} takes as input an interpretation $\mathcal{I}$, and outputs `yes' if $\mathcal{I} \models t_N$ and `no' otherwise. An \emph{equivalence oracle} is a function that takes as input a hypothesis formula $h$ and outputs `yes' if $h \equiv t$, otherwise it outputs a counterexample for $t$ and $h$. This counterexample is an interpretation that either satisfies $t$ but not $h$, or vice versa.
+
+\todo[inline]{Should the definition of exact learning be introduced here?}
+
+\section{Extracting Horn Ontologies from Neural Networks}
+A \emph{horn clause} is a clause where at most one literal is not negated, and a \emph{Horn sentence} is a conjunction of Horn clauses. An implication can be represented as a Horn clause, where the antecedent of the implication is a conjunction of the the negated literals, and the consequent the non-negated literal. So if each rule in an ontology is represented as a horn clause, then a horn sentence containing all the rules would represent the entire ontology.
+
+Given a neural network $N$ that represents an unknown target formula $t$ in the form of a Horn sentence, we are interested in discovering this formula $t$. Since the formula is Horn we can employ Angluin's algorithm for learning Horn theories \cite{DBLP:journals/ml/AngluinFP92}. This algorithm is called HORN. Given a finite set of variables, HORN is guaranteed to exactly identify a target formulated as a Horn sentence in polynomial time. To learn the target the algorithm poses equivalence and membership queries. HORN terminates when an equivalence query returns `yes', meaning that the hypothesis and target are equivalent. Membership queries are used to update the hypothesis, which starts empty and to which clauses that are falsified by a negative counterexample are added. HORN is guaranteed to terminate in polynomial time on the size of the target and the number of variables ($|V|$) in consideration. Using this algorithm Horn ontologies can the extracted from a trained neural network.
+
+\todo[inline]{How thoroughly should the process of extracting Horn sentences from a NN be described? Should the process of simulating the equivalence oracle be included?}
