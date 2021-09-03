@@ -1,18 +1,10 @@
-\chapter{Description Logic}
+\chapter{Learning DL-Lite$_{\mathcal{R}, horn}^{\exists}$ theories}
 
-%\newcommand{dltext}[1]{\centerline{\textsf{#1}\newline}}
+DL-Lite$_{\mathcal{R}, horn}^{\exists}$ is part of the DL-Lite family, which has good trade-off between expressiveness and computational complexity in the context of database queries \cite{borgida2008explanation}. It is a generalization of propositional Horn logic and DL-Lite$_{\mathcal{R}}^{\exists}$. Furthermore, KGs have predicates, which propositional logic lacks. It is for this reason that we go from expressing theories in propositional logic to expressing them in  DL-Lite$_{\mathcal{R}, horn}^{\exists}$. Mapping from KGs to DL-Lite$_{\mathcal{R}, horn}^{\exists}$ is more suitable than mapping from KGs to propositional logic, as less information is lost. 
 
-\section{Motivation behind DLs}
-\gls{dls} are a family of languages used in knowledge representation and reasoning. They are generally less expressive than \gls{fol}, but more expressive than \gls{pl}. The name \textit{description logic} represents two central aspects to this language group: \emph{description}, formal expression of knowledge, and  \emph{logic}, for it's logic-based semantics. DLs are used to represent domain knowledge in a well-structured and easily interpretable way. Domain knowledge is seperated into two components in DL, a \emph{terminological} part, called a TBox, and an \emph{assertional} part, called an ABox. The TBox represents knowledge about the structure of the domain, while the ABox has knowledge about specific instances. For example the fact that \emph{cats are  mammals} would be a TBox statement, while \emph{Leo is a cat} would be an ABox statement, as here we are making an assertion about the individual Leo. The combination of a TBox and an ABox is called a \emph{knowledge base} (KB).
-As the semantics of DLs are logic-based it is clear when a statement is \emph{entailed} by a KB. For instance the two examples given above entail that Leo is a mammal. More importantly, this reasoning task can be automated in a DL KB. Reasoning tasks are performed with respect to the entire KB, which gives this language great power, but also comes with a computational cost. Therefore an important area of research has been to find DLs that strike a balance between expressiveness and the computational complexity of reasoning.
+We will now introduce the syntax and semantics of DL-Lite$_{\mathcal{R}, horn}^{\exists}$.
 
-
-The two main criteria for a reasoner is that it is decidable and tractable (always correctly completed in a time that is polynomial with respect to the size of the KB). The more operators one allows in a logic the more complicated the TBox becomes, and usually the complexity for reasoning in the language increases. See \href{http://www.cs.man.ac.uk/~ezolin/dl/}{\textbf{Complexity of reasoning in Description Logics}} for an interactive look at the complexity of different DLs \cite{zolin_2013}.
-
-\section{DL-Lite$_{\mathcal{R}, horn}^{\exists}$}
-DL-Lite$_{\mathcal{R}, horn}^{\exists}$ is the language that will be used in this thesis. It is part of the DL-Lite family, which has good trade-off between expressiveness and computational complexity in the context of database queries \cite{borgida2008explanation}. We will now introduce the syntax and semantics of DL-Lite$_{\mathcal{R}, horn}^{\exists}$.
-
-\subsection{Syntax of DL-Lite$_{\mathcal{R}, horn}^{\exists}$}
+\section{Syntax of DL-Lite$_{\mathcal{R}, horn}^{\exists}$}
 DL-Lite$_{\mathcal{R}, horn}^{\exists}$ uses unary and binary predicates, which represent concept names and role names respectively. Concept names are denoted by uppercase letters ($A$, $B$, etc) , while role names are denoted by lowercase letters ($r$, $s$, etc). Let \textsf{N\textsubscript{C}} and \textsf{N\textsubscript{R}} respectively be countably infinite sets of concept names and role names. An \emph{inverse role} for some relation $r \in \textsf{N\textsubscript{R}}$ is $r^-$, where $r^-$ semantically is the converse role of $r$. A \emph{role expression} is a role name or an inverse role. While there is only one role constructor in DL-Lite$_{\mathcal{R}, horn}^{\exists}$, there are multiple concept constructors: $\top$ (everything), $\sqcap$ (conjunction), and $\exists r.C$ (existential restriction). A \emph{concept expression} $C$ is defined as:
 \[C \quad:=\quad \top\quad|\quad A \quad|\quad C\sqcap D\quad |\quad \exists r.C\]
 where $D$ is another concept expression, $A\in \textsf{N\textsubscript{C}}$ and $r \in \textsf{N\textsubscript{R}}$. A \emph{basic concept} is a concept name or concept expression in the form $\exists r.\top$, where $r \in \textsf{N\textsubscript{R}}$. \todo{add some examples}
@@ -21,13 +13,13 @@ A DL-Lite$_{\mathcal{R}, horn}^{\exists}$ TBox (ontology) is captured by finite 
 \begin{itemize}
     \setlength\itemsep{1em}
     \item \emph{Role inclusions (RIs)}, which are of the form $r\sqsubseteq s$, where $r$ and $s$ are role expressions.
-    \item \emph{Concept inclusions (CIs)}, which are of the form $B_1 \sqcap ... \sqcap B_n \sqsubseteq C$, where $B_1, ..., B_n$ are basic concepts and $C$ is a concept expression.
+    \item \emph{Concept inclusions (CIs)}, which are of the form $B_1 \sqcap ... \sqcap B_n \sqsubseteq C$, where $B_1, ..., B_n$ are basic concepts and $C$ is a concept expression. The extension $horn$ in DL-Lite$_{\mathcal{R}, horn}^{\exists}$ denotes this allowance of conjunctions of basic concepts on the left side of CIs.
 \end{itemize}
 
 If we have two CIs $C\sqsubseteq D$ and $D \sqsubseteq C$ then we can abbreviate it to $C \equiv D$. Note that in this case both $C$ and $D$ would need to be a basic concept or a conjunction of basic concepts. Similarly for RIs $r$ and $s$, we can use $r\equiv s$ to denote $r\sqsubseteq s$ and $s \sqsubseteq r$. These are known as \emph{concept equivalences (CEs)} and \emph{role equivalences (REs)}.
 
 % SEMANTICS
-\subsection{Semantics of DL-Lite$_{\mathcal{R}, horn}^{\exists}$}
+\section{Semantics of DL-Lite$_{\mathcal{R}, horn}^{\exists}$}
 We will now briefly cover the semantics of DL-Lite$_{\mathcal{R}, horn}^{\exists}$ ontologies \cite{baader_horrocks_lutz_sattler_2017}. An \emph{interpretation} $\mathcal{I} = (\Delta^{\mathcal{I}}, \cdot^{\mathcal{I}})$ consists of a non-empty set $\Delta^{\mathcal{I}}$ (the \emph{domain}) and a mapping $\cdot^{\mathcal{I}}$ that:
 \begin{itemize}
     \item assigns every concept name $A$ to $A^{\mathcal{I}}$, where $A^{\mathcal{I}}\subseteq \Delta^{\mathcal{I}}$
@@ -50,5 +42,8 @@ Interpretations can \emph{satisfy} concept expressions and role expressions, mea
 
 If $\mathcal{I}$ satisfies all CIs and RIs in an ontology $\mathcal{T}$, then it is a \emph{model} of $\mathcal{T}$. If for every model of $\mathcal{T}$ a CI or an RI $\alpha$ is satisfied, then $\mathcal{T}$ \emph{entails} $\alpha$. This can be written as $\mathcal{T} \models \alpha$.
 
+
+
+TODO: write about learning DL-Lite$_{\mathcal{R}, horn}^{\exists}$ rules
 
 
