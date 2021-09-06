@@ -1,25 +1,25 @@
-\chapter{Learning DL-Lite$_{\mathcal{R}, horn}^{\exists}$ theories}
+\chapter{Learning DL-Lite$_{\mathcal{R}, horn}$ theories}
 
-DL-Lite$_{\mathcal{R}, horn}^{\exists}$ is part of the DL-Lite family, which has good trade-off between expressiveness and computational complexity in the context of database queries \cite{borgida2008explanation}. It is a generalization of propositional Horn logic and DL-Lite$_{\mathcal{R}}^{\exists}$. Furthermore, KGs have predicates, which propositional logic lacks. It is for this reason that we go from expressing theories in propositional logic to expressing them in  DL-Lite$_{\mathcal{R}, horn}^{\exists}$. Mapping from KGs to DL-Lite$_{\mathcal{R}, horn}^{\exists}$ is more suitable than mapping from KGs to propositional logic, as less information is lost. 
+DL-Lite$_{\mathcal{R}, horn}$ is part of the DL-Lite family, which has good trade-off between expressiveness and computational complexity in the context of database queries \cite{borgida2008explanation}. It is a generalization of propositional Horn logic and DL-Lite$_{\mathcal{R}}$. Furthermore, KGs have predicates, which propositional logic lacks. It is for this reason that we go from expressing theories in propositional logic to expressing them in  DL-Lite$_{\mathcal{R}, horn}$. Mapping from KGs to DL-Lite$_{\mathcal{R}, horn}$ is more suitable than mapping from KGs to propositional logic, as less information is lost. 
 
-We will now introduce the syntax and semantics of DL-Lite$_{\mathcal{R}, horn}^{\exists}$.
+We will now introduce the syntax and semantics of DL-Lite$_{\mathcal{R}, horn}$.
 
-\section{Syntax of DL-Lite$_{\mathcal{R}, horn}^{\exists}$}
-DL-Lite$_{\mathcal{R}, horn}^{\exists}$ uses unary and binary predicates, which represent concept names and role names respectively. Concept names are denoted by uppercase letters ($A$, $B$, etc) , while role names are denoted by lowercase letters ($r$, $s$, etc). Let \textsf{N\textsubscript{C}} and \textsf{N\textsubscript{R}} respectively be countably infinite sets of concept names and role names. An \emph{inverse role} for some relation $r \in \textsf{N\textsubscript{R}}$ is $r^-$, where $r^-$ semantically is the converse role of $r$. A \emph{role expression} is a role name or an inverse role. While there is only one role constructor in DL-Lite$_{\mathcal{R}, horn}^{\exists}$, there are multiple concept constructors: $\top$ (everything), $\sqcap$ (conjunction), and $\exists r.C$ (existential restriction). A \emph{concept expression} $C$ is defined as:
-\[C \quad:=\quad \top\quad|\quad A \quad|\quad C\sqcap D\quad |\quad \exists r.C\]
+\section{Syntax of DL-Lite$_{\mathcal{R}, horn}$}
+DL-Lite$_{\mathcal{R}, horn}$ uses unary and binary predicates, which represent concept names and role names respectively. Concept names are denoted by uppercase letters ($A$, $B$, etc) , while role names are denoted by lowercase letters ($r$, $s$, etc). Let \textsf{N\textsubscript{C}} and \textsf{N\textsubscript{R}} respectively be countably infinite sets of concept names and role names. An \emph{inverse role} for some relation $r \in \textsf{N\textsubscript{R}}$ is $r^-$, where $r^-$ semantically is the converse role of $r$. A \emph{role expression} is a role name or an inverse role. While there is only one role constructor in DL-Lite$_{\mathcal{R}, horn}$, there are multiple concept constructors: $\top$ (everything), $\sqcap$ (conjunction), and $\exists r.\top$ (existential restriction). A \emph{concept expression} $C$ is defined as:
+\[C \quad:=\quad \top\quad|\quad A \quad|\quad C\sqcap D\quad |\quad \exists r.\top\]
 where $D$ is another concept expression, $A\in \textsf{N\textsubscript{C}}$ and $r \in \textsf{N\textsubscript{R}}$. A \emph{basic concept} is a concept name or concept expression in the form $\exists r.\top$, where $r \in \textsf{N\textsubscript{R}}$. \todo{add some examples}
 
-A DL-Lite$_{\mathcal{R}, horn}^{\exists}$ TBox (ontology) is captured by finite inclusions between concept expressions and roles. These are defined as: 
+A DL-Lite$_{\mathcal{R}, horn}$ TBox (ontology) is captured by finite inclusions between concept expressions and roles. These are defined as: 
 \begin{itemize}
     \setlength\itemsep{1em}
     \item \emph{Role inclusions (RIs)}, which are of the form $r\sqsubseteq s$, where $r$ and $s$ are role expressions.
-    \item \emph{Concept inclusions (CIs)}, which are of the form $B_1 \sqcap ... \sqcap B_n \sqsubseteq C$, where $B_1, ..., B_n$ are basic concepts and $C$ is a concept expression. The extension $horn$ in DL-Lite$_{\mathcal{R}, horn}^{\exists}$ denotes this allowance of conjunctions of basic concepts on the left side of CIs.
+    \item \emph{Concept inclusions (CIs)}, which are of the form $B_1 \sqcap ... \sqcap B_n \sqsubseteq C$, where $B_1, ..., B_n$ are basic concepts and $C$ is a concept expression. The extension $horn$ in DL-Lite$_{\mathcal{R}, horn}$ denotes this allowance of conjunctions of basic concepts on the left side of CIs.
 \end{itemize}
 
 If we have two CIs $C\sqsubseteq D$ and $D \sqsubseteq C$ then we can abbreviate it to $C \equiv D$. Note that in this case both $C$ and $D$ would need to be a basic concept or a conjunction of basic concepts. Similarly for RIs $r$ and $s$, we can use $r\equiv s$ to denote $r\sqsubseteq s$ and $s \sqsubseteq r$. These are known as \emph{concept equivalences (CEs)} and \emph{role equivalences (REs)}.
 
 % SEMANTICS
-\section{Semantics of DL-Lite$_{\mathcal{R}, horn}^{\exists}$}
+\section{Semantics of DL-Lite$_{\mathcal{R}, horn}$}
 We will now briefly cover the semantics of DL-Lite$_{\mathcal{R}, horn}^{\exists}$ ontologies \cite{baader_horrocks_lutz_sattler_2017}. An \emph{interpretation} $\mathcal{I} = (\Delta^{\mathcal{I}}, \cdot^{\mathcal{I}})$ consists of a non-empty set $\Delta^{\mathcal{I}}$ (the \emph{domain}) and a mapping $\cdot^{\mathcal{I}}$ that:
 \begin{itemize}
     \item assigns every concept name $A$ to $A^{\mathcal{I}}$, where $A^{\mathcal{I}}\subseteq \Delta^{\mathcal{I}}$
@@ -29,7 +29,8 @@ An inverse role $r = s^-$ has the interpretation $r^{\mathcal{I}}=\{(d, d') | (d
 \begin{itemize}
     \item $(\neg C)^{\mathcal{I}} = \Delta^{\mathcal{I}} \backslash C^{\mathcal{I}} $,
     \item $ (C_{1} \sqcap C_{2})^{\mathcal{I}} = C_{1}^{\mathcal{I}} \cap C_{2}^{\mathcal{I}} $,
-    \item $ (\exists r.C)^{\mathcal{I}} = \{d\in \Delta ^{\mathcal{I}}\;|\; \exists d' \in C^{\mathcal{I}}, \; (d,d')\in r^{\mathcal{I}}\} $.
+    \item $ (\exists r.C)^{\mathcal{I}} = \{d\in \Delta ^{\mathcal{I}}\;|\; \exists d' \in C^{\mathcal{I}}, \; (d,d')\in r^{\mathcal{I}}\} $
+    \item $ (\exists r.\top)^{\mathcal{I}} = \{d, d'\in \Delta ^{\mathcal{I}}\;|\; \; (d,d')\in r^{\mathcal{I}}\} $.
 \end{itemize}
 
 Interpretations can \emph{satisfy} concept expressions and role expressions, meaning that they fulfill the "requirements" of the rules. An interpretation $\mathcal{I}$ satisfies a:
