@@ -1,0 +1,14 @@
+\chapter{Equivalence of DL-Lite$_{\mathcal{R}, horn}$ and propositional logic}
+
+It will now be shown that any DL-Lite$_{\mathcal{R}, horn}$ formula is logically entailed iff its translation to PL also is entailed. We start by defining a function $\pi$ that maps DL-Lite$_{\mathcal{R}, horn}$ concepts and concept expressions to PL. Then we show that $\Gamma \models \alpha$ iff $\pi(\Gamma) \models \pi(\alpha)$.
+
+\section{Definition of $\pi$}
+We start with the translation of concept expressions:
+\begin{itemize}
+    \item $\pi(\top) := \top$
+    \item $\pi(A) := A$ ????
+    \item $\pi(C \sqcap D) := \pi(C) \wedge \pi(D)$
+    \item $\pi(\exists .r\top) := $
+    \item $\pi() := $
+\end{itemize}
+ where $C$ and $D$ are concept expressions, $A$ is a concept name and $r$ is a role name
