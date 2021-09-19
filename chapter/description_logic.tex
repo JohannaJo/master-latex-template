@@ -43,7 +43,7 @@ Interpretations can \emph{satisfy} concept expressions and role expressions, mea
 
 If $\mathcal{I}$ satisfies all CIs and RIs in an ontology $\mathcal{T}$, then it is a \emph{model} of $\mathcal{T}$. If for every model of $\mathcal{T}$ a CI or an RI $\alpha$ is satisfied, then $\mathcal{T}$ \emph{entails} $\alpha$. This can be written as $\mathcal{T} \models \alpha$.
 
-Given an interpretation $\mathcal{I}$ and an individual $d \in \Delta^{\mathcal{I}}$, a \emph{pointed interpretation} is a pair $(\mathcal{I},d)$, where given any $e\in \Delta^{\mathcal{I}}$ not equal to $d$, $e$ can be reached from $d$ through some role composition in $\mathcal{I}$. This means that the individual $d$ affects all individuals in $\Delta^{\mathcal{I}}$. A pointed interpretation is a model for a concept $C$ iff $d\in C^{\mathcal{I}}$.
+Given an interpretation $\mathcal{I}$ and an element $d \in \Delta^{\mathcal{I}}$, a \emph{pointed interpretation} is a pair $(\mathcal{I},d)$, where any $e\in \Delta^{\mathcal{I}}$ not equal to $d$ can be reached from $d$ through some role composition in $\mathcal{I}$. A pointed interpretation is a model for a concept $C$ iff $d\in C^{\mathcal{I}}$.
 
 TODO: write about learning DL-Lite$_{\mathcal{R}, horn}^{\exists}$ rules
 

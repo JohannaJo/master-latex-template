@@ -1,0 +1,34 @@
+\chapter{Equivalence of DL-Lite$_{\mathcal{R}, horn}$ and propositional logic}
+
+\newtheorem{lemma}{Lemma}
+
+It will now be shown that any DL-Lite$_{\mathcal{R}, horn}$ formula is logically entailed iff its translation to PL also is entailed. We start by defining a translation $T$ that maps DL-Lite$_{\mathcal{R}, horn}$ concepts and concept expressions to formulas in PL. Then we show that for a DL-Lite$_{\mathcal{R}, horn}$ ontology and formula, respectively $\Gamma$ and $\alpha$, $\Gamma \models \alpha$ iff $\Gamma^T \models \alpha^T$.
+
+We start with the translation of concept expressions:
+\begin{itemize}
+    \item $\top^T := \top$
+    \item $A^T := P_A$
+    \item $(C \sqcap D)^T := C^T \wedge D^T$
+    \item ${\exists .r\top}^T := P_r$
+\end{itemize}
+ where $C$ and $D$ are concept expressions, $A$ is a concept name and $r$ is a role name. $P_A$ and $P_r$ are propositional symbols that respectively corresponds to the concept name $A$ and the existential restriction $\exists .r\top$. Furthermore, for an interpretation $\mathcal{I}$ that satisfies a DL-Lite$_{\mathcal{R}, horn}$ formula $\alpha$, the translation of the interpretation will also satisfy the translation of $\alpha$, ie:
+ 
+ \[\mathcal{I} \models \alpha \; \Rightarrow \;  \mathcal{I}^T \models \alpha^T.\]
+ 
+If $\Gamma \models \alpha$, then $\alpha$ is satisfied for every model of $\Gamma$. This means that for some interpretation $\mathcal{I}$ such that $\mathcal{I} \models \Gamma$ then $\mathcal{I} \models \alpha$.
+
+The translation of the pointed interpretation $(\mathcal{I}, d)^T$ will be represented by the function $f$, which maps formula in propositional logic to truth values. Let $p$ be a formula in propositional logic. $f(p)=1$ iff $p\in \{P_a \; | \; d\in A^{\mathcal{I}}\}\cup\{P_r \; | \; d\in {\exists r.\top}^{\mathcal{I}}\}\cup \{P_{r^-} \; | \; d \in {\exists r^{-}.\top}^{\mathcal{I}}\}$, otherwise $f(p)=0$.
+ 
+\begin{lemma}
+Let $\mathcal{I}$ be an interpretation and $C$ be a DL-Lite$_{\mathcal{R}, horn}$ concept. Given a point interpretation $(\mathcal{I}, d)$, $d \in C^{\mathcal{I}}$ iff $(\mathcal{I}, d)^T \models C^T$.
+\end{lemma}
+
+\begin{proof}
+$C$ must be of the form $C_1 \sqcap ... \sqcap C_n$ where each  $C_i$ must be either a concept name $A$, an existential restriction $\exists r.\top$ or an inverse existential restriction $\exists r^{-}.\top$. \newline
+First we show that $(\mathcal{I}, d)^T \models C^T$ if $d\in C^\mathcal{I}$.
+\newline
+If $d \in C^{\mathcal{I}}$ then $d\in \bigwedge^{n}_{i=1}{C_{i}}^{\mathcal{I}}$. Therefore $f$ satisfies $C^T$, since $C^T = \bigwedge_{i = 1}^{n} {C_i}^T$ and $\forall 1 \leq i \leq n$ $f({C_i}^T) = 1$, by the definition of $f$.\newline
+Next we show that $d\in C^\mathcal{I}$ if $(\mathcal{I}, d)^T \models C^T$.
+\newline
+
+\end{proof}
