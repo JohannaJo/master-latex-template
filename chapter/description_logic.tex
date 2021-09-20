@@ -5,15 +5,15 @@ DL-Lite$_{\mathcal{R}, horn}$ is part of the DL-Lite family, which has good trad
 We will now introduce the syntax and semantics of DL-Lite$_{\mathcal{R}, horn}$.
 
 \section{Syntax of DL-Lite$_{\mathcal{R}, horn}$}
-DL-Lite$_{\mathcal{R}, horn}$ uses unary and binary predicates, which represent concept names and role names respectively. Concept names are denoted by uppercase letters ($A$, $B$, etc) , while role names are denoted by lowercase letters ($r$, $s$, etc). Let \textsf{N\textsubscript{C}} and \textsf{N\textsubscript{R}} respectively be countably infinite sets of concept names and role names. An \emph{inverse role} for some relation $r \in \textsf{N\textsubscript{R}}$ is $r^-$, where $r^-$ semantically is the converse role of $r$. A \emph{role expression} is a role name or an inverse role. While there is only one role constructor in DL-Lite$_{\mathcal{R}, horn}$, there are multiple concept constructors: $\top$ (everything), $\sqcap$ (conjunction), and $\exists r.\top$ (existential restriction). A \emph{concept expression} $C$ is defined as:
-\[C \quad:=\quad \top\quad|\quad A \quad|\quad C\sqcap D\quad |\quad \exists r.\top\]
+DL-Lite$_{\mathcal{R}, horn}$ uses unary and binary predicates, which represent concept names and role names respectively. Concept names are denoted by uppercase letters ($A$, $B$, etc) , while role names are denoted by lowercase letters ($r$, $s$, etc). Let \textsf{N\textsubscript{C}} and \textsf{N\textsubscript{R}} respectively be countably infinite sets of concept names and role names. An \emph{inverse role} for some relation $r \in \textsf{N\textsubscript{R}}$ is $r^-$, where $r^-$ semantically is the converse role of $r$. A \emph{role expression} is a role name or an inverse role. While there is only one role constructor in DL-Lite$_{\mathcal{R}, horn}$, there are multiple concept constructors: $\top$ (everything), $\wedge$ (conjunction), and $\exists r.\top$ (existential restriction). A \emph{concept expression} $C$ is defined as:
+\[C \quad:=\quad \top\quad|\quad A \quad|\quad C\wedge D\quad |\quad \exists r.\top\]
 where $D$ is another concept expression, $A\in \textsf{N\textsubscript{C}}$ and $r \in \textsf{N\textsubscript{R}}$. A \emph{basic concept} is a concept name or concept expression in the form $\exists r.\top$, where $r \in \textsf{N\textsubscript{R}}$. \todo{add some examples}
 
 A DL-Lite$_{\mathcal{R}, horn}$ TBox (ontology) is captured by finite inclusions between concept expressions and roles. These are defined as: 
 \begin{itemize}
     \setlength\itemsep{1em}
     \item \emph{Role inclusions (RIs)}, which are of the form $r\sqsubseteq s$, where $r$ and $s$ are role expressions.
-    \item \emph{Concept inclusions (CIs)}, which are of the form $B_1 \sqcap ... \sqcap B_n \sqsubseteq C$, where $B_1, ..., B_n$ are basic concepts and $C$ is a concept expression. The extension $horn$ in DL-Lite$_{\mathcal{R}, horn}$ denotes this allowance of conjunctions of basic concepts on the left side of CIs.
+    \item \emph{Concept inclusions (CIs)}, which are of the form $B_1 \wedge ... \wedge B_n \sqsubseteq C$, where $B_1, ..., B_n$ are basic concepts and $C$ is a concept expression. The extension $horn$ in DL-Lite$_{\mathcal{R}, horn}$ denotes this allowance of conjunctions of basic concepts on the left side of CIs.
 \end{itemize}
 
 If we have two CIs $C\sqsubseteq D$ and $D \sqsubseteq C$ then we can abbreviate it to $C \equiv D$. Note that in this case both $C$ and $D$ would need to be a basic concept or a conjunction of basic concepts. Similarly for RIs $r$ and $s$, we can use $r\equiv s$ to denote $r\sqsubseteq s$ and $s \sqsubseteq r$. These are known as \emph{concept equivalences (CEs)} and \emph{role equivalences (REs)}.
@@ -28,7 +28,7 @@ We will now briefly cover the semantics of DL-Lite$_{\mathcal{R}, horn}^{\exists
 An inverse role $r = s^-$ has the interpretation $r^{\mathcal{I}}=\{(d, d') | (d,d')\in s^{\mathcal{I}}\}$. $ \top^{\mathcal{I}} = \Delta^{\mathcal{I}} $ and $ \bot^{\mathcal{I}} = \emptyset $. A concept expression $C$ has an interpretation $C^{\mathcal{I}}$ defined inductively by
 \begin{itemize}
     \item $(\neg C)^{\mathcal{I}} = \Delta^{\mathcal{I}} \backslash C^{\mathcal{I}} $,
-    \item $ (C_{1} \sqcap C_{2})^{\mathcal{I}} = C_{1}^{\mathcal{I}} \cap C_{2}^{\mathcal{I}} $,
+    \item $ (C_{1} \wedge C_{2})^{\mathcal{I}} = C_{1}^{\mathcal{I}} \cap C_{2}^{\mathcal{I}} $,
     \item $ (\exists r.C)^{\mathcal{I}} = \{d\in \Delta ^{\mathcal{I}}\;|\; \exists d' \in C^{\mathcal{I}}, \; (d,d')\in r^{\mathcal{I}}\} $
     \item $ (\exists r.\top)^{\mathcal{I}} = \{d, d'\in \Delta ^{\mathcal{I}}\;|\; \; (d,d')\in r^{\mathcal{I}}\} $.
 \end{itemize}
