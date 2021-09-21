@@ -17,10 +17,10 @@ We start with the translation of concept expressions:
  
 If $\Gamma \models \alpha$, then $\alpha$ is satisfied for every model of $\Gamma$. This means that for some interpretation $\mathcal{I}$ such that $\mathcal{I} \models \Gamma$ then $\mathcal{I} \models \alpha$.
 
-The translation of the pointed interpretation $(\mathcal{I}, d)^T$ will be represented by the function $f$, which maps formula in propositional logic to truth values. Let $p$ be a formula in propositional logic. For every $p$ in the set of all propositional formula, $f(p)=1$ iff $p\in \{P_a \; | \; d\in A^{\mathcal{I}}\}\cup\{P_r \; | \; d\in {\exists r.\top}^{\mathcal{I}}\}\cup \{P_{r^-} \; | \; d \in {\exists r^{-}.\top}^{\mathcal{I}}\}$, otherwise $f(p)=0$.
+The translation of the pointed interpretation $(\mathcal{I}, d)^T$ will be represented by the function $f$, which maps formula in propositional logic to truth values. Let $p$ be a formula in propositional logic. For every $p$ in the set of all propositional symbols, $f(p)=1$ iff $p\in \{P_a \; | \; d\in A^{\mathcal{I}}\}\cup\{P_r \; | \; d\in {\exists r.\top}^{\mathcal{I}}\}\cup \{P_{r^-} \; | \; d \in {\exists r^{-}.\top}^{\mathcal{I}}\}$, otherwise $f(p)=0$.
  
 \begin{lemma}
-Let $\mathcal{I}$ be an interpretation and $C$ be a DL-Lite$_{\mathcal{R}, horn}$ concept. Given a point interpretation $(\mathcal{I}, d)$, $d \in C^{\mathcal{I}}$ iff $(\mathcal{I}, d)^T \models C^T$.
+Let $\mathcal{I}$ be an interpretation and $C$ be a DL-Lite$_{\mathcal{R}, horn}$ concept. Given a pointed interpretation $(\mathcal{I}, d)$, $d \in C^{\mathcal{I}}$ iff $(\mathcal{I}, d)^T \models C^T$.
 \end{lemma}
 \begin{proof}
 $C$ must be of the form $C_1 \wedge ... \wedge C_n$ where each  $C_i$ must be either a concept name $A$, an existential restriction $\exists r.\top$ or an inverse existential restriction $\exists r^{-}.\top$. \newline
@@ -29,5 +29,5 @@ First we show that $(\mathcal{I}, d)^T \models C^T$ if $d\in C^\mathcal{I}$.
 If $d \in C^{\mathcal{I}}$ then $d\in \bigcap^{n}_{i=1}{C_{i}}^{\mathcal{I}}$. Therefore $f$ satisfies $C^T$, since $C^T = \bigwedge_{i = 1}^{n} {C_i}^T$ and $\forall 1 \leq i \leq n$ $f({C_i}^T) = 1$, by the definition of $f$.\newline
 Next we show that $d\in C^\mathcal{I}$ if $(\mathcal{I}, d)^T \models C^T$.
 \newline
-Recall that $C^T = \bigwedge_{i = 1}^{n} {C_i}^T$. Therefore if $(\mathcal{I}, d)^T \models C^T$ then  $(\mathcal{I}, d) ^T \models {C_{i}}^T \; \forall 1 \leq i \leq n$ by the semantic definition of $\wedge$. If $(\mathcal{I}, d)^T \models {C_i }^T$ then by the definition of $f$ this means that $d\in{C_i}^\mathcal{I}$. If $d\in \bigcap^{n}_{i=1}{C_{i}}^{\mathcal{I}}$ then $d \in C^\mathcal{I}$ by the semantics of DL-Lite$_{\mathcal{R}, horn}$. \footnote{$ (C_{1} \wedge C_{2})^{\mathcal{I}} = C_{1}^{\mathcal{I}} \cap C_{2}^{\mathcal{I}} $, therefore if $d\in {C_1}^\mathcal{I}$ and $d\in {C_2}^{\mathcal{I}}$ then $d\in {C_1}^\mathcal{I} \cap {C_2}^\mathcal{I}$ and thereby $d\in (C_1 \wedge C_2)^\mathcal{I}$.}
+Recall that $C^T = \bigwedge_{i = 1}^{n} {C_i}^T$. Therefore if $(\mathcal{I}, d)^T \models C^T$ then  $(\mathcal{I}, d) ^T \models {C_{i}}^T \; \forall 1 \leq i \leq n$ by the semantic definition of $\wedge$. If $(\mathcal{I}, d)^T \models {C_i }^T$ then by the definition of $f$ this means that $d\in{C_i}^\mathcal{I}\; \forall 1 \leq i \leq n$. If $d\in \bigcap^{n}_{i=1}{C_{i}}^{\mathcal{I}}$ then $d \in C^\mathcal{I}$ by the semantics of DL-Lite$_{\mathcal{R}, horn}$. \footnote{$ (C_{1} \wedge C_{2})^{\mathcal{I}} = C_{1}^{\mathcal{I}} \cap C_{2}^{\mathcal{I}} $, therefore if $d\in {C_1}^\mathcal{I}$ and $d\in {C_2}^{\mathcal{I}}$ then $d\in {C_1}^\mathcal{I} \cap {C_2}^\mathcal{I}$ and thereby $d\in (C_1 \wedge C_2)^\mathcal{I}$.}
 \end{proof}
