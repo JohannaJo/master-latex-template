@@ -31,13 +31,47 @@ def subset_by_signature(dataset, objects, predicates, targets):
     :param predicastes: list of predicates
     :param targets: list of targets
     """
-    #obj_subset =  dataset[np.isin(dataset[:,0], objects)]
-    #pred_subset =  dataset[np.isin(dataset[:,1],predicates)]
-    #target_subset =  dataset[np.isin(dataset[:,2], targets)]
-    #subset_with_duplicates = np.concatenate([obj_subset, pred_subset, target_subset])
-    #subset_without_duplicates = np.unique(subset_with_duplicates)
-    subset = dataset[np.isin(dataset[:,0], objects) | np.isin(dataset[:,1],predicates) | np.isin(dataset[:,2], targets)]
-    return subset
+    # if-else statements are there for slight optimization. If you don't care about runtime, then this functions works fine with just the final line.
+    if len(objects) == 0:
+        if len(targets) == 0:
+            return dataset[np.isin(dataset[:,1],predicates)]
+        elif len(predicates) == 0:
+            return dataset[np.isin(dataset[:,2], targets)]
+    elif len(predicates) == 0:
+        if len(targets) == 0:
+            return dataset[np.isin(dataset[:,0], objects)]
+        elif len(objects) == 0:
+            return dataset[np.isin(dataset[:,2], targets)]
+    elif len(targets) == 0:
+        return dataset[np.isin(dataset[:,0], objects) | np.isin(dataset[:,1],predicates)]
+    return dataset[np.isin(dataset[:,0], objects) | np.isin(dataset[:,1],predicates) | np.isin(dataset[:,2], targets)]
+
+
+def subset_by_strict_signature(dataset, objects, predicates, targets):
+    """
+    Extracts a subset of a knowledge graph. It includes all triplets in which the object, predicate and/or target appear in their corresponding lists.
+    Note that if multiple lists (objects, predicates, targets) are given, then a given triplet must have the appropriate value present in the given lists for it to be included in the subset.
+    
+    :param dataset: set of triplets
+    :param objects: list of objects
+    :param predicastes: list of predicates
+    :param targets: list of targets
+    """
+    # if-else statements are there for slight optimization. If you don't care about runtime, then this functions works fine with just the final line.
+    if len(objects) == 0:
+        if len(targets) == 0:
+            return dataset[np.isin(dataset[:,1],predicates)]
+        elif len(predicates) == 0:
+            return dataset[np.isin(dataset[:,2], targets)]
+    elif len(predicates) == 0:
+        if len(targets) == 0:
+            return dataset[np.isin(dataset[:,0], objects)]
+        elif len(objects) == 0:
+            return dataset[np.isin(dataset[:,2], targets)]
+    elif len(targets) == 0:
+        return dataset[np.isin(dataset[:,0], objects) & np.isin(dataset[:,1],predicates)]
+    return dataset[np.isin(dataset[:,0], objects) & np.isin(dataset[:,1],predicates) & np.isin(dataset[:,2], targets)]
+
 
 
 def subset_by_frequency(dataset, min_predicate_freq, min_object_target_freq):
