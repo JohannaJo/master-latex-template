@@ -1,4 +1,5 @@
 import numpy as np
+import pandas as pd
 from signature_tools import most_frequent_objects, most_frequent_targets
 
 family_subset = np.loadtxt("family_subset_test.txt", dtype = 'object')
@@ -22,13 +23,28 @@ def get_most_common_entities(kb, max_entities: int = 1000):
     entities_subset = np.concatenate([subject_entities, object_entities[~np.isin(object_entities,subject_entities)]])
     return entities_subset
 
-def generate_candidate_triples(kb, max_entities=100, relations=["child", "sibling", "parent", "relative", "spouse"]):
+def generate_candidate_triples(kb, max_entities=100, relations=["child", "sibling", "mother", "father", "relative", "spouse"], candidates_file_name = None):
     # generate a list of the most common entities
-    top_objects = most_frequent_objects(family_subset, n=2500)
-    top_targets = most_frequent_targets(family_subset, n=2500)
-    subject_entities = top_targets[:,1]
-    object_entities = top_objects[:,1]
-    entities_subset = np.concatenate([subject_entities, object_entities[~np.isin(object_entities,subject_entities)]])
+    entities_subset = get_most_common_entities(kb, max_entities)
+
+    # generate all possible triple combinations with relations and top entities
+    candidate_triples_unfiltered = np.array(np.meshgrid(entities_subset, relations, entities_subset)).T.reshape(-1,3)
+    
+    # convert list of triples to hashable set of strings, this is so that they can be compared to the family subset
+    candidate_triples_unfiltered_set = set([' '.join(map(str, triple)) for triple in candidate_triples_unfiltered])
+
+    kb_set = set([' '.join(map(str, triple)) for triple in kb])
+    
+    # remove candidate triples that already exist in the dataset
+    candidate_triples_set = candidate_triples_unfiltered_set - kb_set
+
+    # convert candidate triple set back to numpy ndarray format
+    candidate_triples = np.array([list(triple_string.split(" ")) for triple_string in candidate_triples_set])
+    
+    if candidates_file_name is not None:
+        pd.DataFrame(candidate_triples).to_csv(candidates_file_name + ".txt", sep = "\t", header=None, index=None)
+        
+    return candidate_triples
     
     
-print(get_most_common_entities(family_subset, max_entities = 100))
+print(generate_candidate_triples(family_subset, max_entities = 10, candidates_file_name = "delete"))
