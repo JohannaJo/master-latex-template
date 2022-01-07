@@ -10,7 +10,7 @@ def rule_set_generation(kb_filepath = "family_subset_tsv_test.tsv", miner_filepa
     
     :param kb_filepath: nd-array represetning the knowledge base to mine rules from.
     :param miner_filepath: rule mining approach being used
-    :param rule_body_size: number of triples permitted in the body of the rule # TODO: implement this parameter
+    :param rule_body_size: number of triples permitted in the body of the rule
     :return mining_results: a pandas dataframe containing the rule mining results
     """
     mining_output_path = "family_mined_rules_test.txt"
