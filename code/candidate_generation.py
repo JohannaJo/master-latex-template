@@ -23,9 +23,13 @@ def get_most_common_entities(kb, max_entities: int = 1000):
     entities_subset = np.concatenate([subject_entities, object_entities[~np.isin(object_entities,subject_entities)]])
     return entities_subset
 
-def generate_candidate_triples(kb, max_entities=100, relations=["child", "sibling", "mother", "father", "relative", "spouse"], candidates_file_name = None):
-    # generate a list of the most common entities
-    entities_subset = get_most_common_entities(kb, max_entities)
+def generate_candidate_triples(kb, entities=None, max_entities=100, relations=["child", "sibling", "mother", "father", "relative", "spouse"], candidates_file_name = None):
+    
+    if entities is None:
+        # generate a list of the most common entities
+        entities_subset = get_most_common_entities(kb, max_entities)
+    else:
+        entities_subset = entities
 
     # generate all possible triple combinations with relations and top entities
     candidate_triples_unfiltered = np.array(np.meshgrid(entities_subset, relations, entities_subset)).T.reshape(-1,3)
