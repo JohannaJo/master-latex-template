@@ -2,21 +2,36 @@ import numpy as np
 import os
 import pandas as pd
 
-family_subset = np.loadtxt("family_subset_test.txt", dtype = 'object')
-
-def rule_set_generation(kb_filepath = "family_subset_tsv_test.tsv", miner_filepath = "amie-milestone-intKB.jar", max_rule_body_size = 2, save_raw_mining_output = False, save_mined_rules = False):
+def rule_set_generation(kb=None, kb_filepath=None, miner_filepath="amie-milestone-intKB.jar", max_rule_body_size=2, save_raw_mining_output=False, save_mined_rules=False):
     """
      Generates a set of rules mined from a given knowledge base with a given rule mining approach.
-    
-    :param kb_filepath: nd-array represetning the knowledge base to mine rules from.
+     
+    :param kb: nd-array represetning the knowledge base to mine rules from.    
+    :param kb_filepath: name of a tsv file that 
     :param miner_filepath: rule mining approach being used
     :param rule_body_size: number of triples permitted in the body of the rule
     :return mining_results: a pandas dataframe containing the rule mining results
     """
+    # check for invalid input
+    if (kb is None) and (kb_filepath is None):
+        print("Error: no kb object or filepath is given.")
+        return None
+    
+    # generate tsv file if none is given
+    delete_generated_tsv = False
+    if kb_filepath is None:
+        df_kb = pd.DataFrame(kb)
+        kb_filepath = "temp_tsv_kb.tsv"
+        df_kb.to_csv(kb_filepath, sep="\t", index=None)
+        delete_generated_tsv = True
+        
     mining_output_path = "family_mined_rules_test.txt"
     max_rule_size = max_rule_body_size + 1
     os.system("java -jar " + miner_filepath + " -bias lazy -full -maxad " + str(max_rule_size) + " -noHeuristics -ostd " + kb_filepath + " > " + mining_output_path)
     
+    if delete_generated_tsv:
+        os.remove(kb_filepath)
+        
     a_file = open(mining_output_path, "r")
     lines = a_file.readlines()
     a_file.close()
@@ -53,4 +68,7 @@ def rule_set_generation(kb_filepath = "family_subset_tsv_test.tsv", miner_filepa
     mining_results = pd.DataFrame(df_lines,  columns = header)
     return mining_results
 
-print(rule_set_generation(save_raw_mining_output = False, save_mined_rules = True))
+
+# testing
+family_subset = np.loadtxt("family_subset_test.txt", dtype = 'object')
+print(rule_set_generation(kb=family_subset, save_raw_mining_output=False, save_mined_rules=True))
