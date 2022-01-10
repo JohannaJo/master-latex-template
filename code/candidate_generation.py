@@ -51,7 +51,7 @@ def generate_candidate_triples(kb, entities=None, max_entities=100, relations=["
     if savefile_name is not None:
         pd.DataFrame(candidate_triples).to_csv(savefile_name + ".txt", sep = "\t", header=None, index=None)
         
-    return candidate_triples
+    return candidate_triples, entities_subset
     
     
 print(get_most_common_entities(family_subset, max_entities = 10, savefile_name = "delete_entities"))
