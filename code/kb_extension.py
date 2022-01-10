@@ -2,6 +2,7 @@ import numpy as np
 import pandas as pd
 from candidate_generation import generate_candidate_triples
 from candidate_ranking import rank_candidate_triples, get_candidates_above_rank
+from rule_generation import rule_set_generation
 
 # for testing
 from ampligraph.latent_features import restore_model
@@ -20,6 +21,9 @@ def extend_kb(original_kb, model, entity_selection_process, candidate_admittance
     admitted_candidates_ndarray = admitted_candidates.to_numpy()
     expanded_kb = np.concatenate([original_kb, admitted_candidates_ndarray])
     return expanded_kb
+
+#def mine_rule_sets(original_kb, model, entity_selection_process, candidate_admittance_criteria):
+    #rule_set_A = 
 
 # testing
 model = restore_model('./Wikidata_family_subset_100_epocs.pkl')
