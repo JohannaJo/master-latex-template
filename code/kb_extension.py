@@ -36,7 +36,7 @@ def extend_and_mine(original_kb, model, entity_selection_method, candidate_admit
     :param candidate_admittance_criteria: parameter for filtering out triples not deemed good enough for addition to the kb.
     :return rules: Pandas dataframe containing the mined rules and metrics.
     """
-    extended_kb = extend_kb(original_kb, model, entity_selection_method, candidate_admittance_criteria)
+    extended_kb, admitted_candidates = extend_kb(original_kb, model, entity_selection_method, candidate_admittance_criteria)
     rules = rule_mining(kb=original_kb, save_raw_mining_output=False, save_mined_rules=False)
     return rules, extended_kb
 
