@@ -1,34 +1,51 @@
 import numpy as np
 import pandas as pd
-from signature_tools import most_frequent_objects, most_frequent_targets
+from signature_tools import *
+
+# used to set default parameter
+family_relations = ["child", "sibling", "mother", "father", "relative", "spouse"]
 
 
-def get_most_common_entities(kb, max_entities: int = 1000, savefile_name=None):
+def get_entities(kb, max_entities: int = 1000, selection_method: str="random", savefile_name=None):
     """
-    Generates a numpy array of the most common entities in a set of triples.
+    Generates a numpy array of entities selected by a given method.
     
     :param kb: numpy nd-array representing the knowledge base to extract the most common entities from.
     :param max_entities: upper limit to number of entities to return.
     
-    :return entities_subset: numpy array of the most common entities in the knowledge base.
+    :return entities_subset: numpy array of a subset of entities in the knowledge base.
     """
     obj_target_max = max_entities//2
-    top_objects = most_frequent_objects(kb, n=obj_target_max)
-    top_targets = most_frequent_targets(kb, n=obj_target_max)
+    if selection_method == "random":
+        object_entities = random_objects(kb, n=obj_target_max)
+        subject_entities = random_targets(kb, n=obj_target_max)
+    else:
+        if selection_method == "most_frequent":
+            selected_objects = most_frequent_objects(kb, n=obj_target_max)
+            selected_targets = most_frequent_targets(kb, n=obj_target_max)
+        elif selection_method == "least_frequent":
+            selected_objects = least_frequent_objects(kb, n=obj_target_max)
+            selected_targets = least_frequent_targets(kb, n=obj_target_max)
+        else:
+            # check for invalid input
+            print("Selection method \"" + selection_method + "\" is not valid.")
+            return None
+        object_entities = selected_objects[:,0]
+        subject_entities = selected_targets[:,0]
     
-    subject_entities = top_targets[:,1]
-    object_entities = top_objects[:,1]
-    
+    # generate array of unique selected entities
     entities_subset = np.concatenate([subject_entities, object_entities[~np.isin(object_entities,subject_entities)]])
     
     if savefile_name is not None:
         pd.DataFrame(entities_subset).to_csv(savefile_name, sep = "\t", header=None, index=None)
+        
     return entities_subset
 
-def generate_candidate_triples(kb, entities=None, max_entities=100, relations=["child", "sibling", "mother", "father", "relative", "spouse"], savefile_name = None):
+
+def generate_candidate_triples(kb, entities=None, max_entities=100, relations=family_relations, savefile_name = None):
     if entities is None:
         # generate a list of the most common entities
-        entities_subset = get_most_common_entities(kb, max_entities)
+        entities_subset = get_entities(kb, max_entities)
     else:
         entities_subset = entities
 

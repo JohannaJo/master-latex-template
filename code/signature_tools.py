@@ -49,6 +49,7 @@ def subset_by_signature(dataset, objects, predicates, targets):
             return dataset[np.isin(dataset[:,2], targets)]
     elif len(targets) == 0:
         return dataset[np.isin(dataset[:,0], objects) | np.isin(dataset[:,1],predicates)]
+    
     return dataset[np.isin(dataset[:,0], objects) | np.isin(dataset[:,1],predicates) | np.isin(dataset[:,2], targets)]
 
 
@@ -75,6 +76,7 @@ def subset_by_strict_signature(dataset, objects, predicates, targets):
             return dataset[np.isin(dataset[:,2], targets)]
     elif len(targets) == 0:
         return dataset[np.isin(dataset[:,0], objects) & np.isin(dataset[:,1],predicates)]
+    
     return dataset[np.isin(dataset[:,0], objects) & np.isin(dataset[:,1],predicates) & np.isin(dataset[:,2], targets)]
 
 
@@ -131,6 +133,7 @@ def random_objects(dataset, n = 10):
     objects = dataset[:,0]
     unique_objects = np.unique(objects)
     random_subset_of_objects = np.random.choice(unique_objects, size=n)
+    
     return random_subset_of_objects
     
     
@@ -171,6 +174,7 @@ def random_predicates(dataset, n = 10):
     predicates = dataset[:,1]
     unique_predicates = np.unique(predicates)
     random_subset_of_predicates = np.random.choice(unique_predicates, size=n)
+    
     return random_subset_of_predicates
 
 
@@ -211,4 +215,5 @@ def random_targets(dataset, n = 10):
     targets = dataset[:,2]
     unique_targets = np.unique(targets)
     random_subset_of_targets = np.random.choice(unique_targets, size=n)
+    
     return random_subset_of_targets
