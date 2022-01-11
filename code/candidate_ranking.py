@@ -3,8 +3,6 @@ import pandas as pd
 from ampligraph.evaluation import evaluate_performance
 from ampligraph.latent_features import restore_model
 
-family_subset = np.loadtxt("family_subset_test.txt", dtype = 'object')
-
 def rank_candidate_triples(model, candidates, kb, entities, savefile_name: str=None):
     # find ranks for subset
     ranks = evaluate_performance(candidates, model = model, filter_triples=kb, entities_subset = entities)
@@ -24,7 +22,7 @@ def rank_candidate_triples(model, candidates, kb, entities, savefile_name: str=N
     return ranked_candidates
     
     
-def get_candidates_above_rank(ranked_candidates, rank_cutoff: int):
+def get_candidates_above_rank(ranked_candidates, rank_cutoff: int=3):
     """
     Filters out all candidates that have either a subject rank or an object rank below the rank cutoff.
     
@@ -39,6 +37,9 @@ def get_candidates_above_rank(ranked_candidates, rank_cutoff: int):
 
 """
 TESTING  
+
+family_subset = np.loadtxt("family_subset_test.txt", dtype = 'object')
+
 model = restore_model('./Wikidata_family_subset_100_epocs.pkl')
 candidate_triples = np.loadtxt("delete.txt", dtype = 'object')
 entities = np.loadtxt("delete_entities.txt", dtype = 'object')
