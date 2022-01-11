@@ -1,5 +1,9 @@
 import numpy as np
 
+"""
+The file contains helper functions for selecting entities and triples in a knowledge base by their frequencies or signature.
+"""
+
 def get_object_frequencies(dataset):
     objects = dataset[:,0]
     unique, counts = np.unique(objects, return_counts=True)
@@ -102,6 +106,18 @@ def most_frequent_objects(dataset, n = 10):
     sorted_frequencies = np.flip(sorted_frequencies)
     
     return sorted_frequencies[:n]
+
+def least_frequent_objects(dataset, n = 10):
+    """
+    Finds the least frequent objects in a dataset of triplets, and returns the n least frequent with their corresponding frequencies.
+    
+    :param dataset: set of triplets
+    :param n: number of least frequent objects to return.
+    """
+    frequencies = get_object_frequencies(dataset)
+    sorted_frequencies = frequencies[frequencies[:, 1].argsort()]
+    
+    return sorted_frequencies[:n]
     
     
 def most_frequent_predicates(dataset, n = 10):
@@ -117,6 +133,18 @@ def most_frequent_predicates(dataset, n = 10):
     
     return sorted_frequencies[:n]
 
+def least_frequent_predicates(dataset, n = 10):
+    """
+    Finds the least frequent predicates in a dataset of triplets, and returns the n least frequent with their corresponding frequencies.
+    
+    :param dataset: set of triplets
+    :param n: number of least frequent predicates to return.
+    """
+    frequencies = get_predicate_frequencies(dataset)
+    sorted_frequencies = frequencies[frequencies[:, 1].argsort()]
+    
+    return sorted_frequencies[:n]
+
 
 def most_frequent_targets(dataset, n = 10):
     """
@@ -128,5 +156,17 @@ def most_frequent_targets(dataset, n = 10):
     frequencies = get_target_frequencies(dataset)
     sorted_frequencies = frequencies[frequencies[:, 1].argsort()]
     sorted_frequencies = np.flip(sorted_frequencies)
+    
+    return sorted_frequencies[:n]
+
+def least_frequent_targets(dataset, n = 10):
+    """
+    Finds the most frequent targets in a dataset of triplets, and returns the n least frequent with their corresponding frequencies.
+    
+    :param dataset: set of triplets
+    :param n: number of least frequent targets to return.
+    """
+    frequencies = get_target_frequencies(dataset)
+    sorted_frequencies = frequencies[frequencies[:, 1].argsort()]
     
     return sorted_frequencies[:n]
