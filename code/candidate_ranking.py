@@ -34,10 +34,15 @@ def get_candidates_above_rank(ranked_candidates, rank_cutoff: int):
     """
     top_ranked_candidates = ranked_candidates.loc[(ranked_candidates["Sub_rank"] <= rank_cutoff) & (ranked_candidates["Obj_rank"] <= rank_cutoff)]
     return top_ranked_candidates
-    
+
+
+
+"""
+TESTING  
 model = restore_model('./Wikidata_family_subset_100_epocs.pkl')
 candidate_triples = np.loadtxt("delete.txt", dtype = 'object')
 entities = np.loadtxt("delete_entities.txt", dtype = 'object')
 
 ranked = rank_candidate_triples(model, candidate_triples, family_subset, entities, "delete_ranks")
 print(get_candidates_above_rank(ranked, 5))
+"""

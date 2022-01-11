@@ -2,7 +2,6 @@ import numpy as np
 import pandas as pd
 from signature_tools import most_frequent_objects, most_frequent_targets
 
-family_subset = np.loadtxt("family_subset_test.txt", dtype = 'object')
 
 def get_most_common_entities(kb, max_entities: int = 1000, savefile_name=None):
     """
@@ -27,7 +26,6 @@ def get_most_common_entities(kb, max_entities: int = 1000, savefile_name=None):
     return entities_subset
 
 def generate_candidate_triples(kb, entities=None, max_entities=100, relations=["child", "sibling", "mother", "father", "relative", "spouse"], savefile_name = None):
-    
     if entities is None:
         # generate a list of the most common entities
         entities_subset = get_most_common_entities(kb, max_entities)
@@ -52,6 +50,8 @@ def generate_candidate_triples(kb, entities=None, max_entities=100, relations=["
         pd.DataFrame(candidate_triples).to_csv(savefile_name + ".txt", sep = "\t", header=None, index=None)
         
     return candidate_triples, entities_subset
-    
-    
-print(get_most_common_entities(family_subset, max_entities = 10, savefile_name = "delete_entities"))
+ 
+# testing 
+#family_subset = np.loadtxt("family_subset_test.txt", dtype = 'object')
+#print("Why is this line running?????")    
+#print(get_most_common_entities(family_subset, max_entities = 10, savefile_name = "delete_entities"))
