@@ -19,6 +19,9 @@ def get_entities(kb, max_entities: int = 1000, selection_method: str="random", s
     if selection_method == "random":
         object_entities = random_objects(kb, n=obj_target_max)
         subject_entities = random_targets(kb, n=obj_target_max)
+    elif selection_method == "probabilistic":
+        object_entities = probabilistic_objects(kb, n=obj_target_max)
+        subject_entities = probabilistic_targets(kb, n=obj_target_max)
     else:
         if selection_method == "most_frequent":
             selected_objects = most_frequent_objects(kb, n=obj_target_max)
