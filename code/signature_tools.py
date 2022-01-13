@@ -1,4 +1,5 @@
 import numpy as np
+from random import choices
 
 """
 The file contains helper functions for selecting entities and triples in a knowledge base by their frequencies or signature.
@@ -135,6 +136,23 @@ def random_objects(dataset, n = 10):
     random_subset_of_objects = np.random.choice(unique_objects, size=n)
     
     return random_subset_of_objects
+
+
+def probabilistic_objects(dataset, n = 10):
+    """
+    Returns n unique objects from the dataset where the probability of picking an object is propotional to the frequency of the object.
+    
+    :param dataset: set of triplets.
+    :param n: number of random objects to return.
+    """
+    frequencies = get_object_frequencies(dataset)
+    objects = frequencies[:,0]
+    freq_values = frequencies[:,1]
+    norm = np.linalg.norm(freq_values)
+    norm_freq_values = freq_values/norm
+    random_subset_of_objects = choices(objects, weights=norm_freq_values,k=n)
+    
+    return random_subset_of_objects
     
     
 def most_frequent_predicates(dataset, n = 10):
@@ -215,5 +233,22 @@ def random_targets(dataset, n = 10):
     targets = dataset[:,2]
     unique_targets = np.unique(targets)
     random_subset_of_targets = np.random.choice(unique_targets, size=n)
+    
+    return random_subset_of_targets
+
+
+def probabilistic_targets(dataset, n = 10):
+    """
+    Returns n unique targets from the dataset where the probability of picking a target is propotional to the frequency of the target.
+    
+    :param dataset: set of triplets.
+    :param n: number of random objects to return.
+    """
+    frequencies = get_target_frequencies(dataset)
+    targets = frequencies[:,0]
+    freq_values = frequencies[:,1]
+    norm = np.linalg.norm(freq_values)
+    norm_freq_values = freq_values/norm
+    random_subset_of_targets = choices(targets, weights=norm_freq_values,k=n)
     
     return random_subset_of_targets
