@@ -20,7 +20,7 @@ def extend_kb(original_kb, model, entity_selection_method, candidate_admittance_
     """
     candidates, entities = generate_candidate_triples(original_kb, entities=None, entity_selection_method="random", max_entities=10, relations=family_relations, savefile_name=None)
     ranked_candidate_triples = rank_candidate_triples(model, candidates, original_kb, entities, savefile_name=None)
-    admitted_candidates = get_candidates_above_rank(ranked_candidate_triples, rank_cutoff=candidate_admittance_criteria)
+    admitted_candidates = admit_candidates(ranked_candidate_triples, candidate_admittance_criteria)
     admitted_candidates = admitted_candidates.drop(columns = ["Sub_rank", "Obj_rank"])
     admitted_candidates = admitted_candidates.to_numpy()
     expanded_kb = np.concatenate([original_kb, admitted_candidates])
