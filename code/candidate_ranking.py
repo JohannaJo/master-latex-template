@@ -34,6 +34,14 @@ def get_candidates_above_rank(ranked_candidates, rank_cutoff: int=3):
     return top_ranked_candidates
 
 
+def get_top_n_percent(ranked_candidates, n=10):
+    number_of_candidates = len(ranked_candidates)
+    index_cutoff = int(number_of_candidates * (n/100))
+    ranked_candidates = ranked_candidates.sort_values(["Sub_rank", "Obj_rank"])
+    top_n_percent =  ranked_candidates.head(index_cutoff)
+    return top_n_percent
+    
+
 
 """
 TESTING  
