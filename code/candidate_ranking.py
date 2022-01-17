@@ -40,6 +40,17 @@ def get_top_n_percent(ranked_candidates, n=10):
     ranked_candidates = ranked_candidates.sort_values(["Sub_rank", "Obj_rank"])
     top_n_percent =  ranked_candidates.head(index_cutoff)
     return top_n_percent
+
+
+def admit_candidates(ranked_candidates, admittance_criteria):
+    admittance_type = admittance_criteria[0]
+    if admittance_type == "percent":
+        return get_top_n_percent(ranked_candidates, admittance_criteria[1])
+    elif admittance_type == "rank_cutoff":
+        return get_candidates_above_rank(ranked_candidates, admittance_criteria[1])
+    else:
+        print("Admittance criteria \"", str(admittance_criteria), "\" is not valid.")
+        return None
     
 
 
