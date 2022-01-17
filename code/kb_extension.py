@@ -1,7 +1,7 @@
 import numpy as np
 import pandas as pd
 from candidate_generation import generate_candidate_triples
-from candidate_ranking import rank_candidate_triples, get_candidates_above_rank
+from candidate_ranking import rank_candidate_triples, admit_candidates
 from rule_mining import rule_mining
 
 # used as default parameter
