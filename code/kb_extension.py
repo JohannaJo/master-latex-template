@@ -7,7 +7,7 @@ from rule_mining import rule_mining
 # used as default parameter
 family_relations = ["child", "sibling", "mother", "father", "relative", "spouse"]
 
-def extend_kb(original_kb, model, entity_selection_method, candidate_admittance_criteria, max_entities: int):
+def extend_kb(original_kb, relations, model, entity_selection_method, candidate_admittance_criteria, max_entities: int):
     """
     Takes a knowledge base and extends it by adding new triples that pass some admittance criteria.
     
@@ -19,7 +19,7 @@ def extend_kb(original_kb, model, entity_selection_method, candidate_admittance_
     :return expanded_kb: numpy ndarray containing the original kb with additional new triples, ie an extended version of the original kb.
     :return admitted_candidates: numpy ndarray containing the additional new triples that were added to the extended kb.
     """
-    candidates, entities = generate_candidate_triples(original_kb, entities=None, entity_selection_method=entity_selection_method, max_entities=max_entities, relations=family_relations, savefile_name=None)
+    candidates, entities = generate_candidate_triples(original_kb, relations, entities=None, entity_selection_method=entity_selection_method, max_entities=max_entities, savefile_name=None)
     ranked_candidate_triples = rank_candidates(model, candidates, original_kb, entities, savefile_name=None)
     admitted_candidates = admit_candidates(ranked_candidate_triples, candidate_admittance_criteria)
     admitted_candidates = admitted_candidates.drop(columns = ["Sub_rank", "Obj_rank"])

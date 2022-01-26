@@ -3,8 +3,8 @@ import pandas as pd
 from signature_tools import *
 
 # used to set default parameter
-family_relations = ["child", "sibling", "mother", "father", "relative", "spouse"]
-
+#family_relations = ["child", "sibling", "mother", "father", "relative", "spouse"]
+# TODO: delete
 
 def get_entities(kb, max_entities: int, selection_method: str, savefile_name=None):
     """
@@ -45,7 +45,7 @@ def get_entities(kb, max_entities: int, selection_method: str, savefile_name=Non
     return entities_subset
 
 
-def generate_candidate_triples(kb, entities=None, entity_selection_method:str="random", max_entities: int=1000, relations=family_relations, savefile_name = None):
+def generate_candidate_triples(kb, relations, entities=None, entity_selection_method:str="random", max_entities: int=1000, savefile_name = None):
     if entities is None:
         # generate a list of the most common entities
         entities_subset = get_entities(kb, max_entities, entity_selection_method)
