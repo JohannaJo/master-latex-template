@@ -152,7 +152,7 @@ def probabilistic_objects(dataset, n = 10):
     norm_freq_values = freq_values/norm
     random_subset_of_objects = choices(objects, weights=norm_freq_values,k=n)
     
-    return random_subset_of_objects
+    return np.array(random_subset_of_objects)
     
     
 def most_frequent_predicates(dataset, n = 10):
@@ -251,4 +251,4 @@ def probabilistic_targets(dataset, n = 10):
     norm_freq_values = freq_values/norm
     random_subset_of_targets = choices(targets, weights=norm_freq_values,k=n)
     
-    return random_subset_of_targets
+    return np.array(random_subset_of_targets)

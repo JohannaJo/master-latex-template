@@ -43,15 +43,18 @@ def print_comparison_details(rule_set_A, rule_set_B, index=0):
     print("Unique original:", len(unique_A)," Unique expanded:", len(unique_B), " Common rules:", len(common))
 
     
-def display_comparison(rule_set_A, rule_set_B, index=0):
+def display_comparison(model_name, rule_set_A, rule_set_B, index=0):
     common = get_common_rules(rule_set_A, rule_set_B)
     unique_A, unique_B = get_unique_rules(rule_set_A, rule_set_B)
     common = len(common)
     unique_A = len(unique_A)
     unique_B = len(unique_B)
     
-    # print details
-    print("EXPANDED RULE SET ", index)
+    if index==0:
+        print()
+        print(model_name)
+    else:
+        print("EXPANDED RULE SET ", index)
     print("Unique original:", unique_A," Unique expanded:", unique_B, " Common rules:", common)
     
      # plot distribution of the mined rules

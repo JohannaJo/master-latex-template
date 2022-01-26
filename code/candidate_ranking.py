@@ -3,9 +3,9 @@ import pandas as pd
 from ampligraph.evaluation import evaluate_performance
 from ampligraph.latent_features import restore_model
 
-def rank_candidate_triples(model, candidates, kb, entities, savefile_name: str=None):
+def rank_candidates(model, candidates, kb, entities, savefile_name:str=None):
     # find ranks for subset
-    ranks = evaluate_performance(candidates, model = model, filter_triples=kb, entities_subset = entities)
+    ranks = evaluate_performance(candidates, model=model, filter_triples=kb, entities_subset=entities)
     
     # save ranked candidates in Pandas DataFrame
     data = {"Object" : candidates[:,0],
@@ -22,7 +22,7 @@ def rank_candidate_triples(model, candidates, kb, entities, savefile_name: str=N
     return ranked_candidates
     
     
-def get_candidates_above_rank(ranked_candidates, rank_cutoff: int=3):
+def get_candidates_above_rank(ranked_candidates, rank_cutoff:int=3):
     """
     Filters out all candidates that have either a subject rank or an object rank below the rank cutoff.
     
@@ -48,6 +48,11 @@ def admit_candidates(ranked_candidates, admittance_criteria):
         return get_top_n_percent(ranked_candidates, admittance_criteria[1])
     elif admittance_type == "rank_cutoff":
         return get_candidates_above_rank(ranked_candidates, admittance_criteria[1])
+    elif admittance_type == "random":
+        #number_of_candidates = len(ranked_candidates)
+        #index_cutoff = int(number_of_candidates * (10/100))
+        randomly_selected_candidates = ranked_candidates.sample(n=admittance_criteria[1], replace=False)
+        return randomly_selected_candidates
     else:
         print("Admittance criteria \"", str(admittance_criteria), "\" is not valid.")
         return None
@@ -63,6 +68,6 @@ model = restore_model('./Wikidata_family_subset_100_epocs.pkl')
 candidate_triples = np.loadtxt("delete.txt", dtype = 'object')
 entities = np.loadtxt("delete_entities.txt", dtype = 'object')
 
-ranked = rank_candidate_triples(model, candidate_triples, family_subset, entities, "delete_ranks")
+ranked = rank_candidates(model, candidate_triples, family_subset, entities, "delete_ranks")
 print(get_candidates_above_rank(ranked, 5))
 """
