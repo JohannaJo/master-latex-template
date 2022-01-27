@@ -51,3 +51,33 @@ As the semantics of DLs are logic-based it is clear when a statement is \emph{en
 
 
 The two main criteria for a reasoner is that it is decidable and tractable (always correctly completed in a time that is polynomial with respect to the size of the KB). The more operators one allows in a logic the more complicated the TBox becomes, and usually the complexity for reasoning in the language increases. See \href{http://www.cs.man.ac.uk/~ezolin/dl/}{\textbf{Complexity of reasoning in Description Logics}} for an interactive look at the complexity of different DLs \cite{zolin_2013}.
+
+\section{The Resource Description Framework}
+
+The Resource Description Framework (RDF) is a standard for representation and exchange of graph data introduced by \gls{w3c}. Semantic triples are the data types used in the RDF data model. A triple, as the name suggests, is a tuple of three elements. It has the form ( subject, predicate, object) and can therefore represent statements about semantic data, for example "Cats are mammals", or "Ann knows Bob". These RDF statements express relationships between two resources, these resources being the subject and the object, while the predicate encapsulates the nature of the relationship. The relationship is phrased in a directional way, and so set of RDF stamements can also be viewed as a directed graph. The graph represents these triple statements, where the predicate in the triple denotes the edge going from the subject to the object, both of which are vertices.
+
+\begin{lstlisting}[caption={Example of RDF triple set written in informal pseudocode},label={RDF_triples_example}]
+<Ann> <knows> <Bob>
+<Ann> <is a> <person>
+<Bob> <is a> <person>
+<Ann> <owns> <Leo>
+<Leo> <is a> <cat>
+<cat> <is a> <mammal>
+<Bob> <is scared of> <Leo>
+\end{lstlisting}
+
+\begin{figure}
+\centering
+    \includegraphics[scale=0.3]{figures/RDF_triple}
+    \caption{TODO Informal graph of the example triples from \ref{RDF_triples_example}}
+    
+    \label{fig:KGexample}
+\end{figure}
+
+With this type of data organisation one can for example query for a list of all people who own cats in the dataset.
+
+\subsection{Resource Description Framework Schema}
+RDF provides the abstract model for how to organize the data and sets standards for how data points relate to eachother and real-world entities. The RDF Schema (RDFS), on the other hand, is a \emph{vocabulary} in RDF that explains how nodes of a graph relate.
+
+\section{Semantic Triples in Description Logics}
+Semantic triples are 
