@@ -36,7 +36,11 @@ There is no single agreed upon definition of \glspl{kg} \cite{bergman_2019, bona
 \section{Knowledge Graph Embeddings}
 
 
-\section{Horn Rules}
+\section{Rules}
+Large knowledge bases are not complete. They may for example be extracted from natural language resources and may contain facts that are wrong or exhibit gaps in their knowledge. Most of the data that is present, however, is correct and hence implicitly contain meaningful rules. For example the Wikidata dataset that contains information about many individuals will implicitly contain the fact that siblings tend to have the same mother:
+\[siblingOf(a, b) \wedge motherOf(c, a) \Rightarrow motherOf(c, b)\]
+
+There will of course be exceptions to this rule, but generally it will hold. The rules describe information about relational data, and hence will only use binary predicates. The rules will also be Horn, meaning that any number of predicates may be used in the body of the rule, but only one predicate is implied in the rule. This form has useful properties in knowledge representation and reasoning. When extracting rules from knowledge graphs they therefore tend to be Horn rules on binary predicates.
 
 \section{Rule Mining}
 \subsection{AMIE+}
