@@ -36,13 +36,28 @@ There is no single agreed upon definition of \glspl{kg} \cite{bergman_2019, bona
 \section{Knowledge Graph Embeddings}
 
 
-\section{Rules}
-Large knowledge bases are not complete. They may for example be extracted from natural language resources and may contain facts that are wrong or exhibit gaps in their knowledge. Most of the data that is present, however, is correct and hence implicitly contain meaningful rules. For example the Wikidata dataset that contains information about many individuals will implicitly contain the fact that siblings tend to have the same mother:
-\[siblingOf(a, b) \wedge motherOf(c, a) \Rightarrow motherOf(c, b)\]
+\section{Rule-based machine learning}
+Rule-based machine learning has as a goal to create rules that make new true predictions going beyond the data on which the rule was applied to. In contrast, other areas of machine learning focus on training a single model that can be applied to make a broad range of predictions. Conceptually the end result of rule-based machine learning is similar to a rule-based system.  Rule-based systems are often hand-crafted and require a knowledge expert to be curated, while rule-based machine learning requires no knowledge expert and rules are automatically created by the learning algorithm.
 
-There will of course be exceptions to this rule, but generally it will hold. The rules describe information about relational data, and hence will only use binary predicates. The rules will also be Horn, meaning that any number of predicates may be used in the body of the rule, but only one predicate is implied in the rule. This form has useful properties in knowledge representation and reasoning. When extracting rules from knowledge graphs they therefore tend to be Horn rules on binary predicates.
+Within rule-based machine learning there are many different approaches including learning classifier systems\cite{sigaud2007learning} and association rule mining\cite{agrawal1993mining}, the latter of which is the approach used in this thesis. Within both learning classifier systems and association rule mining a single rule is not in itself a model. It is merely a if-then statement that .... TODO continue https://youtu.be/CRge_cZ2cJc?t=120
 
-\section{Rule Mining}
+
+
+
+
+
+
+\subsection{Association Rule Mining}
+Association rules \cite{agrawal1993mining} are types of "if-then" statements that describe frequent associations between items in a dataset containing \textit{transactions}. Association rule mining was originally proposed as a new method for finding relationships between sales items in stores. The idea of mining association rules over transactions has successfully been applied to many other scenarios \cite{altaf2017applications, lin2002efficient}. In the context of convenience store sales, each transaction can be thought of as a set of items that a customer has purchased. The rules are of the form $\{Sugar, Flour, Eggs\} \Rightarrow Butter$, meaning that a person who bought sugar, flour and eggs was likely to also purchase butter. The antecedent is some set of items in the dataset, while the consequent is an item often found in combination with the antecedent in the dataset.  So sugar, flour and eggs can be thought of as "associated with" butter. These original association rules are also not Horn rules over binary predicates, but is cited as a main inspiration for the AMIE approach used for experiments in this thesis.
+
+\subsection{Significance and quality measurement}
+The goal is to find formal rules that make true predictions that go beyond the explicit information in the knowledge base. For this some for of metrics are required in order to determine the suitability of a proposed rule.
+
+
+
+
+Support and confidence were originally proposed as relevance and quality measurements for this type of rule mining, but as explained in \todo{PCA m8} this is not adequate when working with datasets in the form of knowledge graphs.
+
 \subsection{AMIE+}
 
 \iffalse 
