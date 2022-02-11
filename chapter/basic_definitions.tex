@@ -39,12 +39,25 @@ There is no single agreed upon definition of \glspl{kg} \cite{bergman_2019, bona
 \section{Rule-based machine learning}
 Rule-based machine learning has as a goal to create rules that make new true predictions going beyond the data on which the rule was applied to. In contrast, other areas of machine learning focus on training a single model that can be applied to make a broad range of predictions. Conceptually the end result of rule-based machine learning is similar to a rule-based system.  Rule-based systems are often hand-crafted and require a knowledge expert to be curated, while rule-based machine learning requires no knowledge expert and rules are automatically created by the learning algorithm.
 
-Within rule-based machine learning there are many different approaches including learning classifier systems\cite{sigaud2007learning} and association rule mining\cite{agrawal1993mining}, the latter of which is the approach used in this thesis. Within both learning classifier systems and association rule mining a single rule is not in itself a model. It is merely a if-then statement that .... TODO continue https://youtu.be/CRge_cZ2cJc?t=120
+Classically, a rule is comprised of a condition and consequent, or a so-called "if-then" statement. \begin{center} \textbf{IF} \textit{'the condition is met'} \textbf{THEN} \textit{'the consequent holds'} \end{center}
+The condition of the rule specifies attributes in the data on which the rule will be applied. If these attributes are present in this data, the condition is met. Once the condition for the rule is met, the attributes in the consequent should neccesarily also be met.
 
+\begin{equation}
+hasSibling(x, y) \Rightarrow hasSibling(y,x)
+\label{example_rule_1}
+\end{equation}
+\begin{equation}
+    hasSibling(x, y) \Rightarrow hasMother(x,z) \Rightarrow hasMOther(x, z)
+    \label{example_rule_2}
+\end{equation}
+\begin{lstlisting}[caption={Simple example knowledge base},captionpos=b, label={simple_kb_example}]
+<Ann> <hasMother> <Carol>
+<Ann> <hasSibling> <Bob>
+<Bob> <hasSibling> <Ann>
+\end{lstlisting}
+Consider the two rules and knowledge base given above. Under this knowledge base the antecedent of the first rule is satisfied by both triple 2 and 3. The resulting consequent of rule \ref{example_rule_1} is also present in the knowledge base. So the reflexivity of the $hasSibling$ predicate holds in this knowledge base. The antecendent of the second rule is satisfied by triples 1 and 2 in the knowledge base, but the resulting consquent would then be $hasMother(Bob, Carol)$. Since \texttt{<BoB> <hasMother> <Carol>} is not present in the knowledge base, rule \ref{example_rule_2} does not hold. If we know that this rule is reliable, we could for example extend the incomplete knowledge base with this triple.
 
-
-
-
+Within rule-based machine learning there are many different approaches including learning classifier systems\cite{sigaud2007learning} and association rule mining\cite{agrawal1993mining}, the latter of which is the approach used in this thesis. Bpth approaches aim to create a set of rules to act as a model for a set of data. The association rule mining approach will now be explained further.
 
 
 \subsection{Association Rule Mining}
@@ -57,6 +70,18 @@ The goal is to find formal rules that make true predictions that go beyond the e
 
 
 Support and confidence were originally proposed as relevance and quality measurements for this type of rule mining, but as explained in \todo{PCA m8} this is not adequate when working with datasets in the form of knowledge graphs.
+
+\[supp(\vec{B}\Rightarrow r(x, y)) :=  \# (x, y) : \exists z_1 , ...,z_m : \vec{B} \wedge r(x, y)\]
+
+\[hc(\vec{B}\Rightarrow r(x, y)) := \frac{supp(\vec{B}\Rightarrow r(x, y)}{ \#(x', y'):r(x', y'))}\]
+
+\[conf(\vec{B}\Rightarrow r(x, y)) := \frac{supp(\vec{B}\Rightarrow r(x, y)}{\#(x, y):\exists z_1 ,..., z_m : \vec{B}}\]
+
+Partial completeness
+\[\forall y' : r(x, y') \in KBtrue \cup NEWtrue \Rightarrow r(x, y') \in KBtrue\]
+
+\[pcaconf(\vec{B}\Rightarrow r(x, y)) := \frac{supp(\vec{B}\Rightarrow r(x, y)}{\#(x, y):\exists z_1 ,..., z_m, y' : \vec{B} \wedge r(x, y')}\]
+
 
 \subsection{AMIE+}
 
