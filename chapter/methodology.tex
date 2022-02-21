@@ -171,8 +171,10 @@ Once the entities were selected, all possible triples were generated with them a
 As discussed in (TODO: add section) it is not easy to set a relative score to a triple, based on a KG embedding. Therefore candidate triples are ranked against corrupted triples. An accurate KG embedding model will rank well-suited candidates higher than the corrupted triples. Since only one side of each triple is corrupted at a time, the corrupted triples generated are compliant with the local closed world assumption. AmpliGraph's function \texttt{evaluate\_performance} evaluates the performance of a trained KG embedding model by ranking a set of test triples from the KG against a set of corrupted triples. One then evaluated the embedding model based on how good it is at ranking the positive test triples higher than the negative corrupted triples. By instead passing the set of candidate triples to \texttt{evaluate\_performance} these could be ranked instead. Once the candidates have been given ranks one simply needs to decide on a cutoff rank to consider the candidate as a true positive and add it to the KG.
 
 
-
-
-
-
 \section{Rule mining and evaluation}
+Rules are mined using the rule mining algorithm AMIE+. Default settings for amie mentioned in paper?????
+Rules are mined on both the original KGs and the extended data
+
+
+\section{Additional experimental setup details}
+The experiments were run on a server with 64 GB of RAM and an Intel Core i9-7900X 3.3GHz processor.
