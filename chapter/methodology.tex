@@ -65,10 +65,10 @@ represents the information that the synset \texttt{cat} is a hypernym of the syn
 \caption{Frequency of relations in WN18RR KG and whether they were included in the final KG}
 \end{table}
 
-WN18RR was chosen because the number of relations needed to be limited, and with a dataset already containing few relations most of it could be included. By taking all triples containing one of the six most frequent relations, in total 88227 datapoints, 95\% of WN18RR was used. This was intended to produce a more complete KG. For the experiments Ampligraph's distribution of the dataset was used \cite{ampligraph}.
+WN18RR was chosen because the number of relations needed to be limited, and with a dataset already containing few relations most of it could be included. By taking all triples containing one of the six most frequent relations, in total 88227 datapoints, 95\% of WN18RR was used. This was intended to produce a more complete KG. For the experiments AmpliGraph's distribution of the dataset was used \cite{ampligraph}.
 
 \section{KG embeddings}
-The library Ampligraph was used for the KG embedding models. Ampligraph is an open source library based on Tensorflow. The library provides many different KG embedding models, metric calculators and also allows for the prediction of new triples in KGs. Three different KG embedding methods were selected: TransE, DistMult and ComplEx. Ampligraph also provides a baseline model, which the three selected models were compared to. 
+The library AmpliGraph was used for the KG embedding models. AmpliGraph is an open source library based on Tensorflow. The library provides many different KG embedding models, metric calculators and also allows for the prediction of new triples in KGs. Three different KG embedding methods were selected: TransE, DistMult and ComplEx. AmpliGraph also provides a baseline model, which the three selected models were compared to. 
 
 Each embedding model has a number of hyperparameters that could be optimised. As the search space grows it has been shown that random search is more optimal than grid search, where each combination needs to be tested \cite{bergstra2012random}. Due to limited computational resources, this approach to hyperparameter optimisation was selected. It is not an optimal approach, but serves as a practical and effective solution that measures well against more sophisticated methods such as Baysian optimisation \cite{li2017hyperband}.
 
@@ -78,21 +78,61 @@ Each embedding model has a number of hyperparameters that could be optimised. As
 \hline
 \textbf{Hyperparameter}      & \textbf{Values}             \\ \hline
 Batches count       & 50, 100                              \\ \hline
-Epocs               & 10, 50, 100                          \\ \hline
-k                   & 10, 50, 100, 200                     \\ \hline
+Epocs               & 50, 100                          \\ \hline
+k                   & 50, 100, 200                     \\ \hline
 eta                 & 5, 10, 15                            \\ \hline
 Pairwise loss margin    & 0.5, 1, 2                    \\ \hline
-Regularizer         & LP, None                             \\ \hline
+%Regularizer         & LP                             \\ \hline
 %Learning rate       & Random number in range(0.0001, 0.01) \\ \hline
 \end{tabular}
 %\label{{hyperparameter_table}
 \caption{Hyperparameter values to search through in model selection.}
 \end{table}
 
-The Ampligraph documentation was a main inspriation when deciding which hyperparameters to focus on. It was for example stated in the documentation that they recieved the best results with the adam optimizer, therefore other optimisers were not considered in the hyperparameter search \cite{ampligraph_documentation}. Since pairwise hinge loss has been shown to be an adequate loss function for both TransE, DistMult and ComplEx, it was chosen and other functions were not explored in the hyperparameter search \cite{mohamed2019loss}. Different values for the  pairwise loss margin were however included in the search. At the end of each model selection process, the final model for each embedding type is retrained on the combined train and validation set, before it is eventually evaluated on the test set.
+The AmpliGraph documentation was a main inspriation when deciding which hyperparameters to focus on. It was for example stated in the documentation that they recieved the best results with the adam optimizer, therefore other optimisers were not considered in the hyperparameter search \cite{ampligraph_documentation}. Since pairwise hinge loss has been shown to be an adequate loss function for both TransE, DistMult and ComplEx, it was chosen and other functions were not explored in the hyperparameter search \cite{mohamed2019loss}. Different values for the  pairwise loss margin were however included in the search. For each hyperparameter combination a learning rate randomly chosen in the range of 0.0001 - 0.01 was selected. 
+
+For the implementation of model selection AmpliGraph's \texttt{select\_best\_mode\_ranking} was used. It is a model selection routine that allows for both grid and random search. At the end of each model selection process, the final model for each embedding type is retrained on the concatenation of the train and validation set, before it is eventually evaluated on the test set. As the training data only contains positive examples, negative ones are generated. The \texttt{eta} hyperparameter denotes the number of negative examples generates at training for each positive example. In the training process corrupted triples are generated according to the strategy proposed on the paper in which TransE was introduced \cite{TransE}. This approach takes valid triples and replaces either the head or tail (but not both) with a random entity.
+
+\subsection{Model selection results}
+% Please add the following required packages to your document preamble:
+% \usepackage{multirow}
+% \usepackage[normalem]{ulem}
+% \useunder{\uline}{\ul}{}
+\begin{table}[]
+\centering
+\begin{tabular}{|l||ccccc||ccccc|}
+\hline
+{\textbf{DATASET}}                 & \multicolumn{5}{c||}{\textbf{WN18RR}}                                                                                                                                               & \multicolumn{5}{c|}{\textbf{Family KG}}                                                                                                                            \\ \hline
+\multirow{2}{*}{{\textbf{METRIC}}} & \multicolumn{1}{c|}{\multirow{2}{*}{\textbf{MR}}} & \multicolumn{1}{c|}{\multirow{2}{*}{\textbf{MRR}}} & \multicolumn{3}{c||}{\textbf{Hits@}}                                       & \multicolumn{1}{c|}{\multirow{2}{*}{\textbf{MR}}} & \multicolumn{1}{c|}{\multirow{2}{*}{\textbf{MRR}}} & \multicolumn{3}{c|}{\textbf{Hits@}}                                       \\ \cline{4-6} \cline{9-11} 
+                                       & \multicolumn{1}{c|}{}                             & \multicolumn{1}{c|}{}                              & \multicolumn{1}{l|}{\textbf{1}} & \multicolumn{1}{l|}{\textbf{3}} & \multicolumn{1}{l||}{\textbf{10}} & \multicolumn{1}{c|}{}                             & \multicolumn{1}{c|}{}                              & \multicolumn{1}{l|}{\textbf{1}} & \multicolumn{1}{l|}{\textbf{3}} & \multicolumn{1}{l|}{\textbf{10}} \\ \hline
+\textbf{Baseline}                      & 1                                                 & 1                                                  & 1                      & 1                      & 1                       & 1                                                 & 1                                                  & 1                      & 1                      & 1                       \\ 
+\textbf{TransE}                        & 1                                                  & 1                                                  & 1                      & 1                      & 1                       & 1                                                 & 1                                                  & 1                      & 1                      & 1                       \\ 
+\textbf{DistMult}                      & 1                                                 & 1                                                  & 1                      & 1                      & 1                       & 1                                                 & 1                                                  & 1                      & 1                      & 1                       \\ 
+\textbf{ComplEx}                       & 1                                                 & 1                                                  & 1                      & 1                      & 1                       & 1                                                 & 1                                                  & 1                      & 1                      & 1                       \\ \hline
+\end{tabular}
+\caption{Results of selected models evaluated on test set.}
+\end{table}
+
+\begin{figure}[htp]
+    \centering
+    \includegraphics[width=12cm]{figures/model_selection/family_scores_1.png}
+    \caption{KB prediction under incompleteness}
+\end{figure}
 
 
-%eta (int) – The number of negatives that must be generated at runtime during training for each positive.
+\begin{figure}[htp]
+    \centering
+    \includegraphics[width=12cm]{figures/model_selection/family_scores_0.png}
+    \caption{KB prediction under incompleteness}
+\end{figure}
+
+
+\begin{figure}[htp]
+    \centering
+    \includegraphics[width=12cm]{figures/model_selection/family_hit_scores.png}
+    \caption{KB prediction under incompleteness}
+\end{figure}
+
 
 %epochs (int) – The iterations of the training loop.
 
@@ -102,6 +142,7 @@ The Ampligraph documentation was a main inspriation when deciding which hyperpar
 
 %loss : pairwise loss, with a margin of 0.5 set via the loss_params kwarg.
 
+TODO: add results and write about them
 
 
 \section{Candidate generation and ranking}
