@@ -172,9 +172,12 @@ As discussed in (TODO: add section) it is not easy to set a relative score to a 
 
 
 \section{Rule mining and evaluation}
-Rules are mined using the rule mining algorithm AMIE+. Default settings for amie mentioned in paper?????
-Rules are mined on both the original KGs and the extended data
+Rules are mined using the rule mining algorithm AMIE3 \cite{amie3}. The authors of AMIE3 have made an implementation of it available on \hyperlink{https://github.com/lajus/amie}{GitHub}. It is released as a executable jar file that takes a KG in TSV format as input and produces rules accompanied with various confidence scores. The jar file in release 3.0 was used for rule mining. It was run using the default settings used in the AMIE3 paper by Lajus et al\cite{amie3}. Since default settings change, the exact command used for rule mining was: \texttt{java -jar amie-milestone-intKB.jar -bias lazy -full -noHeuristics -ostd [TSV file]}. This was run in a directory where both the \texttt{amie-milestone-intKB.jar} and the KG file are located.
+
+
 
 
 \section{Additional experimental setup details}
 The experiments were run on a server with 64 GB of RAM and an Intel Core i9-7900X 3.3GHz processor.
+
+The implementation of AMIE used in this thesis is distributed under the \hyperlink{https://creativecommons.org/licenses/by-nc/3.0/}{Creative Commons Attribution-NonComercial license v3.0} by the \hyperlink{https://www.mpi-inf.mpg.de/departments/databases-and-information-systems/research/yago-naga/amie/}{YAGO-NAGA team} and the \hyperlink{https://dig.telecom-paris.fr/blog/}{DIG team}. The program uses Javatools, a library released under the \hyperlink{https://creativecommons.org/licenses/by/3.0/}{Creative Commons Attribution license v3.0} by the \hyperlink{https://www.mpi-inf.mpg.de/departments/databases-and-information-systems/research/yago-naga/amie/}{YAGO-NAGA team}.
