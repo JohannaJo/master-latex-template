@@ -91,7 +91,7 @@ Pairwise loss margin    & 0.5, 1, 2                    \\ \hline
 
 The AmpliGraph documentation was a main inspriation when deciding which hyperparameters to focus on. It was for example stated in the documentation that they recieved the best results with the adam optimizer, therefore other optimisers were not considered in the hyperparameter search \cite{ampligraph_documentation}. Since pairwise hinge loss has been shown to be an adequate loss function for both TransE, DistMult and ComplEx, it was chosen and other functions were not explored in the hyperparameter search \cite{mohamed2019loss}. Different values for the  pairwise loss margin were however included in the search. For each hyperparameter combination a learning rate randomly chosen in the range of 0.0001 - 0.01 was selected. 
 
-For the implementation of model selection AmpliGraph's \texttt{select\_best\_mode\_ranking} was used. It is a model selection routine that allows for both grid and random search. At the end of each model selection process, the final model for each embedding type is retrained on the concatenation of the train and validation set, before it is eventually evaluated on the test set. As the training data only contains positive examples, negative ones are generated. The \texttt{eta} hyperparameter denotes the number of negative examples generates at training for each positive example. In the training process corrupted triples are generated according to the strategy proposed on the paper in which TransE was introduced \cite{TransE}. This approach takes valid triples and replaces either the head or tail (but not both) with a random entity.
+For the implementation of model selection AmpliGraph's \texttt{select\_best\_mode\_ranking} was used. It is a model selection routine that allows for both grid and random search. At the end of each model selection process, the final model for each embedding type is retrained on the concatenation of the train and validation set, before it is eventually evaluated on the test set. As the training data only contains positive examples, negative ones are generated. The \texttt{eta} hyperparameter denotes the number of negative examples generates at training for each positive example. In the training process corrupted triples are generated according to the strategy proposed on the paper in which TransE was introduced \cite{TransE}. This approach takes valid triples and replaces either the head or tail (but not both) with a random entity. TODO: remove, this has been written about(?)
 
 \subsection{Model selection results}
 % Please add the following required packages to your document preamble:
@@ -144,8 +144,34 @@ For the implementation of model selection AmpliGraph's \texttt{select\_best\_mod
 
 TODO: add results and write about them
 
+\newpage
 
-\section{Candidate generation and ranking}
+\section{KG extension}
+
+The goal of KG extension is to add potentially true statements to the original KG. AmpliGraph does have an implementation for this, called \texttt{discover\_facts}, but for technical reasons it could not be used. The implementation used in this thesis does however follow the same strategy used in \texttt{discover\_facts}. It consists of two main parts:
+\begin{enumerate}
+    \item Candidate triple generation
+    \item Ranking of generated candidates
+\end{enumerate}
+Once one has a set of ranked candidate triples all that remains is to decide what the minimum rank should be for a candidate to be added to the KG.
+
+
+\subsection{Candidate triple generation}
+Both WN18RR and the family KG contain too many entities for it to be possible to consider all possible triples when extending the KB. TODO: add exact numbers. There are only 6 types of relations in each dataset, but WN18RR and the family KG contain X and Y entities respectively. Therefore only a small subset of these entities can be included in the candidate generation. Four approaches were tested:
+\begin{itemize}
+    \item random selection
+    \item the most frequent entities
+    \item the least frequent entities
+    \item probabilistic selection based on the frequency of the entities in the dataset
+\end{itemize}
+Once the entities were selected, all possible triples were generated with them and the six relations. The resulting candidate triples were then filtered such that no triples already included in the original KG also were candidates to the extension. Of course the more triples that are considered for the extension, the better the extension will be, but again computational limitations restricted this. After trying different candidate set sizes it was eventually decided that selecting 1000 entities for candidate triple generation was a feasible number. This meant that $ 1000 \times 6 \times 1000 = 6 \times 10^6 $ triples (minus those that already appeared in the KB) were considered for each KG extension.
+
+
+\subsection{Candidate triple ranking}
+As discussed in (TODO: add section) it is not easy to set a relative score to a triple, based on a KG embedding. Therefore candidate triples are ranked against corrupted triples. An accurate KG embedding model will rank well-suited candidates higher than the corrupted triples. Since only one side of each triple is corrupted at a time, the corrupted triples generated are compliant with the local closed world assumption. AmpliGraph's function \texttt{evaluate\_performance} evaluates the performance of a trained KG embedding model by ranking a set of test triples from the KG against a set of corrupted triples. One then evaluated the embedding model based on how good it is at ranking the positive test triples higher than the negative corrupted triples. By instead passing the set of candidate triples to \texttt{evaluate\_performance} these could be ranked instead. Once the candidates have been given ranks one simply needs to decide on a cutoff rank to consider the candidate as a true positive and add it to the KG.
+
+
+
 
 
 
