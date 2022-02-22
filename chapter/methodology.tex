@@ -2,18 +2,11 @@
 
 \begin{figure}[htp]
     \centering
-    \includegraphics[width=10cm]{figures/kb_venn.png}
-    \caption{KB prediction under incompleteness}
+    \includegraphics[width=16cm]{figures/ontology_mining_pipeline.jpg}
+    \caption{Diagram representing KG extension and rule mining pipeline.}
 \end{figure}
 
-\begin{figure}[htp]
-    \centering
-    \includegraphics[width=12cm]{figures/ontology_mining_pipeline.jpg}
-    \caption{KB prediction under incompleteness}
-\end{figure}
-
-
-TODO: write about your config file.
+The process starts with a KG, from which we want to mine rules, extend with new triples, and then mine rules again on the extended version. From the KG one selects entities through some selection process, and uses these entities to create all possible triple combinations with the relations used in the KG. Once this set of candidate triples has been generated one needs to some way to select the best of these so that only those are added to the KG. While there is no direct way to give a relative score to these triples, a KG embedding trained on the original KG can rank the candidate triples against a set of corrupted triple. With the candidates ranked, one can accept all those that have a better rank than some appropriately chosen cutoff, and add them to the KG. Then rules can be mined and evaluated on both the original and extended KG, and results compared. This chapter will explain the components of this pipeline in more detail.
 
 \section{Knowledge Graph Datasets}
 While there are many large KGs publicly available, they are often quite complex in the number of different relations and entities used. Since we are mining rules over relations, the relational aspect of the KGs used was kept simple. By limiting the number of relations used in the KGs the resulting rules mined won't be overly diverse, and therefore easier for a human to understand evaluate. Two different datasets were used to conduct the experiments, both of which had been limited to contain only six different types of relations.
