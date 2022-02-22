@@ -81,6 +81,7 @@ Batches count       & 50, 100                              \\ \hline
 Epocs               & 50, 100                          \\ \hline
 k                   & 50, 100, 200                     \\ \hline
 eta                 & 5, 10, 15                            \\ \hline
+Loss function   & Pairwise, nll                         \\ \hline
 Pairwise loss margin    & 0.5, 1, 2                    \\ \hline
 %Regularizer         & LP                             \\ \hline
 %Learning rate       & Random number in range(0.0001, 0.01) \\ \hline
@@ -88,10 +89,9 @@ Pairwise loss margin    & 0.5, 1, 2                    \\ \hline
 %\label{{hyperparameter_table}
 \caption{Hyperparameter values to search through in model selection.}
 \end{table}
+The AmpliGraph documentation was a main inspiration when deciding which hyperparameters to focus on. It was for example stated in the documentation that they recieved the best results with the adam optimizer, therefore other optimisers were not considered in the hyperparameter search \cite{ampligraph_documentation}. For each hyperparameter combination a learning rate randomly chosen in the range of 0.0001 - 0.01 was selected. 
 
-The AmpliGraph documentation was a main inspriation when deciding which hyperparameters to focus on. It was for example stated in the documentation that they recieved the best results with the adam optimizer, therefore other optimisers were not considered in the hyperparameter search \cite{ampligraph_documentation}. Since pairwise hinge loss has been shown to be an adequate loss function for both TransE, DistMult and ComplEx, it was chosen and other functions were not explored in the hyperparameter search \cite{mohamed2019loss}. Different values for the  pairwise loss margin were however included in the search. For each hyperparameter combination a learning rate randomly chosen in the range of 0.0001 - 0.01 was selected. 
-
-For the implementation of model selection AmpliGraph's \texttt{select\_best\_mode\_ranking} was used. It is a model selection routine that allows for both grid and random search. At the end of each model selection process, the final model for each embedding type is retrained on the concatenation of the train and validation set, before it is eventually evaluated on the test set. As the training data only contains positive examples, negative ones are generated. The \texttt{eta} hyperparameter denotes the number of negative examples generates at training for each positive example. In the training process corrupted triples are generated according to the strategy proposed on the paper in which TransE was introduced \cite{TransE}. This approach takes valid triples and replaces either the head or tail (but not both) with a random entity. TODO: remove, this has been written about(?)
+For the implementation of model selection AmpliGraph's \texttt{select\_best\_mode\_ranking} was used. It is a model selection routine that allows for both grid and random search. At the end of each model selection process, the final model for each embedding type is retrained on the concatenation of the train and validation set, before it is eventually evaluated on the test set. As the training data only contains positive examples, negative ones are generated. The \texttt{eta} hyperparameter denotes the number of negative examples generates at training for each positive example. In the training process corrupted triples are generated according to the strategy proposed by Bordes et al, which maintains the local closed world assumption \cite{TransE}.
 
 \subsection{Model selection results}
 % Please add the following required packages to your document preamble:
@@ -172,9 +172,25 @@ As discussed in (TODO: add section) it is not easy to set a relative score to a 
 
 
 \section{Rule mining and evaluation}
-Rules are mined using the rule mining algorithm AMIE3 \cite{amie3}. The authors of AMIE3 have made an implementation of it available on \hyperlink{https://github.com/lajus/amie}{GitHub}. It is released as a executable jar file that takes a KG in TSV format as input and produces rules accompanied with various confidence scores. The jar file in release 3.0 was used for rule mining. It was run using the default settings used in the AMIE3 paper by Lajus et al\cite{amie3}. Since default settings change, the exact command used for rule mining was: \texttt{java -jar amie-milestone-intKB.jar -bias lazy -full -noHeuristics -ostd [TSV file]}. This was run in a directory where both the \texttt{amie-milestone-intKB.jar} and the KG file are located.
+Rules are mined using the rule mining algorithm AMIE3 \cite{amie3}. The authors of AMIE3 have made an implementation of it available on \hyperlink{https://github.com/lajus/amie}{GitHub}. It is released as a executable jar file that takes a KG in TSV format as input and produces rules accompanied with various confidence scores. The jar file in release 3.0 was used for rule mining. It was run using the default settings used in the AMIE3 paper by Lajus et al\cite{amie3}. Since default settings change, the exact command used for rule mining was: \texttt{java -jar amie-milestone-intKB.jar -bias lazy -full -noHeuristics -ostd [TSV file]}. This was run in a directory where both the \texttt{amie-milestone-intKB.jar} and the TSV file are located.
 
+As previously mentioned, the implementation of AMIE3 outputs the rules accompanied with confidence scores. The problem is that the scores are calculated on the same dataset on which the rules have been mined on. Since these datasets have been extended they may contain datapoints that are false positives, leading to evaluation based on erroneous data. New rules that follow this incorrect data will therefore possibly receive high scores in spite of the fact that they do not make sense in the given context. To amend this problem all mined rules are also evaluated on the original KG. This was not previously available in any release of AMIE3, which only allows rule evaluation in combination with rule mining, on the dataset from which the rules are being mined. Evaluation of rules on a custom KG was not possible until one of the authors, Jonathan Lajus, was kind enough to add a script to do exactly this.
 
+The final result was that each rule had two different sets of confidence scores, one evaluated on the original KG and the other on the extended KG. On addition to scores, each rule was also accompanied by information around how the KG was extended, so entity selection method, model used to rank candidates and rank. cutoff value. In summary, the output data points in the rule mining and evaluation process had these features:
+\begin{itemize}
+    \item Rule
+    \item Metrics
+        \subitem Head Coverage (extended and original KG)
+        \subitem PCA Confidence (extended and original KG)
+        \subitem Positive Examples (extended and original KG)
+        \subitem PCA body size (extended and original KG)
+    \item Parameters
+        \subitem Entity seleciton method
+        \subitem KG embedding model
+        \subitem Rank cutoff
+\end{itemize}
+
+With this information one can look at the effect the parameters have on the number of rules mined and how the measured confidence differs when calculated on the extended KG versus the original KG.
 
 
 \section{Additional experimental setup details}
