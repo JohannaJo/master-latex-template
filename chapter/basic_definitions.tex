@@ -55,11 +55,15 @@ In this thesis we will loosely follow the Resource Description Framework (RDF) s
 \end{figure}
 
 With this type of data organisation one can for example query for a list of all people who own cats in the dataset. 
-\subsection{Open versus closed world assumption}
+\subsection{Open versus Closed World Assumption}
+KGs contain only true facts. By the \textit{closed world assumption } (CWA) all facts not present in the KG are considered false. For example, by the KG in figure \ref{fig:KGexample} the statement \texttt{<Ann> <has sibling> <Bob>} is false under the CWA, as it is not present in the KG. Bob is not the sibling of Ann. The \textit{open world assumption} OWA makes no such claims and  the validity of triple not present in the KG is considered unknown. In the above example Bob is therefore neither considered a sibling of Ann nor not a sibling of Ann.
+
+In the context of KGs the OWA is often more justified, as most large interesting KGs are far from complete. For example, the KG Wikidata5M does not contain information the national bird of countries. This of course does not mean that the statement "The kiwi is the national bird of New Zealand" is any less true. The information has simply not been included in the KG. Another example is Freebase, the precursor to Wikidata, in which 71\% is people listed had the place-of-birth attribute missing. In section (TODO: add section) the local closed world assumption is described, another paradigm that is used when training knowledge graph embeddings.
+
 
 \section{Knowledge Graph Embeddings}
 Let a KG be defined as a set of triples $\mathcal{K}={<h, r, t>}$, where $h, r, t$ respectively denote the head entity, relation and tail entity. To simplify the explanation we let the dimension of entities \emph{and} relations in the embedding space to be $d$.
-Given $\mathcal{K}$ and $d$, a KG embedding seeks to represent all entities and relations in the continuous vector space of $d$ dimensions. These representations are meant to capture the semantic information in the graph. An embedding that manages this can then be used to evaluate the probability of new facts (link prediction) and identify false information in $\mathcal{K}$.
+Given $\mathcal{K}$ and $d$, a KG embedding seeks to represent all entities and relations in the continuous vector space of $d$ dimensions. These representations are meant to capture the semantic information in the graph. An embedding that manages this can then be used to evaluate the probability of new facts and identify false information in $\mathcal{K}$, two tasks respectively called \textit{link prediction} and \textit{triple classification}.
 
 
 
@@ -76,6 +80,8 @@ Let $\mathcal{K}$ be KG with triples of the form $<h, r, t>$ with $r\in \mathbb{
 \textbf{Metrics}
 
     Ranking triples
+    
+\subsection{Performance indicators}
 
     MR
 

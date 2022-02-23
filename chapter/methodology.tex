@@ -65,7 +65,7 @@ The library AmpliGraph was used for the KG embedding models. AmpliGraph is an op
 
 Each embedding model has a number of hyperparameters that could be optimised. As the search space grows it has been shown that random search is more optimal than grid search, where each combination needs to be tested \cite{bergstra2012random}. Due to limited computational resources, this approach to hyperparameter optimisation was selected. It is not an optimal approach, but serves as a practical and effective solution that measures well against more sophisticated methods such as Baysian optimisation \cite{li2017hyperband}.
 
-\begin{table}[]
+\begin{table}[h]
 \centering
 \begin{tabular}{|l|l|}
 \hline
@@ -86,44 +86,65 @@ The AmpliGraph documentation was a main inspiration when deciding which hyperpar
 
 For the implementation of model selection AmpliGraph's \texttt{select\_best\_mode\_ranking} was used. It is a model selection routine that allows for both grid and random search. At the end of each model selection process, the final model for each embedding type is retrained on the concatenation of the train and validation set, before it is eventually evaluated on the test set. As the training data only contains positive examples, negative ones are generated. The \texttt{eta} hyperparameter denotes the number of negative examples generates at training for each positive example. In the training process corrupted triples are generated according to the strategy proposed by Bordes et al, which maintains the local closed world assumption \cite{TransE}.
 
+
 \subsection{Model selection results}
+The final model of all three embedding architectures had good results on the WN18RR dataset, and even better results on the family KG. Each model had an MRR score above 0.9 on the family KG and around 0.6 on the WN18RR. TransE seemed to perform slightly worse than DisMult and ComplEx on the family KG. On the WN18RR dataset TransE performed slighly worse at hits@1, while it outperformed both DistMult and ComplEx in both hist@3 and hits@10.
+
+
 % Please add the following required packages to your document preamble:
 % \usepackage{multirow}
 % \usepackage[normalem]{ulem}
 % \useunder{\uline}{\ul}{}
-\begin{table}[]
+\begin{table}[h]
 \centering
 \begin{tabular}{|l||ccccc||ccccc|}
 \hline
 {\textbf{DATASET}}                 & \multicolumn{5}{c||}{\textbf{WN18RR}}                                                                                                                                               & \multicolumn{5}{c|}{\textbf{Family KG}}                                                                                                                            \\ \hline
 \multirow{2}{*}{{\textbf{METRIC}}} & \multicolumn{1}{c|}{\multirow{2}{*}{\textbf{MR}}} & \multicolumn{1}{c|}{\multirow{2}{*}{\textbf{MRR}}} & \multicolumn{3}{c||}{\textbf{Hits@}}                                       & \multicolumn{1}{c|}{\multirow{2}{*}{\textbf{MR}}} & \multicolumn{1}{c|}{\multirow{2}{*}{\textbf{MRR}}} & \multicolumn{3}{c|}{\textbf{Hits@}}                                       \\ \cline{4-6} \cline{9-11} 
                                        & \multicolumn{1}{c|}{}                             & \multicolumn{1}{c|}{}                              & \multicolumn{1}{l|}{\textbf{1}} & \multicolumn{1}{l|}{\textbf{3}} & \multicolumn{1}{l||}{\textbf{10}} & \multicolumn{1}{c|}{}                             & \multicolumn{1}{c|}{}                              & \multicolumn{1}{l|}{\textbf{1}} & \multicolumn{1}{l|}{\textbf{3}} & \multicolumn{1}{l|}{\textbf{10}} \\ \hline
-\textbf{Baseline}                      & 1                                                 & 1                                                  & 1                      & 1                      & 1                       & 1                                                 & 1                                                  & 1                      & 1                      & 1                       \\ 
-\textbf{TransE}                        & 1                                                  & 1                                                  & 1                      & 1                      & 1                       & 1                                                 & 1                                                  & 1                      & 1                      & 1                       \\ 
-\textbf{DistMult}                      & 1                                                 & 1                                                  & 1                      & 1                      & 1                       & 1                                                 & 1                                                  & 1                      & 1                      & 1                       \\ 
-\textbf{ComplEx}                       & 1                                                 & 1                                                  & 1                      & 1                      & 1                       & 1                                                 & 1                                                  & 1                      & 1                      & 1                       \\ \hline
+\textbf{Baseline}       & 495.32     & 0.007      & 0     & 0       & 0.01        & 498.72       & 0     & 0       & 0       & 0.1      \\ 
+\textbf{TransE}  & 34.29  & 0.60       & 0.51                     & 0.66    & 0.76 & 2.59     & 0.93  &0.88  & 0.97   & 0.99   \\ 
+\textbf{DistMult}      & 152.37  & 0.62    & 0.59   & 0.63      & 0.66   & 7.45    & 0.98     & 0.98    & 0.99   & 0.99    \\ 
+\textbf{ComplEx}        & 139.36    & 0.59      & 0.57      & 0.60      & 0.63      & 4.64     & 0.99     & 0.98     & 0.99      & 0.99  \\ \hline
 \end{tabular}
 \caption{Results of selected models evaluated on test set.}
 \end{table}
 
-\begin{figure}[htp]
-    \centering
-    \includegraphics[width=12cm]{figures/model_selection/family_scores_1.png}
-    \caption{KB prediction under incompleteness}
+
+\begin{figure}[h]
+\centering
+\begin{subfigure}{.5\textwidth}
+  \centering
+  \includegraphics[width=1\linewidth]{figures/model_selection/family_mrr.png}
+  \caption{MRR scores}
+  \label{fig:sub1}
+\end{subfigure}%
+\begin{subfigure}{.5\textwidth}
+  \centering
+  \includegraphics[width=1\linewidth]{figures/model_selection/family_hit_scores.png}
+  \caption{Hits@n scores}
+  \label{fig:sub2}
+\end{subfigure}
+\caption{KG embedding test performance results for Wikidata5M (family KG)}
+\label{fig:test}
 \end{figure}
 
-
-\begin{figure}[htp]
-    \centering
-    \includegraphics[width=12cm]{figures/model_selection/family_scores_0.png}
-    \caption{KB prediction under incompleteness}
-\end{figure}
-
-
-\begin{figure}[htp]
-    \centering
-    \includegraphics[width=12cm]{figures/model_selection/family_hit_scores.png}
-    \caption{KB prediction under incompleteness}
+\begin{figure}[h]
+\centering
+\begin{subfigure}{.5\textwidth}
+  \centering
+  \includegraphics[width=1\linewidth]{figures/model_selection/wn18rr_mrr.png}
+  \caption{MRR scores}
+  \label{fig:sub1}
+\end{subfigure}%
+\begin{subfigure}{.5\textwidth}
+  \centering
+  \includegraphics[width=1\linewidth]{figures/model_selection/wn18rr_hit_scores.png}
+  \caption{Hits@n scores}
+  \label{fig:sub2}
+\end{subfigure}
+\caption{KG embedding test performance results for WN18RR}
+\label{fig:test}
 \end{figure}
 
 
@@ -134,8 +155,6 @@ For the implementation of model selection AmpliGraph's \texttt{select\_best\_mod
 %k (int) – Embedding space dimensionality.
 
 %loss : pairwise loss, with a margin of 0.5 set via the loss_params kwarg.
-
-TODO: add results and write about them
 
 \newpage
 
@@ -165,7 +184,7 @@ As discussed in (TODO: add section) it is not easy to set a relative score to a 
 
 
 \section{Rule mining and evaluation}
-Rules are mined using the rule mining algorithm AMIE3 \cite{amie3}. The authors of AMIE3 have made an implementation of it available on \hyperlink{https://github.com/lajus/amie}{GitHub}. It is released as a executable jar file that takes a KG in TSV format as input and produces rules accompanied with various confidence scores. The jar file in release 3.0 was used for rule mining. It was run using the default settings used in the AMIE3 paper by Lajus et al\cite{amie3}. Since default settings change, the exact command used for rule mining was: \texttt{java -jar amie-milestone-intKB.jar -bias lazy -full -noHeuristics -ostd [TSV file]}. This was run in a directory where both the \texttt{amie-milestone-intKB.jar} and the TSV file are located.
+Rules are mined using the rule mining algorithm AMIE3 \cite{amie3}. The authors of AMIE3 have made an implementation of it available on \hyperlink{https://github.com/lajus/amie}{GitHub}. It is released as a executable jar file that takes a KG in TSV format as input and produces rules accompanied with various confidence scores. The jar file in release 3.0 was used for rule mining. It was run using the default settings used in the AMIE3 paper by Lajus et al\cite{amie3}. Since default settings change, the exact command used for rule mining was: \texttt{java -jar amie-milestone-intKB.jar -bias lazy -full -noHeuristics -ostd [TSV file]}. This was run in a directory where both the executable jar file and the TSV file are located.
 
 As previously mentioned, the implementation of AMIE3 outputs the rules accompanied with confidence scores. The problem is that the scores are calculated on the same dataset on which the rules have been mined on. Since these datasets have been extended they may contain datapoints that are false positives, leading to evaluation based on erroneous data. New rules that follow this incorrect data will therefore possibly receive high scores in spite of the fact that they do not make sense in the given context. To amend this problem all mined rules are also evaluated on the original KG. This was not previously available in any release of AMIE3, which only allows rule evaluation in combination with rule mining, on the dataset from which the rules are being mined. Evaluation of rules on a custom KG was not possible until one of the authors, Jonathan Lajus, was kind enough to add a script to do exactly this.
 
