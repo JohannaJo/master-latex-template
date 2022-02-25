@@ -6,10 +6,12 @@
     \caption{Diagram representing KG extension and rule mining pipeline.}
 \end{figure}
 
-The process starts with a KG, from which we want to mine rules, extend with new triples, and then mine rules again on the extended version. From the KG one selects entities through some selection process, and uses these entities to create all possible triple combinations with the relations used in the KG. Once this set of candidate triples has been generated one needs to some way to select the best of these so that only those are added to the KG. While there is no direct way to give a relative score to these triples, a KG embedding trained on the original KG can rank the candidate triples against a set of corrupted triple. With the candidates ranked, one can accept all those that have a better rank than some appropriately chosen cutoff, and add them to the KG. Then rules can be mined and evaluated on both the original and extended KG, and results compared. This chapter will explain the components of this pipeline in more detail.
+In this chapter we will first briefly summarize the process, before exploring each component separately.
+
+The process starts with a KG. From this KG we want to first mine rules, then extend it with new plausible facts, and lastly mine rules again on the extended KG. Candidates for additions to the KG are generated according to strategies that attempt to maximise the plausibility of the candidates. Once this set of candidate triples has been generated, the best of these are added to the KG. While there is no direct way to give a relative score to these triples, a KG embedding trained on the original KG can rank the candidate triples against a set of corrupted triples. With the candidates ranked, one can accept all above some appropriately chosen cutoff, and add them to the KG. Then rules can be mined and evaluated on both the original and extended KG, and results compared.
 
 \section{Knowledge Graph Datasets}
-While there are many large KGs publicly available, they are often quite complex in the number of different relations and entities used. Since we are mining rules over relations, the relational aspect of the KGs used was kept simple. By limiting the number of relations used in the KGs the resulting rules mined won't be overly diverse, and therefore easier for a human to understand evaluate. Two different datasets were used to conduct the experiments, both of which had been limited to contain only six different types of relations.
+While there are many large KGs publicly available, they are often quite complex in the number of different relations and entities used. Since we are mining rules over relations, the relational aspect of the KGs was kept simple. By limiting the number of relations the resulting rules  won't be overly diverse, and there will be many more candidate triples per relation when generating new plausible triples. Two different datasets were used to conduct the experiments, both of which were limited to contain only six different types of relations.
 
 
 \subsection{Wikidata5M - family KG}
@@ -169,14 +171,15 @@ Once one has a set of ranked candidate triples all that remains is to decide wha
 
 
 \subsection{Candidate triple generation}
-Both WN18RR and the family KG contain too many entities for it to be possible to consider all possible triples when extending the KB. TODO: add exact numbers. There are only 6 types of relations in each dataset, but WN18RR and the family KG contain X and Y entities respectively. Therefore only a small subset of these entities can be included in the candidate generation. Four approaches were tested:
+Both in the family KG and in WN18RR the number of potential facts is huge, and so in order to avoid having to evaluate all of them one can use a number of strategies to select plausible facts. In AmpliGraph's implementation of plausible candidate generation they make they assumption that densely connected entities are less likely to have missing true statements. In a KG embedding tutorial at the European Conference on Artificial Intelligence in 2020, members of the AmpliGraph team say that this assumption has been true for their empirical evaluations, but s not necessarily true for all datasets \cite{nicholas_ampligraph_tutorial}.Therefore only a small subset of these entities can be included in the candidate generation. AmpliGraph has implemented six different strategies for weighted sampling of entities by:
 \begin{itemize}
-    \item random selection
-    \item the most frequent entities
-    \item the least frequent entities
-    \item probabilistic selection based on the frequency of the entities in the dataset
+    \item \textit{entity frequency}: weighted sampling by how often an entity appears in a triple.
+    \item \textit{graph degree}: weighted sampling by the sum of the number of edges that are incident to the vertex.
+    \item \textit{cluster triangles}: weighted sampling by the number of triangles in the KG the entity is contained by.
+    \item \textit{cluster squares}: weighted sampling by the number of squares in the KG the entity is contained by.
+    \item \textit{cluster coefficient}: weighted sampling by clustering coefficient of entities.
 \end{itemize}
-Once the entities were selected, all possible triples were generated with them and the six relations. The resulting candidate triples were then filtered such that no triples already included in the original KG also were candidates to the extension. Of course the more triples that are considered for the extension, the better the extension will be, but again computational limitations restricted this. After trying different candidate set sizes it was eventually decided that selecting 1000 entities for candidate triple generation was a feasible number. This meant that $ 1000 \times 6 \times 1000 = 6 \times 10^6 $ triples (minus those that already appeared in the KB) were considered for each KG extension.
+A random uniform selection strategy was also available. Subject and object entities are sampled separately, and and only entities related to a specific relation are considered at a time when assigning weights. If there are six relations, then there are six rounds of candidate generation. The resulting candidate triples were then filtered such that no triples already included in the original KG also were candidates to the extension. Of course the more triples that are considered for the extension, the better the extension will be, but again computational limitations restricted this. After trying different candidate set sizes it was eventually decided that selecting 10000 entities for candidate triple generation was a feasible number. This meant that $ 6 \times 10000$ triples (minus those that already appeared in the KB) were considered for each KG extension.
 
 
 \subsection{Candidate triple ranking}

@@ -7,7 +7,7 @@ There is no single agreed upon definition of \glspl{kg} \cite{bergman_2019, bona
 
 
 %For example, the knowledge that 'Amy is the daughter of Bo, and Bo is a woman' can be represented by the knowledge graph in fig 1.\todo{Add figure}
-\begin{figure}
+\begin{figure}[h]
 \centering
 \begin{tikzpicture}
     \node[shape=circle,draw=red] (L) at (0,0) {Leo};
@@ -32,29 +32,60 @@ There is no single agreed upon definition of \glspl{kg} \cite{bergman_2019, bona
 \caption{Example of a knowledge graph, where the dotted line represents a relationship that can be deductively inferred.} \label{fig:KGexample}
 \end{figure}
 
-\newpage
-
 In this thesis we will loosely follow the Resource Description Framework (RDF) standard and view KGs as sets of semantic triples. RDF is a standard for representation and exchange of graph data introduced by \gls{w3c}. Semantic triples are the data types used in the RDF data model. A triple, as the name suggests, is a tuple of three elements. It has the form ( subject, predicate, object) and can therefore represent statements about semantic data, for example "Cats are mammals", or "Ann knows Bob". These RDF statements express relationships between two resources, these resources being the subject and the object, while the predicate encapsulates the nature of the relationship. The relationship is phrased in a directional way, and so set of RDF stamements can also be viewed as a directed graph. The graph represents these triple statements, where the predicate in the triple denotes the edge going from the subject to the object, both of which are vertices.
 
-\begin{lstlisting}[caption={Example of RDF triple set written in informal pseudocode},label={RDF_triples_example}]
+\begin{lstlisting}[caption={Example of RDF triple set written in informal pseudocode},label={RDF_triples_example}][h]
+<Leo> <is a> <cat>
+<cat> <is a> <mammal>
 <Ann> <knows> <Bob>
 <Ann> <is a> <person>
 <Bob> <is a> <person>
-<Ann> <owns> <Leo>
-<Leo> <is a> <cat>
-<cat> <is a> <mammal>
-<Bob> <is scared of> <Leo>
+<Ann> <has pet> <Leo>
 \end{lstlisting}
 
-\begin{figure}
+%For example, the knowledge that 'Amy is the daughter of Bo, and Bo is a woman' can be represented by the knowledge graph in fig 1.\todo{Add figure}
+\begin{figure}[h]
 \centering
-    \includegraphics[scale=0.3]{figures/RDF_triple}
-    \caption{TODO Informal graph of the example triples from \ref{RDF_triples_example}}
+\begin{tikzpicture}
+    \node[shape=circle,draw=black] (L) at (3.9,0) {Leo};
+    \node[shape=circle,draw=black] (P) at (0,2.5) {Person};
+    \node[shape=circle,draw=black] (A) at (1,0) {Ann};
+    \node[shape=circle,draw=black] (B) at (2.5,2.5) {Bob};
+    \node[shape=circle,draw=black] (C) at (6,0) {Cat};
+    \node[shape=circle,draw=black] (M) at (5,2.5) {Mammal};
+
+   % \path [->] (L) edge node[left] {$IsA$} (C);
+   \draw [->] (L) -- (C);
+   \draw [decoration={text along path,
+    text={is a},text align={center}},decorate]  (L) -- (C);
     
-    \label{fig:KGexample}
+    \draw [->] (L) -- (M);
+   \draw [decoration={text along path,
+    text={is a},text align={center}},decorate]  (L) -- (M);
+    
+    \draw [->] (A) -- (B);
+   \draw [decoration={text along path,
+    text={knows},text align={center}},decorate]  (A) -- (B);
+    
+    \draw [->] (A) -- (L);
+   \draw [decoration={text along path,
+    text={has pet},text align={center}},decorate]  (A) -- (L);
+    
+    \draw [->] (A) -- (P);
+   \draw [decoration={text along path,
+    text={is a},text align={center}, reverse path},decorate]  (A) -- (P);
+    
+    \draw [->] (B) -- (P);
+   \draw [decoration={text along path,
+    text={is a},text align={center}, reverse path},decorate]  (B) -- (P);
+    
+\end{tikzpicture}
+
+\caption{Informal visualization of the KG consisting of the example triples from \ref{RDF_triples_example}} \label{fig:KGexample}
 \end{figure}
 
-With this type of data organisation one can for example query for a list of all people who own cats in the dataset. 
+With this type of data organisation one can for example query for a list of all people who own cats in the dataset.
+
 \subsection{Open versus Closed World Assumption}
 KGs contain only true facts. By the \textit{closed world assumption } (CWA) all facts not present in the KG are considered false. For example, by the KG in figure \ref{fig:KGexample} the statement \texttt{<Ann> <has sibling> <Bob>} is false under the CWA, as it is not present in the KG. Bob is not the sibling of Ann. The \textit{open world assumption} OWA makes no such claims and  the validity of triple not present in the KG is considered unknown. In the above example Bob is therefore neither considered a sibling of Ann nor not a sibling of Ann.
 
@@ -63,9 +94,9 @@ In the context of KGs the OWA is often more justified, as most large interesting
 
 \section{Knowledge Graph Embeddings}
 Let a KG be defined as a set of triples $\mathcal{K}={<h, r, t>}$, where $h, r, t$ respectively denote the head entity, relation and tail entity. To simplify the explanation we let the dimension of entities \emph{and} relations in the embedding space to be $d$.
-Given $\mathcal{K}$ and $d$, a KG embedding seeks to represent all entities and relations in the continuous vector space of $d$ dimensions. These representations are meant to capture the semantic information in the graph. An embedding that manages this can then be used to evaluate the probability of new facts and identify false information in $\mathcal{K}$, two tasks respectively called \textit{link prediction} and \textit{triple classification}.
+Given $\mathcal{K}$ and $d$, a KG embedding seeks to represent all entities and relations in the continuous vector space of $d$ dimensions. These representations are meant to capture the semantic information in the graph. An embedding that manages this can then be used to evaluate the probability of new facts and identify false information in $\mathcal{K}$, two tasks respectively called \textit{link prediction} and \textit{triple classification}. Let $\text{\textbf{(h, r, t)}}$ denote an embedding of a head, relation and tail. A \textit{scoring function} is used to measure the "goodness" or plausibility of a triple.
 
-
+This goes pretty in depth: https://ieeexplore.ieee.org/stamp/stamp.jsp?tp=&arnumber=9416312
 
 
 Where do the negative examples come from?: https://ieeexplore.ieee.org/stamp/stamp.jsp?tp=&arnumber=7358050
