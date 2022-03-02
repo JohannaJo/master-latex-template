@@ -34,7 +34,7 @@ As discussed in (TODO: add section) TransE is not able to learn some type of rel
 \section{Effect of parameters}
 \subsection{Effect of KG embedding model}
 
-\begin{table}[]
+\begin{table}[h]
 \begin{tabular}{|l|ccc||ccc|}
 \hline
 {\textbf{DATASET}}   & \multicolumn{3}{c||}{\textbf{WN18RR}}                                                                              & \multicolumn{3}{c|}{\textbf{Family KG}}                                                           \\ \hline
@@ -48,7 +48,7 @@ As discussed in (TODO: add section) TransE is not able to learn some type of rel
 \end{table}
 
 
-    \begin{figure*}[u]
+    \begin{figure*}[h]
         \centering
         \begin{subfigure}[b]{0.49\textwidth}
             \centering
@@ -87,7 +87,7 @@ As discussed in (TODO: add section) TransE is not able to learn some type of rel
     \end{figure*}
     
     
-    \begin{figure*}
+    \begin{figure*}[h]
         \centering
         \begin{subfigure}[b]{0.49\textwidth}
             \centering
@@ -124,6 +124,44 @@ As discussed in (TODO: add section) TransE is not able to learn some type of rel
         {\small Distribution of all the rules mined over KG embedding models. KG: WN18RR.} 
         \label{fig:mean and std of nets}
     \end{figure*}
+    
+    
+    
+\begin{figure}[h]
+\centering
+\begin{subfigure}{.5\textwidth}
+  \centering
+  \includegraphics[width=1\linewidth]{figures/results/PCA_models/PCA-models_wn18rr.png}
+  \caption{Original KG}
+  \label{fig:PCA-models_wn18rr_boxplot_sub}
+\end{subfigure}%
+\begin{subfigure}{.5\textwidth}
+  \centering
+  \includegraphics[width=1\linewidth]{figures/results/PCA_models/_PCA-models_wn18rr.png}
+  \caption{Extended KG}
+  \label{fig:_PCA_models_wn18rr_boxplot_sub}
+\end{subfigure}
+\caption{Distribution of PCA confidence of mined rules by KG embedding models. PCA confidence scores are calculated on the original WN18RR and the extended WN18RR from which the rules are mined. The dashed line represents the median PCA confidence of the rules mined from the original WN18RR KG.}
+\label{fig:test}
+\end{figure}
+
+\begin{figure}[h]
+\centering
+\begin{subfigure}{.5\textwidth}
+  \centering
+  \includegraphics[width=1\linewidth]{figures/results/PCA_models/PCA-models_family.png}
+  \caption{Original KG}
+  \label{fig:models_family_boxplot_sub}
+\end{subfigure}%
+\begin{subfigure}{.5\textwidth}
+  \centering
+  \includegraphics[width=1\linewidth]{figures/results/PCA_models/_PCA-models_family.png}
+  \caption{Extended KG}
+  \label{fig:_PCA_models_family_boxplot_sub}
+\end{subfigure}
+\caption{Distribution of PCA confidence of mined rules by KG embedding models. PCA confidence scores are calculated on the original family KG and the extended family KG from which the rules are mined. The dashed line represents the median PCA confidence of the rules mined from the original family KG.}
+\label{fig:PCA_models_family_boxplot}
+\end{figure}
 
 \subsection{Effect of entity selection method}
 
