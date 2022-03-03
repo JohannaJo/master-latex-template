@@ -37,7 +37,7 @@ In this section we will examine the effects of each parameter, namely the choice
 
 \subsection{Effect of KG embedding model}
 At the first glance of figures \ref{fig:model_pies_family} and \ref{fig:model_pies_wn18rr} it may seem odd that the PCA confidence of rules mined from RandomBaseline extensions is so high. By looking at figures (TODO: add hbar figs) and (TODO: add) it becomes apparent that there in fact fewer different rules mined from these extensions. In the WN18RR case no new rules were found, and one original rule was also never mined. The omitted rule,
-\[derivationally\_related\_form(y, x)   \Rightarrow derivationally\_related\_form(x, y)\]
+\[derivationally\_related\_form(x, y)   \Rightarrow derivationally\_related\_form(y, x)\]
 has the lowest PCA confidence out of all the original rules. Since there already was little support in the KG for the rule the addition of noise must have obscured too much evidence of \texttt{derivationally\_related\_form} being reflexive for AMIE3 to pick up on it. The family KG produced similar results, where AMIE3 failed to find 12 original rules in the RandomBaseline-extended KGs. All of these rules were among those with the lowest PCA confidence of the original rules.
 Since the introduction of noise leads to the rules with lower PCA confidence to be removed it explains how the rules mined from RandomBaseline-extended KGs have a higher median PCA confidence than the original rules, as seen in figures \ref{fig:model_pies_family} and \ref{fig:model_pies_wn18rr}.
 
@@ -56,7 +56,7 @@ Since the introduction of noise leads to the rules with lower PCA confidence to 
   \label{fig:_PCA_models_wn18rr_boxplot_sub}
 \end{subfigure}
 \caption{Distribution of PCA confidence of mined rules by KG embedding models. PCA confidence scores are calculated on the original WN18RR and the extended WN18RR from which the rules are mined. The dashed line represents the median PCA confidence of the rules mined from the original WN18RR KG.}
-\label{fig:test}
+\label{fig:PCA_models_wn18rr_boxplot}
 \end{figure}
 
 \begin{figure}[h]
@@ -93,9 +93,12 @@ As presented in \cref{TransE_sucks}, AMIE3 mines a lot more rules from KGs exten
 \caption{Overview of which KG embedding models found all the original rules and how many new rules were found.}
 \end{table}
 
-DistMult and ComplEx are relatively similar embedding models as they have similar scoring functions (the scoring function of ComplEx corresponds to that of DistMult but with real embeddings), and perform similarly on benchmark datasets \cite{complEx}. As mentioned in section (TODO add section), DistMult is not able to learn asymmetry nor antisymmetry qualities to relations, however the type of rules AMIE3 can mine are not able to represent this either (add source or explanation). From the results it seems that ComplEx is a somewhat stricter model, in the sense that it ranks canidate triples lower against corrupted triples. THis is evidenced by the fact that the KG extensions sizes are larger for DistMult than ComplEx; DistMult is admitting more candidates. For example on the out of the candidates generated with the the entity selection method "probabillistic" from the WN18RR KG, DistMult assigned 1468 candidates rank 1 while ComplEx only did this for 866 candidates. As a result, more rules are mined from DistMult-extended KGs, as can be seen in (TODO: add fig). 
+DistMult and ComplEx are relatively similar embedding models as they have similar scoring functions (the scoring function of ComplEx corresponds to that of DistMult but with real embeddings), and perform similarly on benchmark datasets \cite{complEx}. As mentioned in section (TODO add section), DistMult is not able to learn asymmetry nor antisymmetry qualities to relations, however the type of rules AMIE3 can mine are not able to represent this either (TODO: add source or explanation). From the results it seems that ComplEx is a somewhat stricter model, in the sense that it ranks canidate triples lower against corrupted triples. THis is evidenced by the fact that the KG extensions sizes are larger for DistMult than ComplEx; DistMult is admitting more candidates. For example on the out of the candidates generated with the the entity selection method "probabillistic" from the WN18RR KG, DistMult assigned 1468 candidates rank 1 while ComplEx only did this for 866 candidates. As a result, more rules are mined from DistMult-extended KGs, as can be seen in (TODO: add fig). 
 
 The combined set of rules found from ComplEx-extended KGs include all the original rules, both for WN18RR and the family KG.  This is almost also the case for DistMult, but it fails to find the original rule $child(x, y) \Rightarrow mother(y,x)$ in the family KG. This rule has the second lowest PCA confidence of all the original family KG rules.
+
+
+TODO( correlations between rules mined from ComplEx and DistMult)
 
 
     \begin{figure*}[h]
@@ -176,6 +179,257 @@ The combined set of rules found from ComplEx-extended KGs include all the origin
     \end{figure*}
 
 
-\subsection{Effect of entity selection method}
 
+\newpage
+\subsection{Effect of entity selection method}
+The \textit{probabilistic}, \textit{random}, and the \textit{least frequent} entity selection strategies perform relatively similarly if we look at the PCA confidence box plots in figures \ref{fig:PCA_entity_wn18rr_boxplot} and \ref{fig:PCA_entity_family_boxplot}. The \textit{most frequent} strategy, however, performs worse, both on the WN18RR and family KG. This is consistent with AmpliGraph's assumption that the most frequent entities are less likely to have missing facts.
+
+In the WN18RR KG all original rules were found, but in the family KG only the \textit{least frequent} strategy resulted in all the original rules being mined. It also resulted in the least new rules being mined, while the\textit{most frequent} strategy led to the most new rules.
+
+Overall it seems like \textit{probabilistic}, \textit{random}, and the \textit{least frequent} entity selection strategies all are appropriate entity selection strategies in regard to maintaining PCA confidence. If however the goal is to mine many new rules then \textit{most frequent} seems the most appropriate, though at the sacrifice of PCA confidence.
+
+\begin{figure}[h]
+\centering
+\begin{subfigure}{.5\textwidth}
+  \centering
+  \includegraphics[width=1\linewidth]{figures/results/entity_selection/PCA-entity_wn18rr.png}
+  \caption{Original KG}
+  \label{fig:PCA-entity_wn18rr_boxplot_sub}
+\end{subfigure}%
+\begin{subfigure}{.5\textwidth}
+  \centering
+  \includegraphics[width=1\linewidth]{figures/results/entity_selection/_PCA-entity_wn18rr.png}
+  \caption{Extended KG}
+  \label{fig:_PCA_entity_wn18rr_boxplot_sub}
+\end{subfigure}
+\caption{Distribution of PCA confidence of mined rules by entity selection strategies. PCA confidence scores are calculated on the original WN18RR and the extended WN18RR from which the rules are mined. The dashed line represents the median PCA confidence of the rules mined from the original WN18RR KG.}
+\label{fig:PCA_entity_wn18rr_boxplot}
+\end{figure}
+
+\begin{figure}[h]
+\centering
+\begin{subfigure}{.5\textwidth}
+  \centering
+  \includegraphics[width=1\linewidth]{figures/results/entity_selection/PCA-entity_family.png}
+  \caption{Original KG}
+  \label{fig:models_entity_boxplot_sub}
+\end{subfigure}%
+\begin{subfigure}{.5\textwidth}
+  \centering
+  \includegraphics[width=1\linewidth]{figures/results/entity_selection/_PCA-entity_family.png}
+  \caption{Extended KG}
+  \label{fig:_PCA_entity_family_boxplot_sub}
+\end{subfigure}
+\caption{Distribution of PCA confidence of mined rules by entity selection strategies. PCA confidence scores are calculated on the original family KG and the extended family KG from which the rules are mined. The dashed line represents the median PCA confidence of the rules mined from the original family KG.}
+\label{fig:PCA_entity_family_boxplot}
+\end{figure}
+
+
+
+\begin{figure*}[h]
+        \centering
+        \begin{subfigure}[b]{0.49\textwidth}
+            \centering
+            \includegraphics[width=\textwidth]{figures/results/entity_selection/pie_charts/probabilistic_wn18rr.png}
+            \caption[complEx_pie]%
+            {{\small Probabilistic}}    
+            \label{fig:probabilistic_pie_wn18rr}
+        \end{subfigure}
+        \hfill
+        \begin{subfigure}[b]{0.49\textwidth}  
+            \centering 
+            \includegraphics[width=\textwidth]{figures/results/entity_selection/pie_charts/random_wn18rr.png}
+            \caption[]%
+            {{\small Random}}    
+            \label{random_pie_wn18rr}
+        \end{subfigure}
+        \vskip\baselineskip
+        \begin{subfigure}[b]{0.49\textwidth}   
+            \centering 
+            \includegraphics[width=\textwidth]{figures/results/entity_selection/pie_charts/most_frequent_wn18rr.png}
+            \caption[]%
+            {{\small Most Frequent}}    
+            \label{fig:most_pie_wn18rr}
+        \end{subfigure}
+        \hfill
+        \begin{subfigure}[b]{0.49\textwidth}   
+            \centering 
+            \includegraphics[width=\textwidth]{figures/results/entity_selection/pie_charts/least_frequent_wn18rr.png}
+            \caption[]%
+            {{\small Least Frequent}}    
+            \label{fig:least_pie_wn18rr}
+        \end{subfigure}
+        \caption[]
+        {\small Distribution of all the rules mined over entity selection stragegies for WN18RR.} 
+        \label{fig:entity_pies_wn18rr}
+    \end{figure*}
+    
+    
+    \begin{figure*}[h]
+        \centering
+        \begin{subfigure}[b]{0.49\textwidth}
+            \centering
+            \includegraphics[width=\textwidth]{figures/results/entity_selection/pie_charts/Probabilistic_selection_family.png}
+            \caption[]%
+            {{\small Probabilistic}}    
+            \label{fig:probablilistic_pie_family}
+        \end{subfigure}
+        \hfill
+        \begin{subfigure}[b]{0.49\textwidth}  
+            \centering 
+            \includegraphics[width=\textwidth]{figures/results/entity_selection/pie_charts/random_family.png}
+            \caption[]%
+            {{\small Random}}    
+            \label{fig:random_pie_family}
+        \end{subfigure}
+        \vskip\baselineskip
+        \begin{subfigure}[b]{0.49\textwidth}   
+            \centering 
+            \includegraphics[width=\textwidth]{figures/results/entity_selection/pie_charts/most_frequent_family.png}
+            \caption[]%
+            {{\small Most Frequent}}    
+            \label{fig:most_pie_family}
+        \end{subfigure}
+        \hfill
+        \begin{subfigure}[b]{0.49\textwidth}   
+            \centering 
+            \includegraphics[width=\textwidth]{figures/results/entity_selection/pie_charts/least_frequent_family.png}
+            \caption[]%
+            {{\small Least Frequent}}    
+            \label{fig:least_pie_family}
+        \end{subfigure}
+        \caption[]
+        {\small Distribution of all the rules mined over entity selection strategies for the family KG.} 
+        \label{fig:entity_pies_family}
+    \end{figure*}
+
+
+
+
+
+
+\newpage
 \subsection{Effect of rank cutoff value}
+
+\begin{figure}[h]
+\centering
+\begin{subfigure}{.5\textwidth}
+  \centering
+  \includegraphics[width=1\linewidth]{figures/results/ranks/Extension_size_entity_wn18rr.png}
+  \caption{WN18RR KG.}
+  \label{fig:rank_extension_wn18rr_boxplot_sub}
+\end{subfigure}%
+\begin{subfigure}{.5\textwidth}
+  \centering
+  \includegraphics[width=1\linewidth]{figures/results/ranks/Extension_size_entity_family.png}
+  \caption{Family KG.}
+  \label{fig:rank_extension_family_boxplot_sub}
+\end{subfigure}
+\caption{Distribution of KG extension sizes over rank cutoff values.}
+\label{fig:rank_extensions_boxplot}
+\end{figure}
+
+\begin{figure}[h]
+\centering
+\begin{subfigure}{.5\textwidth}
+  \centering
+  \includegraphics[width=1\linewidth]{figures/results/ranks/PCA-rank_wn18rr.png}
+  \caption{Original KG}
+  \label{fig:PCA-rank_wn18rr_boxplot_sub}
+\end{subfigure}%
+\begin{subfigure}{.5\textwidth}
+  \centering
+  \includegraphics[width=1\linewidth]{figures/results/ranks/_PCA-rank_wn18rr.png}
+  \caption{Extended KG}
+  \label{fig:_PCA_rank_wn18rr_boxplot_sub}
+\end{subfigure}
+\caption{Distribution of PCA confidence of mined rules over rank cutoff values. PCA confidence scores are calculated on the original WN18RR and the extended WN18RR from which the rules are mined. The dashed line represents the median PCA confidence of the rules mined from the original WN18RR KG.}
+\label{fig:PCA_rank_wn18rr_boxplot}
+\end{figure}
+
+\begin{figure}[h]
+\centering
+\begin{subfigure}{.5\textwidth}
+  \centering
+  \includegraphics[width=1\linewidth]{figures/results/ranks/PCA-rank_family.png}
+  \caption{Original KG}
+  \label{fig:models_rank_boxplot_sub}
+\end{subfigure}%
+\begin{subfigure}{.5\textwidth}
+  \centering
+  \includegraphics[width=1\linewidth]{figures/results/ranks/_PCA-rank_family.png}
+  \caption{Extended KG}
+  \label{fig:_PCA_rank_family_boxplot_sub}
+\end{subfigure}
+\caption{Distribution of PCA confidence of mined rules by rank cutoff values. PCA confidence scores are calculated on the original family KG and the extended family KG from which the rules are mined. The dashed line represents the median PCA confidence of the rules mined from the original family KG.}
+\label{fig:PCA_entity_family_boxplot}
+\end{figure}
+
+
+
+
+
+
+
+\begin{figure*}[h]
+        \centering
+        \begin{subfigure}[b]{0.49\textwidth}
+            \centering
+            \includegraphics[width=\textwidth]{figures/results/ranks/pie_charts/('rank_cutoff', 1)_family.png}
+            \caption[]%
+            {{\small Rank 1}}    
+            \label{fig:rank_1_pie_family}
+        \end{subfigure}
+        \hfill
+        \begin{subfigure}[b]{0.49\textwidth}  
+            \centering 
+            \includegraphics[width=\textwidth]{figures/results/ranks/pie_charts/('rank_cutoff', 4)_family.png}
+            \caption[]%
+            {{\small Rank 4}}    
+            \label{fig:rank_4_pie_family}
+        \end{subfigure}
+        \vskip\baselineskip
+        \begin{subfigure}[b]{0.49\textwidth}   
+            \centering 
+            \includegraphics[width=\textwidth]{figures/results/ranks/pie_charts/('rank_cutoff', 7)_family.png}
+            \caption[]%
+            {{\small Rank 7}}    
+            \label{fig:rank_1_pie_family}
+        \end{subfigure}
+        \hfill
+        \caption[]
+        {\small Distribution of all the rules mined over KG rank cutoff values. KG: family KG.} 
+        \label{fig:rank_pies_family}
+    \end{figure*}
+    
+    
+    \begin{figure*}[h]
+        \centering
+        \begin{subfigure}[b]{0.49\textwidth}
+            \centering
+            \includegraphics[width=\textwidth]{figures/results/ranks/pie_charts/('rank_cutoff', 1)_wn18rr.png}
+            \caption[]%
+            {{\small Rank 1}}    
+            \label{fig:rank_1_pie_wn18rr}
+        \end{subfigure}
+        \hfill
+        \begin{subfigure}[b]{0.49\textwidth}  
+            \centering 
+            \includegraphics[width=\textwidth]{figures/results/ranks/pie_charts/('rank_cutoff', 4)_wn18rr.png}
+            \caption[]%
+            {{\small Rank 4}}    
+            \label{fig:rank_4_pie_wn18rr}
+        \end{subfigure}
+        \vskip\baselineskip
+        \begin{subfigure}[b]{0.49\textwidth}   
+            \centering 
+            \includegraphics[width=\textwidth]{figures/results/ranks/pie_charts/('rank_cutoff', 7)_wn18rr.png}
+            \caption[]%
+            {{\small Rank 7}}    
+            \label{fig:rank_7_pie_wn18rr}
+        \end{subfigure}
+        \hfill
+        \caption[ ]
+        {\small Distribution of all the rules mined over rank cutoff values. KG: WN18RR.} 
+        \label{fig:rank_pies_wn18rr}
+    \end{figure*}
