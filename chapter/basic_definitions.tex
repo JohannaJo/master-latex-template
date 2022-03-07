@@ -86,10 +86,26 @@ In this thesis we will loosely follow the Resource Description Framework (RDF) s
 
 With this type of data organisation one can for example query for a list of all people who own cats in the dataset.
 
-\subsection{Open versus Closed World Assumption}
-KGs contain only true facts. By the \textit{closed world assumption } (CWA) all facts not present in the KG are considered false. For example, by the KG in figure \ref{fig:KGexample} the statement \texttt{<Ann> <has sibling> <Bob>} is false under the CWA, as it is not present in the KG. Bob is not the sibling of Ann. The \textit{open world assumption} OWA makes no such claims and  the validity of triple not present in the KG is considered unknown. In the above example Bob is therefore neither considered a sibling of Ann nor not a sibling of Ann.
+\subsection{Integrity of KGs}
+Amihai Motro presents in his paper 
+KGs contain only true facts. By the \textit{closed world assumption } (CWA) all facts not present in the KG are considered false. For example, by the KG in figure \ref{fig:KGexample} the statement \texttt{<Ann> <has sibling> <Bob>} is false under the CWA, as it is not present in the KG. Bob is not the sibling of Ann. The \textit{open world assumption} (OWA) makes no such claims and  the validity of a triple not present in the KG is considered unknown. In the above example Bob is therefore neither considered a sibling of Ann nor not a sibling of Ann.
 
-In the context of KGs the OWA is often more justified, as most large interesting KGs are far from complete. For example, the KG Wikidata5M does not contain information the national bird of countries. This of course does not mean that the statement "The kiwi is the national bird of New Zealand" is any less true. The information has simply not been included in the KG. Another example is Freebase, the precursor to Wikidata, in which 71\% is people listed had the place-of-birth attribute missing. In section (TODO: add section) the local closed world assumption is described, another paradigm that is used when training knowledge graph embeddings.
+In the context of KGs the OWA is often more justified, as most large interesting KGs are far from complete. For example, the KG Wikidata5M does not contain about information the national bird of countries. This of course does not make the statement ``\textit{The kiwi is the national bird of New Zealand}" any less true. The information has simply not been included in the KG. Another example is Freebase, the precursor to Wikidata, in which 71\% is people listed had the place-of-birth attribute missing.
+
+\begin{figure}[htp]
+    \centering
+    \includegraphics[width=10cm]{figures/kb_venn.png}
+    \caption{KB prediction under incompleteness}
+    \label{KB_predictions}
+\end{figure}
+
+In the context of rule mining and KG embeddings the OWA however has a central problem; it fails to provide counterexamples. Because missing facts are assumed to be neither true nor false, there are no false facts to give as examples when mining rules or training an embedding model. In the context of the predictions, marked with red in \cref{KB_predictions} we want to maximize B over D. Under the OWA, however, there are no false facts, so we don't know what B and D are. Someone (TODO: who?) therefore introduced a different paradigm called the \textit{partial completeness assumption} (PCA).
+
+The assumption is that for some entities $x$, $y$, if $r(x, y) \in KB true$ then
+\[\forall y' : r(x, y') \in KBtrue \cup NEWtrue \Rightarrow r(x, y') \in KBtrue\]. 
+
+Note the difference between PCA and PCWA.
+
 
 
 \section{Knowledge Graph Embeddings}
@@ -126,12 +142,6 @@ Let $\mathcal{K}$ be KG with triples of the form $<h, r, t>$ with $r\in \mathbb{
 
     Hits@n
     
-    
-\begin{figure}[htp]
-    \centering
-    \includegraphics[width=10cm]{figures/kb_venn.png}
-    \caption{KB prediction under incompleteness}
-\end{figure}
 
 
 \section{Rule-based machine learning}
@@ -174,9 +184,6 @@ Support and confidence were originally proposed as relevance and quality measure
 \[hc(\vec{B}\Rightarrow r(x, y)) := \frac{supp(\vec{B}\Rightarrow r(x, y)}{ \#(x', y'):r(x', y'))}\]
 
 \[conf(\vec{B}\Rightarrow r(x, y)) := \frac{supp(\vec{B}\Rightarrow r(x, y)}{\#(x, y):\exists z_1 ,..., z_m : \vec{B}}\]
-
-Partial completeness
-\[\forall y' : r(x, y') \in KBtrue \cup NEWtrue \Rightarrow r(x, y') \in KBtrue\]
 
 \[pcaconf(\vec{B}\Rightarrow r(x, y)) := \frac{supp(\vec{B}\Rightarrow r(x, y)}{\#(x, y):\exists z_1 ,..., z_m, y' : \vec{B} \wedge r(x, y')}\]
 
