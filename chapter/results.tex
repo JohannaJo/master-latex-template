@@ -310,6 +310,7 @@ Overall it seems like \textit{probabilistic}, \textit{random}, and the \textit{l
 
 \newpage
 \subsection{Effect of rank cutoff value}
+Rank cutoff values determine which candidates triples are admitted to the KG. Only those with rank on the cutoff or lower are accepted. Therefore, the higher the rank cutoff, the more candidates are added to the KG. The box plots in \cref{rank_extensions_boxplot} show evidence of this. The pie charts in figures \ref{rank_pies_family} and \ref{rank_pies_wn18rr} both show that when the rank cutoff was 1, all the original rules were found. Increase in rank cutoff led to more new rules being mined, but this also led to some original rules not being mined, especially in the WN18RR case. PCA confidence-wise the rank cutoff values had a slightly different effect on the two datasets. In the WN18RR dataset there was little different in PCA confidence over the different ranks when calculated over the original KG, while for the family KG the PCA confidence was increased at rank cutoff 4 and 7, while staying the same at rank cutoff 1. When calculated over the KG extensions rank 1 and 4 did worse than the mean of the original rules, while rank cutoff 7 did significantly better. On the family KG PCA confidence calculated on the extended KGs led to little variety over the rank values. Rank 1 resulted on the same median as the original rules, rank 4 just above and rank 7 just below. Overall it seems like if the goal is to find many new rules, then a higher rank cutoff values is more appropriate.
 
 \begin{figure}[h]
 \centering
@@ -373,23 +374,23 @@ Overall it seems like \textit{probabilistic}, \textit{random}, and the \textit{l
 
 \begin{figure*}[h]
         \centering
-        \begin{subfigure}[b]{0.49\textwidth}
+        \begin{subfigure}[b]{0.3\textwidth}
             \centering
             \includegraphics[width=\textwidth]{figures/results/ranks/pie_charts/('rank_cutoff', 1)_family.png}
             \caption[]%
             {{\small Rank 1}}    
             \label{fig:rank_1_pie_family}
         \end{subfigure}
-        \hfill
-        \begin{subfigure}[b]{0.49\textwidth}  
+        %\hfill
+        \begin{subfigure}[b]{0.3\textwidth}  
             \centering 
             \includegraphics[width=\textwidth]{figures/results/ranks/pie_charts/('rank_cutoff', 4)_family.png}
             \caption[]%
             {{\small Rank 4}}    
             \label{fig:rank_4_pie_family}
         \end{subfigure}
-        \vskip\baselineskip
-        \begin{subfigure}[b]{0.49\textwidth}   
+        %\vskip\baselineskip
+        \begin{subfigure}[b]{0.3\textwidth}   
             \centering 
             \includegraphics[width=\textwidth]{figures/results/ranks/pie_charts/('rank_cutoff', 7)_family.png}
             \caption[]%
@@ -405,23 +406,23 @@ Overall it seems like \textit{probabilistic}, \textit{random}, and the \textit{l
     
     \begin{figure*}[h]
         \centering
-        \begin{subfigure}[b]{0.49\textwidth}
+        \begin{subfigure}[b]{0.3\textwidth}
             \centering
             \includegraphics[width=\textwidth]{figures/results/ranks/pie_charts/('rank_cutoff', 1)_wn18rr.png}
             \caption[]%
             {{\small Rank 1}}    
             \label{fig:rank_1_pie_wn18rr}
         \end{subfigure}
-        \hfill
-        \begin{subfigure}[b]{0.49\textwidth}  
+        %\hfill
+        \begin{subfigure}[b]{0.3\textwidth}  
             \centering 
             \includegraphics[width=\textwidth]{figures/results/ranks/pie_charts/('rank_cutoff', 4)_wn18rr.png}
             \caption[]%
             {{\small Rank 4}}    
             \label{fig:rank_4_pie_wn18rr}
         \end{subfigure}
-        \vskip\baselineskip
-        \begin{subfigure}[b]{0.49\textwidth}   
+       % \vskip\baselineskip
+        \begin{subfigure}[b]{0.3\textwidth}   
             \centering 
             \includegraphics[width=\textwidth]{figures/results/ranks/pie_charts/('rank_cutoff', 7)_wn18rr.png}
             \caption[]%
@@ -433,3 +434,7 @@ Overall it seems like \textit{probabilistic}, \textit{random}, and the \textit{l
         {\small Distribution of all the rules mined over rank cutoff values. KG: WN18RR.} 
         \label{fig:rank_pies_wn18rr}
     \end{figure*}
+    
+
+\newpage
+\section{Rule comparison}
