@@ -87,6 +87,7 @@ In this thesis we will loosely follow the Resource Description Framework (RDF) s
 With this type of data organisation one can for example query for a list of all people who own cats in the dataset.
 
 \subsection{Integrity of KGs}
+\label{Integrity_of_KGs}
 Amihai Motro presents in his paper 
 KGs contain only true facts. By the \textit{closed world assumption } (CWA) all facts not present in the KG are considered false. For example, by the KG in figure \ref{fig:KGexample} the statement \texttt{<Ann> <has sibling> <Bob>} is false under the CWA, as it is not present in the KG. Bob is not the sibling of Ann. The \textit{open world assumption} (OWA) makes no such claims and  the validity of a triple not present in the KG is considered unknown. In the above example Bob is therefore neither considered a sibling of Ann nor not a sibling of Ann.
 
@@ -145,14 +146,14 @@ Let $\mathcal{K}$ be KG with triples of the form $<h, r, t>$ with $r\in \mathbb{
 Rule-based machine learning has as a goal to create rules that make new true predictions going beyond the data on which the rule was applied to. In contrast, other areas of machine learning focus on training a single model that can be applied to make a broad range of predictions. Conceptually the end result of rule-based machine learning is similar to a rule-based system.  Rule-based systems are often hand-crafted and require a knowledge expert to be curated, while rule-based machine learning requires no knowledge expert and rules are automatically created by the learning algorithm.
 
 Classically, a rule is comprised of a condition and consequent, or a so-called "if-then" statement. \begin{center} \textbf{IF} \textit{'the condition is met'} \textbf{THEN} \textit{'the consequent holds'} \end{center}
-The condition of the rule specifies attributes in the data on which the rule will be applied. If these attributes are present in this data, the condition is met. Once the condition for the rule is met, the attributes in the consequent should neccesarily also be met.
+The condition of the rule specifies attributes in the data on which the rule will be applied. If these attributes are present in this data, the condition is met. Once the condition for the rule is met, the attributes in the consequent should necessarily also be met. We define an \textit{atom} to be a triple in which the head and/or tail are variables. A \textit{Horn rule} is a rule where the consequent of a rule is a single atom, while the body is a set of atoms. We denote a Horn rule by $B \Rightarrow r(x, y)$ where $B$ is the body and $r(x, y)$ the head. Two examples of such rules are \ref{example_rule_1} and \ref{example_rule_2}.
 
 \begin{equation}
 hasSibling(x, y) \Rightarrow hasSibling(y,x)
 \label{example_rule_1}
 \end{equation}
 \begin{equation}
-    hasSibling(x, y) \Rightarrow hasMother(x,z) \Rightarrow hasMOther(x, z)
+    hasSibling(x, y), hasMother(y,z) \Rightarrow hasMother(x,z)
     \label{example_rule_2}
 \end{equation}
 \begin{lstlisting}[caption={Simple example knowledge base},captionpos=b, label={simple_kb_example}]
@@ -162,14 +163,26 @@ hasSibling(x, y) \Rightarrow hasSibling(y,x)
 \end{lstlisting}
 Consider the two rules and knowledge base given above. Under this knowledge base the antecedent of the first rule is satisfied by both triple 2 and 3. The resulting consequent of rule \ref{example_rule_1} is also present in the knowledge base. So the reflexivity of the $hasSibling$ predicate holds in this knowledge base. The antecendent of the second rule is satisfied by triples 1 and 2 in the knowledge base, but the resulting consquent would then be $hasMother(Bob, Carol)$. Since \texttt{<BoB> <hasMother> <Carol>} is not present in the knowledge base, rule \ref{example_rule_2} does not hold. If we know that this rule is reliable, we could for example extend the incomplete knowledge base with this triple.
 
-Within rule-based machine learning there are many different approaches including learning classifier systems\cite{sigaud2007learning} and association rule mining\cite{agrawal1993mining}, the latter of which is the approach used in this thesis. Both approaches aim to create a set of rules to act as a model for a set of data. The association rule mining approach will now be explained further.
+Within rule-based machine learning there are many different approaches including learning classifier systems \cite{sigaud2007learning} and association rule mining \cite{agrawal1993mining}, the latter of which is the approach used in this thesis. Both approaches aim to create a set of rules to act as a model for a set of data. The association rule mining approach will now be explained further.
 
 
 \subsection{Association Rule Mining}
-Association rules \cite{agrawal1993mining} are types of "if-then" statements that describe frequent associations between items in a dataset containing \textit{transactions}. Association rule mining was originally proposed as a new method for finding relationships between sales items in stores. The idea of mining association rules over transactions has successfully been applied to many other scenarios \cite{altaf2017applications, lin2002efficient}. In the context of convenience store sales, each transaction can be thought of as a set of items that a customer has purchased. The rules are of the form $\{Sugar, Flour, Eggs\} \Rightarrow Butter$, meaning that a person who bought sugar, flour and eggs was likely to also purchase butter. The antecedent is some set of items in the dataset, while the consequent is an item often found in combination with the antecedent in the dataset.  So sugar, flour and eggs can be thought of as "associated with" butter. These original association rules are also not Horn rules over binary predicates, but is cited as a main inspiration for the AMIE approach used for experiments in this thesis.
+Association rules \cite{agrawal1993mining} are types of "if-then" statements that describe frequent associations between items in a dataset containing \textit{transactions}. Association rule mining was originally proposed as a new method for finding relationships between sales items in stores. The idea of mining association rules over transactions has successfully been applied to many other scenarios \cite{altaf2017applications, lin2002efficient}. In the context of convenience store sales, each transaction can be thought of as a set of items that a customer has purchased. The rules are of the form $\{Sugar, Flour, Eggs\} \Rightarrow Butter$, meaning that a person who bought sugar, flour and eggs was likely to also purchase butter. The antecedent is some set of items in the dataset, while the consequent is an item often found in combination with the antecedent in the dataset.  So sugar, flour and eggs can be thought of as "associated with" butter. These original association rules are also not Horn rules over binary predicates, but is cited as a main inspiration for the AMIE3 approach used for experiments in this thesis. AMIE3 also limits rules to be in Horn form, meaning that the consequent can contain at most one predicate. We denote a Horn rule by $B \rightarrow r(x,y)$
 
 \subsection{Significance and quality measurement}
-The goal is to find formal rules that make true predictions that go beyond the explicit information in the knowledge base. For this some for of metrics are required in order to determine the suitability of a proposed rule.
+The goal is to find formal rules that make true predictions that go beyond the explicit information in the knowledge base. If we look back at \cref{KB_predictions} this means we want to maximise B and minimise D. For this we need to know what those areas are, and this is where the problem from \cref{Integrity_of_KGs} occurs. The area \textbf{KB false} is empty. We will look at different measures that address this problem.
+
+The \textit{support} of a rule is the quantity of correct predictions. So, if we consider \cref{KB_predictions} as a diagram representing 
+
+
+\subsubsection{Head coverage}
+The \emph{support} of a rule is the number of distinct object-subject pairs in the KB that appear in the head and tail of the rule.
+\emph{Head coverage} is the ratio of known true facts about a relation $r$ that are implied by the rule with $r$ in its head.
+\[hc(B \rightarrow r(x,y)) = \frac{support(B \rightarrow r(x,y))}{|\{(x, y) : r(x, y) \in \mathcal{K}\}|}\]
+
+\subsubsection{Confidence} Confidence is the proportion of a rules true predictions out of all its predictions. If the counterexamples are chosen with PCA, then it is denoted as PCA-confidence. Likewise with CWA.
+
+For this some for of metrics are required in order to determine the suitability of a proposed rule.
 
 
 
