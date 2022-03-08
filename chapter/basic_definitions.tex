@@ -99,12 +99,9 @@ In the context of KGs the OWA is often more justified, as most large interesting
     \label{KB_predictions}
 \end{figure}
 
-In the context of rule mining and KG embeddings the OWA however has a central problem; it fails to provide counterexamples. Because missing facts are assumed to be neither true nor false, there are no false facts to give as examples when mining rules or training an embedding model. In the context of the predictions, marked with red in \cref{KB_predictions} we want to maximize B over D. Under the OWA, however, there are no false facts, so we don't know what B and D are. Someone (TODO: who?) therefore introduced a different paradigm called the \textit{partial completeness assumption} (PCA).
-
-The assumption is that for some entities $x$, $y$, if $r(x, y) \in KB true$ then
-\[\forall y' : r(x, y') \in KBtrue \cup NEWtrue \Rightarrow r(x, y') \in KBtrue\]. 
-
-Note the difference between PCA and PCWA.
+However, in the context of rule mining and KG embeddings the OWA has a central problem; it fails to provide counterexamples. Because missing facts are assumed to be neither true nor false, there are no false facts to give as examples when mining rules or training an embedding model. In the context of the predictions, marked with red in \cref{KB_predictions} we want to maximize B over D. Under the OWA, however, there are no false facts, so we don't know what B and D are. The authors of AMIE therefore introduced a new paradigm called the \textit{partial completeness assumption} (PCA). It assumes that if $r(x, y) \in KB true$ for some entities $x$, $y$, then
+\[\forall y' : r(x, y') \in KBtrue \cup NEWtrue \Rightarrow r(x, y') \in KBtrue\].
+This assumption says that if the KG already has $r$-related information about the entity $x$,  then it contains \textit{all} $r$-related information about $x$. For example if a KG only contains \texttt{<Ann> <has sibling> <Bob>} and no other sibling entries with Ann as the head, then by the PCA Bob is Ann's only sibling. All other facts claiming that Ann has other siblings will therefore be negative examples. If we then however ask what \textit{friends} Ann has in a knowledge base without information about Ann's friends, then one cannot conclude that Ann is friendless. PCA is a more particular version of the broad \textit{partial-closed world assumption} (PCWA), where the KG generally is treated under the OWA, but parts of it that are considered complete are treated under the CWA \cite{motro1989integrity}. The PCA specifically defines what parts of the KG should be treated under closed-world semantics.
 
 
 
