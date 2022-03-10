@@ -124,14 +124,37 @@ where $\mathcal{S'}$ is the set of corrupted triples. This loss function favours
 
 
 \subsubsection{Negative log-likelihood loss}
-This is the loss function by the authors that introduced ComplEx \cite{complEx}. 
+This is the loss function by the authors that introduced ComplEx \cite{complEx}. The idea here is to use likelihood minimization to push the model toward the embedding that minimises the likelihood of loss. It is the opposite of maximum likelihood estimation, where one wants to maximise the likelihood of some datapoints given a set of parameters, hence \textit{negative} log-likelihood.
+Since the likelihood of facts in a KG are independent, the likelihood of a set of triples is the same as the product of the likelihood of each individual triple. With a lot of datapoints, multiplying many small probabilities quickly leads to incredibly small numbers. This causes \textit{underflow}, where a number is too small for a computer to be capable of storing it. To solve this problem, we take the log of the likelihoods so that products become sums instead. Since log functions monotonically increase, the relative likelihood is maintained. For example if $f(h,r,t) \geq f(h', r, t')$ then $log(f(h,r,t)) \geq log(f(h', r, t'))$, so the $\geq$ is maintained. Since the goal is to create distance between positive and negative triples, the relative difference between them is the only quality that needs to be maintained. Given embedding parameters $\Theta$, the negative log-likelihood loss is:
 
+\[\mathcal{L}=\sum_{(h, r, t) \in \mathcal{S} \cup \mathcal{S'}}log(1+exp(-y \, f(h, r, t)))\]
+
+where $y\in [1, -1]$ is the label of the triple (positive or negative).
 
 
 %This goes pretty in depth: %https://ieeexplore.ieee.org/stamp/stamp.jsp?tp=&arnumber=9416312
+
     
+\subsection{Performance indicators}
+Three different performance indexes are commonly used to evaluate the embedding quality of a model. As they are simple to calculate, they are suitable for measuring performance on a large scale. With $\mathcal{T}$ as the set of triples ranked by the model and $\mathcal{S}$ as the set of true triples, we can define three performance indexes.
+
+\subsubsection{Hits@K}
+Hits@K is the probability of finding the correct triple in the top K ranked triples. Often $k=10$ or lower values are used. This metric measures the model' ability to rank positive triples higher than corrupted ones.
+\[\text{Hits@K}=\frac{|\{t\in \mathcal{T} : t_{rank}<k, t \in \mathcal{S}\}|}{|\mathcal{T}|}\]
+The larger the value, the better the performance of the model.
+
+\subsubsection{Mean rank}
+Mean rank (MR) is the average rank of all the ranks assigned to the triples in the test set. A smaller value indicates a better model.
+\[MR=\frac{1}{|\mathcal{T}|}\sum_{t\in\mathcal{T}}t_{rank}\]
+
+\subsubsection{Mean reciprocal rank}
+Mean reciprocal rank (MRR) is a measurement for the number of triples correctly ranked. If the triple with the best rank is a positive triple, then 1 is added. If the triple with the second best rank is positive $\frac{1}{2}$ is added, etc. If a ranked triple is negative nothing is deducted, the fraction simply isn't added to the MRR.
+\[MRR=\frac{1}{|\mathcal{T}|}\sum_{t\in\mathcal{T}}t_{rank} : t\in \mathcal{S}\]
+The larger the value, the better the model.
     
-\subsection{ComplEx}
+\subsection{KG embedding model architectures}
+
+\subsubsection{ComplEx}
 ComplEx is a tensor factorization-based embedding model.\nocite{trouillon2016complex} In such models triples in a KG are transformed into a 3D binary tensor. The embeddings of the entities and relations are intended to be such that one can mathematically combine them to obtain the tensor representing the KG. ComplEx builds on the embedding model DistMult, which restricts the semantic embedding of relations to be a diagonal matrix. This allows for the number of parameters to be linear on the number of entities and embedding dimension. \nocite{dai2020survey} 
 
 Unfortunately the original DistMult model cannot embed asymmetric relations, which the ComplEx approach solved by using complex-valued embeddings. This was achieved without increasing parameter or memory complexity. The imaginary and real part of the embeddings play the role of representing the "direction" of the relation and thus asymmetric relations are able to be embedded. I used \href{https://docs.ampligraph.org/en/1.4.0/generated/ampligraph.latent_features.ComplEx.html}{Ampligraph's} implementation of ComplEx, but it provided to be problematic to use. Explanation of the problems encountered are described in the \textbf{Experiments} section.    
@@ -142,16 +165,6 @@ Unfortunately the original DistMult model cannot embed asymmetric relations, whi
 \textbf{Metrics}
 
     Ranking triples
-    
-\subsection{Performance indicators}
-
-    MR
-
-    MRR
-
-    Hits@n
-    
-
 
 \section{Rule-based machine learning}
 Rule-based machine learning has as a goal to create rules that make new true predictions going beyond the data on which the rule was applied to. In contrast, other areas of machine learning focus on training a single model that can be applied to make a broad range of predictions. Conceptually the end result of rule-based machine learning is similar to a rule-based system.  Rule-based systems are often hand-crafted and require a knowledge expert to be curated, while rule-based machine learning requires no knowledge expert and rules are automatically created by the learning algorithm.
