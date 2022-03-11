@@ -5,8 +5,6 @@
 \section{Knowledge Graphs}
 There is no single agreed upon definition of \glspl{kg} \cite{bergman_2019, bonatti2019knowledge, ehrlinger2016towards}. Definitions and usages vary from specific technical proposals to more general descriptions. In this thesis we will use the more inclusive definition similar to the one proposed by Hogan et al. \cite{hogan2020knowledge}, where we view a \gls{kg} as \textit{a graph of data intended to capture the semantic connections within real world knowledge, where nodes represent relevant entities and edges represent relations between these entities}. The type of graph may vary, i.e. it may be simple, directed, etc. A graph may contain knowledge over a broad range of domains, such as Wikidata\cite{lehmann2015dbpedia}, or be limited to a specific domain, such as DBpedia\cite{fellbaum2010wordnet}. The concept of ``knowledge'' has been widely debated in epistemology, but here we will use it to mean descriptive knowledge, meaning facts that can be stated. Knowledge can be simple statements, such as ``Leo is a cat'', or quantified statements such as ``at least one cat is black''. KGs are not expressive enough for quantified statements, where ontologies or rules would be more appropriate. Additional knowledge can be inferred from KGs through inductive or deductive methods. For example from a KG containing the information that ``Leo is a cat'' and ``cats are mammals'', one can deductively infer that ``Leo is a mammal''. If all cats mentioned in the knowledge graph like to eat fish, then one can inductively infer ``cats like to eat fish''.
 
-
-%For example, the knowledge that 'Amy is the daughter of Bo, and Bo is a woman' can be represented by the knowledge graph in fig 1.\todo{Add figure}
 \begin{figure}[h]
 \centering
 \begin{tikzpicture}
@@ -43,7 +41,6 @@ In this thesis we will loosely follow the Resource Description Framework (RDF) s
 <Ann> <has pet> <Leo>
 \end{lstlisting}
 
-%For example, the knowledge that 'Amy is the daughter of Bo, and Bo is a woman' can be represented by the knowledge graph in fig 1.\todo{Add figure}
 \begin{figure}[h]
 \centering
 \begin{tikzpicture}
@@ -88,10 +85,9 @@ With this type of data organisation one can for example query for a list of all 
 
 \subsection{Integrity of KGs}
 \label{Integrity_of_KGs}
-Amihai Motro presents in his paper 
-KGs contain only true facts. By the \textit{closed world assumption } (CWA) all facts not present in the KG are considered false. For example, by the KG in figure \ref{fig:KGexample} the statement \texttt{<Ann> <has sibling> <Bob>} is false under the CWA, as it is not present in the KG. Bob is not the sibling of Ann. The \textit{open world assumption} (OWA) makes no such claims and  the validity of a triple not present in the KG is considered unknown. In the above example Bob is therefore neither considered a sibling of Ann nor not a sibling of Ann.
+Generally, KGs contain only true facts. As with all databases, there seldom is a use in documenting all things that are not true. By the \textit{closed world assumption } (CWA) all facts not present in the KG are considered false. For example, by the KG in figure \ref{fig:KGexample} the statement \texttt{<Ann> <has sibling> <Bob>} is false under the CWA, as it is not present in the KG. So under the CWA Bob is not a sibling of Ann. The \textit{open world assumption} (OWA) makes no such claims and  the validity of a triple not present in the KG is considered unknown. In the above example Bob is therefore neither considered a sibling of Ann nor not a sibling of Ann under the OWA.
 
-In the context of KGs the OWA is often more justified, as most large interesting KGs are far from complete. For example, the KG Wikidata5M does not contain about information the national bird of countries. This of course does not make the statement ``\textit{The kiwi is the national bird of New Zealand}" any less true. The information has simply not been included in the KG. Another example is Freebase, the precursor to Wikidata, in which 71\% is people listed had the place-of-birth attribute missing.
+In the context of KGs the OWA is often more justified, as most large interesting KGs are far from complete. For example, the KG Wikidata5M does not contain about information the national bird of countries. This of course does not make the statement ``\textit{The kiwi is the national bird of New Zealand}" any less true. The information has simply not been included in the KG. Another example is Freebase, the precursor to Wikidata, in which 70\% of people listed had the place-of-birth attribute missing \cite{west2014knowledge}.
 
 \begin{figure}[htp]
     \centering
@@ -100,7 +96,7 @@ In the context of KGs the OWA is often more justified, as most large interesting
     \label{KB_predictions}
 \end{figure}
 
-However, in the context of rule mining and KG embeddings the OWA has a central problem; it fails to provide counterexamples. Because missing facts are assumed to be neither true nor false, there are no false facts to give as examples when mining rules or training an embedding model. In the context of the predictions, marked with red in \cref{KB_predictions} we want to maximize B over D. Under the OWA, however, there are no false facts, so we don't know what B and D are. The authors of AMIE therefore introduced a new paradigm called the \textit{partial completeness assumption} (PCA). It assumes that if $r(x, y) \in KB true$ for some entities $x$, $y$, then
+However, in the context of rule mining and KG embeddings the OWA has a central problem; it fails to provide counterexamples. Because missing facts are assumed to be neither true nor false, there are no false facts to give as examples when mining rules or training an embedding model. In the context of the predictions, marked with red in \cref{KB_predictions} we want to maximize B over D. Under the OWA, however, there are no false facts, so we don't know what B and D are. The authors of AMIE therefore introduced a new paradigm called the \textit{partial completeness assumption} (PCA) \cite{amie}. It assumes that if $r(x, y) \in KB true$ for some entities $x$, $y$, then
 \[\forall y' : r(x, y') \in KBtrue \cup NEWtrue \Rightarrow r(x, y') \in KBtrue\].
 This assumption says that if the KG already has $r$-related information about the entity $x$,  then it contains \textit{all} $r$-related information about $x$. For example if a KG only contains \texttt{<Ann> <has sibling> <Bob>} and no other sibling entries with Ann as the head, then by the PCA Bob is Ann's only sibling. All other facts claiming that Ann has other siblings will therefore be negative examples. If we then however ask what \textit{friends} Ann has in a knowledge base without information about Ann's friends, then one cannot conclude that Ann is friendless. PCA is a more particular version of the broad \textit{partial-closed world assumption} (PCWA), where the KG generally is treated under the OWA, but parts of it that are considered complete are treated under the CWA \cite{motro1989integrity}. The PCA specifically defines what parts of the KG should be treated under closed-world semantics.
 
@@ -120,7 +116,7 @@ A loss function is a function that assigns a ``cost" to an event in the form of 
 
 \[\mathcal{L}=\sum_{(h, r, t) \in \mathcal{S}}\sum_{(h', r, t') \in \mathcal{S'}}[\gamma + f(h, r, t) - f(h', r, t')]\]
 
-where $\mathcal{S'}$ is the set of corrupted triples. This loss function favours low score for corrupted triples and a higher score for non-corrupted triples. The aim is not to give a negative triples a score below a certain value nor positive triples a score above a certain value, rather the goal is to create distance between them. This loss function can be used across many KG embedding models, but it is the \textit{scoring function} that differs. The specific scoring functions for TransE, DistMult and ComplEx will be presented in section (TODO: write section).
+where $\mathcal{S'}$ is the set of corrupted triples. This loss function favours low score for corrupted triples and a higher score for non-corrupted triples. The aim is not to give a negative triples a score below a certain value nor positive triples a score above a certain value, rather the goal is to create distance between them. This loss function can be used across many KG embedding models, but it is the \textit{scoring function} that differs. The specific scoring functions for TransE, DistMult and ComplEx will be presented in \cref{KG_embeddings_section}.
 
 
 \subsubsection{Negative log-likelihood loss}
@@ -153,18 +149,49 @@ Mean reciprocal rank (MRR) is a measurement for the number of triples correctly 
 The larger the value, the better the model.
     
 \subsection{KG embedding model architectures}
+\label{KG_embeddings_section}
+KG embedding models differ mainly in three aspects: (1) how entities and relations are represented, (2) the scoring function, and (3) how the embedding is optimized. The difficulty with embedding KGs is that there are many different entities and relationships, so the embedding model needs to be generic enough to capture all the different entities and relationships at the same time. We will now look at the three models used in the thesis.
+
+\subsubsection{TransE}
+\label{TransE_peaked_in_2013}
+In 2013 Mikolov et al. proposed a technique for natural language processing called \textit{word2vec} \cite{mikolov2013distributed,mikolov2013efficient}, which used a word-embedding algorithm that managed to capture some the of semantics. Words were represented as vectors, and the authors found that the embeddings had interesting qualities, such as
+\[\overrightarrow{King} - \overrightarrow{Queen} \approx \overrightarrow{Man} -\overrightarrow{Woman}\]
+where the words with an overhead arrow denote \textit{word2vec}'s vector embedding of the word. Inspired by this Bordes et al. introduced this idea to embedding entities and relations in KGs, and proposed the embedding model TransE \cite{TransE}. A main motivation behind this approach was that ``\textit{hierarchical relationships are extremely common in KBs and translations are the natural transformations for representing them.}" \cite{TransE}. This approach learns entity embeddings and treats relations as translations in the entity embedding space.  For a true triple this means that the tail entity should be very close to the head entity plus the relation translation in the embedding space. If $\textbf{h}$, $\textbf{t}$, and $\textbf{r}$ respectively are the embeddings for the head entity, embedding for the tail entity and the relation translation, then $\textbf{h} + \textbf{r} \approx \textbf{t}$. The score function $f_{TransE}$ is thus defined as the distance between $\textbf{h} + \textbf{r}$ and $\textbf{t}$, using $l_1$ or $l_2$ constraints:
+\[f_{TransE}(h, r, t) = ||\textbf{h} + \textbf{r} - \textbf{t}||_{l_1/l_2}\]
+
+Let $d$ denote the dimension of the embedding space. Per entity one vector $\textbf{e}\in \mathbb{R}^d$ needs to be learned and per relationship one translation vector $\textbf{d}_r\in \mathbb{R}^d$ needs to be learned. Let $n_e$ and $n_r$ be the number of unique entities and relations respectively. The number of parameters needed to be learned for TransE is thus $\mathcal{O}(n_e d + n_r d)$.
+
+TransE does have some limitations. For example, it is not capable of properly embedding complex relations, meaning 1-N, N-1, or N-N relations. Imagine a complex relation such that $\forall i \in \{1,2, ..., n\}$, $(h, r, t_i )\in \mathcal{S}$, where $\mathcal{S}$ is the set of correct triples. Following the TransE approach, $\textbf{h}+\textbf{r}\approx \textbf{t}_i$, therefore $\textbf{t}_1 \approx \textbf{t}_2 \approx ... \approx \textbf{t}_i$, even though the tail entities are not semantically similar. Other translation-based models, such as TransH \cite{transH}, TranR \cite{transR} and TransD \cite{transD}, have later been proposed to alleviate some of the limitations of TransE.
+
+\subsubsection{DistMult}
+DistMult is a tensor factorization-based model. In such models triples in a KG are transformed into a 3D binary tensor $\mathcal{X}$. We want the embeddings of the entities and relations to be such that one can mathematically combine them to obtain the tensor representing the knowledge graph. As seen in \cref{tensor_model_fig}, in the KG tensor each relation is represented by an $n \times n$, where $n$ is the number of unique entities. The number of relations is denoted by $m$, so $\mathcal{X}\in \mathbb{R}^{n \times n \times m}$. An element $X_{ijk} = 1$ if there is a relation of type $(i, j, k)$ in the graph, and $X_{ijk} = 0$ otherwise.
+The tensor factorization-based model RESCAL \cite{RESCAL} uses rank-$d$ factorization to obtain the latent semantics. The main idea of this method is that
+\begin{center}
+ $\mathcal{X}_k \approx AR_k A^T$, for $k = 1,2,...,m$
+\end{center}
+where $\mathcal{X}_k$ is the $k$th slice in the KG tensor, $A\in \mathbb{R}^{n\times d}$ is the matrix representing all entities and $R_k\in \mathbb{R}^{d\times d}$ is a matrix representing the $k$th relation.
+So the scoring function used in RESCAL is
+\[f_ {\text{RESCAL}}(h, r, t) =\textbf{h}^{\top}\textbf{M}_r\textbf{t}\]
+where $\textbf{h, t}\in \mathbb{R}^{d}$ are the embedding vectors of entities and $\textbf{M}_r \in \mathbb{R}^{d\times d}$ is the semantic embedding of the relation.
+This method requires thus $\mathcal{O}(n_ed + n_r d^r)$ parameters. In order to lower this complexity, DistMult restricts $\textbf{M}_r$ to be a diagonal matrix. Meaning that all entries apart from those in the diagonal of the matrix are zero. After $\textbf{M}_r = \text{diag}(\textbf{r}), \textbf{r}\in\mathbb{R}^d$. The scoring function is transformed to
+\[f_ {\text{DistMult}}(h, r, t) =\textbf{h}^{\top}\text{diag}(\textbf{r})\textbf{t}\]
+Now only $d$ parameters need to be learned per relationship, and the number of parameters to be learned for DistMult is $\mathcal{O}(n_ed + n_r d)$. The space required is also $\mathcal{O}(n_ed + n_r d)$.
+
+\begin{figure}[htp]
+    \centering
+    \includegraphics[width=6cm]{figures/KG_embeddings/tensor_model.png}
+    \caption{A tensor model of a knowledge graph \cite{dai2020survey}.}
+    \label{tensor_model_fig}
+\end{figure}
+
+A main problem with this approach is that $f_ {\text{DistMult}}(h, r, t) = f_ {\text{DistMult}}(t, r, h)$, so DistMult cannot embed the asymmetry of a relation. This issue is adressed by later models, such as ComplEx \cite{complEx} and \cite{SimplE}.
+
 
 \subsubsection{ComplEx}
-ComplEx is a tensor factorization-based embedding model.\nocite{trouillon2016complex} In such models triples in a KG are transformed into a 3D binary tensor. The embeddings of the entities and relations are intended to be such that one can mathematically combine them to obtain the tensor representing the KG. ComplEx builds on the embedding model DistMult, which restricts the semantic embedding of relations to be a diagonal matrix. This allows for the number of parameters to be linear on the number of entities and embedding dimension. \nocite{dai2020survey} 
-
-Unfortunately the original DistMult model cannot embed asymmetric relations, which the ComplEx approach solved by using complex-valued embeddings. This was achieved without increasing parameter or memory complexity. The imaginary and real part of the embeddings play the role of representing the "direction" of the relation and thus asymmetric relations are able to be embedded. I used \href{https://docs.ampligraph.org/en/1.4.0/generated/ampligraph.latent_features.ComplEx.html}{Ampligraph's} implementation of ComplEx, but it provided to be problematic to use. Explanation of the problems encountered are described in the \textbf{Experiments} section.    
+ComplEx extends DistMult with complex-valued embeddings, thereby allowing it to distinguish between symmetric and asymmetric facts \cite{complEx}. This was achieved without increasing parameter or memory complexity. The imaginary and real part of the embeddings play the role of representing the "direction" of the relation and thus asymmetric relations are able to be embedded. So the scoring function for ComplEx is quite similar to that of DistMult:
+\[f_ {\text{ComplEx}}(h, r, t) =\textbf{Re}(\textbf{h}^{\top}\text{diag}(\textbf{r})\overline{\textbf{t}})\]
+where $\overline{\textbf{t}}$ represents the complex conjugate of \textbf{t}. With such a scoring function, triples with asymmetric relations are able to obtain differetn scores depending on the sequence of entities.
     
-
-
-
-\textbf{Metrics}
-
-    Ranking triples
 
 \section{Rule-based machine learning}
 Rule-based machine learning has as a goal to create rules that make new true predictions going beyond the data on which the rule was applied to. In contrast, other areas of machine learning focus on training a single model that can be applied to make a broad range of predictions. Conceptually the end result of rule-based machine learning is similar to a rule-based system.  Rule-based systems are often hand-crafted and require a knowledge expert to be curated, while rule-based machine learning requires no knowledge expert and rules are automatically created by the learning algorithm.
@@ -220,7 +247,7 @@ Recalling the PCA from \ref{Integrity_of_KGs} we now look at AMIE's attempt at n
 
 
 \subsection{AMIE, AMIE+ and AMIE3}
-\textcolor{red}{I treat the mining algorithm as a black box in the experiments. How much shoulf be written about AMIE3 here= Should I write about the different versions of AMIE?}
+\textcolor{red}{I treat the mining algorithm as a black box in the experiments. How much should be written about AMIE3 here? Should I write about the different versions of AMIE?}
 
 \iffalse 
 \section{Web Ontology Language}
