@@ -1,23 +1,23 @@
 \chapter{Results}
-
+TODO: This chapter will....
 \section{Goals}
-We want to look at the effect that extending a KG has on the rules mined from it and the role of extension methods in the process. Some central questions here are:
-\begin{itemize}
-    \item Does adding new plausible facts lead to new rules being mined?
-    \item How does the quality of these rules compare to the rules mined from the original KG?
+We study how the extension of KG affects rule mining, and the role of extension methods in the process. Some central questions here are:
+\begin{enumerate}
+    \item Does adding new plausible facts lead to new rules being mined? 
+    \item How does the PCA confidence of these rules compare to the rules mined from the original KG?
     \item Can the rules mined from the original KG also be mined after the KG is extended?
-\end{itemize}
+\end{enumerate}
 Regarding extension methods we will look at three parameters:
 \begin{itemize}
     \item the \textit{entity selection strategy} for candidate generation
     \item the \textit{KG embedding model architecture} for ranking candidates
     \item the \textit{rank cutoff value} for admitting candidates to the KG
 \end{itemize}
-and their role in the quantity and quality of the rules that are mined.
+and their role in the quantity and PCA confidence of the rules that are mined.
 \section{Overview of results}
-
+This section will give a brief overview of the results and focuses on the fact that most of the rules mined derive from KGs extended using TransE.
 \subsection{KG extension sizes}
-In the KG extension process there are 48 different parameter combinations. This means that there are 48 different KG extensions for each original KG. Extension set sizes range from approximately 800 to 33500 triples, where the RandomBaseline model admitted the most candidates. This makes sense, as the models assign a random score to facts, so that many more receive a high rank. The \textit{trained} models give most candidates a low score because most triples usually are bad candidates. Note that the extension sizes were about the same for both datasets, while WN18RR and the family KG respectively have 88 227 and 258 235 facts, therefore the extensions for WN18RR are relatively larger than for the family KG.
+In the KG extension process there are 48 \footnote{4 (KG embedding models) $\times$ 4 (entity selection methods) $\times$ 3 (rank cutoff) = 48 parameter combinations.} different parameter combinations. This means that there are 48 different KG extensions for each original KG. Extension set sizes range from approximately 800 to 33500 triples, where the RandomBaseline model admitted the most candidates. This makes sense, as the models assign a random score to facts, so that many more receive a high rank. The \textit{trained} models give most candidates a low score because most triples usually are bad candidates. Note that the extension sizes were about the same for both datasets, while WN18RR and the family KG respectively have 88 227 and 258 235 facts, therefore the extensions for WN18RR are relatively larger than for the family KG.
 
 \subsection{Rule set sizes and mean PCA confidence}
 \label{TransE_sucks} 
@@ -41,7 +41,7 @@ Upon examining the number of rules mined per KG extension one immediately sees s
 \label{fig:test}
 \end{figure}
 
-As discussed in \cref{TransE_peaked_in_2013} TransE is not able to learn certain relation qualities, and upon further inspection of the embedding vectors for relations in TransE the vector values all tend toward zero. It seems that while scoring decently on the performance metrics during model selection, TransE has not properly embedded the relations in the KG. Of the rules mined, \textcolor{red}{97}\% (WN18RR) and \textcolor{red}{76}\% (family KG) originate from KGs extended using TransE. The large number of rules produced marginalize those mined using other embedding models. Due to this and the fact that the trained TransE model has poor relational embeddings, we will include rules mined from KGs extended with TransE only when examining embedding models, but not when looking at entity selection methods or rank cutoff values.
+As discussed in Section \ref{TransE_peaked_in_2013} TransE is not able to learn certain relation qualities, and upon further inspection of the embedding vectors for relations in TransE the vector values all tend toward zero. It seems that while scoring decently on the performance metrics during model selection, TransE has not properly embedded the relations in the KG. Of the rules mined, \textcolor{red}{97}\% (WN18RR) and \textcolor{red}{76}\% (family KG) originate from KGs extended using TransE. The large number of rules produced marginalize those mined using other embedding models. Due to this and the fact that the trained TransE model has poor relational embeddings, we will include rules mined from KGs extended with TransE only when examining embedding models, but not when looking at entity selection methods or rank cutoff values.
 
 \section{Effect of parameters}
 In this section we will examine the effects of each of the three main parameters in the KG extension process. Note that when looking at rules with a certain parameter the sets of rules will be a concatenation of all cases where that parameter was used. For example, if we look at the rules mined with ComplEx as the KG embedding model, then this group will contain rules mined from 12 different KG extensions because we need to look at all the combinations of entity selection methods and rank cutoff values ($4\times3=12$). This is differentiated from the case where we look at rules mined from a single extended KG, which we will do in \cref{Rule_comparison}.
@@ -108,26 +108,40 @@ The family KG produced similar results, where AMIE3 failed to find 12 original r
 \end{figure}
 
 
-As presented in \cref{TransE_sucks}, AMIE3 mines a great deal more rules from KGs extended with TransE. Due to the low mean PCA confidence for these rules (0.038 for WN18RR and 0.089 for the family KG) it is clear that there is little support for the rules in the original KGs. If one however evaluates the TransE rules on the \textit{extended} KGs they were mined from, the PCA confidence increases substantially, as seen in figures \ref{fig:model_pies_family} and \ref{fig:model_pies_wn18rr}. So even though most of these rules have little support from the original KGs, it was no mistake that AMIE3 mined so many rules from the TransE-extended KGs.
+As presented in \cref{TransE_sucks}, AMIE3 mines a great deal more rules from KGs extended with TransE. Due to the low mean PCA confidence for these rules (0.038 for WN18RR and 0.089 for the family KG) it is clear that there is little support for the rules in the original KGs. If one however evaluates the TransE rules on the \textit{extended} KGs they were mined from, the PCA confidence increases substantially, as seen in figures \ref{table_rules_models_family} and \ref{table_rules_models_wn18rr}. So even though most of these rules have little support from the original KGs, it was no mistake that AMIE3 mined so many rules from the TransE-extended KGs.
 
-\begin{table}[h]
-\begin{tabular}{|l|ccc||ccc|}
-\hline
-{\textbf{DATASET}}   & \multicolumn{3}{c||}{\textbf{WN18RR}}                                                                              & \multicolumn{3}{c|}{\textbf{Family KG}}                                                           \\ \hline
-{\textbf{RULE GROUPS}}   & \multicolumn{1}{c|}{\textbf{Not found}} & \multicolumn{1}{c|}{\textbf{Found}} & \multicolumn{1}{c||}{\textbf{New}} & \multicolumn{1}{c|}{\textbf{Not found}} & \multicolumn{1}{c|}{\textbf{Found}} & \multicolumn{1}{c|}{\textbf{New}} \\ \hline
-\textbf{ComplEx}  & \multicolumn{1}{c|}{0}                  & \multicolumn{1}{c|}{10}             & \multicolumn{1}{c||}{19}           & \multicolumn{1}{c|}{0}                  & \multicolumn{1}{c|}{94}             & \multicolumn{1}{c|}{73}           \\ \hline
-\textbf{DistMult} & \multicolumn{1}{c|}{0}                     & \multicolumn{1}{c|}{10}                                  & 16                                & \multicolumn{1}{c|}{1}         & \multicolumn{1}{c|}{93}          & 115                               \\ \hline
-\textbf{TransE}   & \multicolumn{1}{c|}{0}         & \multicolumn{1}{c|}{10}                     & 811                               & \multicolumn{1}{c|}{7}       & \multicolumn{1}{c|}{87}      & 1083                              \\ \hline
-\textbf{Baseline} & \multicolumn{1}{c|}{1}     & \multicolumn{1}{c|}{9}                   & 0                                 & \multicolumn{1}{c|}{12}       & \multicolumn{1}{c|}{82}         & 16                                \\ \hline
+\begin{table}[]
+\begin{tabular}{l|cc|cc|cc}
+\multicolumn{1}{c}{\multirow{2}{*}{\textbf{Model}}} & \multicolumn{2}{c}{\textbf{Original rules}} & \multicolumn{2}{c}{\textbf{New rules}} & \multicolumn{2}{c}{\textbf{Orig. rules not found}}         \\
+\multicolumn{1}{c}{}                                & Count    & \% of mined rules    & Count  & \% of mined rules & Count & \multicolumn{1}{c}\% of original rules \\ \hline
+Baseline                                            & 85             & 100\%                      & 0            & 0\%                     & 9           & 10\%                                           \\
+TransE                                              & 94             & 9\%                        & 986          & 91\%                    & 0           & 0\%                                            \\
+DistMult                                            & 93             & 51\%                       & 90           & 49\%                    & 1           & 1\%                                            \\
+ComplEx                                             & 94             & 69\%                       & 43           & 31\%                    & 0           & 0\%                                           
 \end{tabular}
-\caption{Overview of which KG embedding models found all the original rules and how many new rules were found.}
+\label{table_rules_models_family}
+\caption{Distribution of all the rules mined over KG embedding models. KG: family KG.}
 \end{table}
 
-DistMult and ComplEx are closely related embedding models as they have similar scoring functions (the scoring function of ComplEx corresponds to that of DistMult but with real embeddings), and perform similarly on benchmark datasets \cite{complEx}. As mentioned in \cref{TransE_peaked_in_2013}, DistMult is not able to learn asymmetric qualities to relations. Although the the rules mined with AMIE3 must be Horn, thereby a rule defining the asymmetry of a relation cannot be mined, this may still affect the the quality of the embedding and thus the KG extension. From the results it seems that ComplEx is a somewhat stricter model, in the sense that it ranks candidate triples lower against corrupted triples than DistMult does. This is evidenced by the fact that the KG extension sizes are larger for DistMult than for ComplEx; DistMult is admitting more candidates. For example, of the candidates generated with the the entity selection method "probabilistic" from the WN18RR KG, DistMult assigned \textcolor{red}{1468} candidates rank 1 while ComplEx only did this for \textcolor{red}{866} candidates. As a result, more rules are mined from DistMult-extended KGs.
+\begin{table}[]
+\begin{tabular}{l|cc|cc|cc}
+\multicolumn{1}{c}{\multirow{2}{*}{\textbf{Model}}} & \multicolumn{2}{c}{\textbf{Original rules}} & \multicolumn{2}{c}{\textbf{New rules}} & \multicolumn{2}{c}{\textbf{Orig. rules not found}}         \\
+\multicolumn{1}{c}{}                                & Count    & \% of mined rules    & Count  & \% of mined rules & Count & \multicolumn{1}{c}\% of original rules \\ \hline
+Baseline                                            & 9             & 100\%                      & 0            & 0\%                     & 1           & 10\%                                           \\
+TransE                                              & 10             & 1\%                        & 659          & 99\%                    & 0           & 0\%                                            \\
+DistMult                                            & 10             & 67\%                       & 5           & 33\%                    & 0           & 0\%                                            \\
+ComplEx                                             & 10             & 59\%                       & 7           & 41\%                    & 0           & 0\%                                           
+\end{tabular}
+\label{table_rules_models_wn18rr}
+\caption{Distribution of all the rules mined over KG embedding models. KG: WN18RR.}
+\end{table}
+
+
+DistMult and ComplEx are closely related embedding models as they have similar scoring functions (the scoring function of ComplEx corresponds to that of DistMult but with real embeddings), and perform similarly on benchmark datasets \cite{complEx}. As mentioned in \cref{TransE_peaked_in_2013}, DistMult is not able to represent asymmetric relations. Although AMIE3 can only mine Horn rules, thereby a rule defining the asymmetry of a relation cannot be mined, this may still affect the the quality of the embedding and thus the KG extension. From the results it seems that ComplEx is a somewhat stricter model, in the sense that it ranks candidate triples lower against corrupted triples than DistMult does. This is evidenced by the fact that the KG extension sizes are larger for DistMult than for ComplEx; DistMult is admitting more candidates. For example, of the candidates generated with the entity selection method "probabilistic" from the WN18RR KG, DistMult assigned \textcolor{red}{1468} candidates rank 1 while ComplEx only did this for \textcolor{red}{866} candidates. As a result, more rules are mined from DistMult-extended KGs.
 
 The combined set of rules found from ComplEx-extended KGs include all the original rules, both for WN18RR and the family KG.  This is almost also the case for DistMult, but it fails to find the original rule $child(x, y) \Rightarrow mother(y,x)$ in the family KG. This rule has the second lowest PCA confidence of all the original family KG rules.
 
-
+\iffalse
     \begin{figure*}[h]
         \centering
         \begin{subfigure}[b]{0.49\textwidth}
@@ -205,11 +219,11 @@ The combined set of rules found from ComplEx-extended KGs include all the origin
         \label{fig:model_pies_wn18rr}
     \end{figure*}
 
-
+\fi
 
 \newpage
 \subsection{Effect of entity selection method}
-The \textit{probabilistic}, \textit{random}, and the \textit{least frequent} entity selection strategies perform relatively similarly if we look at the PCA confidence box plots in figures \ref{fig:PCA_entity_wn18rr_boxplot} and \ref{fig:PCA_entity_family_boxplot}. The \textit{most frequent} strategy, however, performs worse, both on the WN18RR and family KG. This is consistent with AmpliGraph's assumption that the most frequent entities are less likely to have missing facts.
+The \textit{probabilistic}, \textit{random}, and the \textit{least frequent} entity selection strategies perform relatively similarly if we look at the PCA confidence box plots in figures \ref{fig:PCA_entity_wn18rr_boxplot} and \ref{fig:PCA_entity_family_boxplot}. The \textit{most frequent} strategy, however, performs worse, both on the WN18RR and family KG. This is consistent with AmpliGraph's assumption that the most frequent entities are less likely to have missing facts \cite{kge_tutorial}.
 
 In the WN18RR KG all original rules were found, but in the family KG only the \textit{least frequent} strategy resulted in all the original rules being mined. It also resulted in the least new rules being mined, while the \textit{most frequent} strategy led to the most new rules.
 
@@ -287,7 +301,7 @@ Overall it seems like \textit{probabilistic}, \textit{random}, and the \textit{l
             \label{fig:least_pie_wn18rr}
         \end{subfigure}
         \caption[]
-        {\small Distribution of all the rules mined over entity selection stragegies for WN18RR.} 
+        {\small Distribution of all the rules mined over entity selection strategies for WN18RR.} 
         \label{fig:entity_pies_wn18rr}
     \end{figure*}
     
