@@ -43,6 +43,19 @@ Upon examining the number of rules mined per KG extension one immediately sees s
 
 As discussed in Section \ref{TransE_peaked_in_2013} TransE is not able to learn certain relation qualities, and upon further inspection of the embedding vectors for relations in TransE the vector values all tend toward zero. It seems that while scoring decently on the performance metrics during model selection, TransE has not properly embedded the relations in the KG. Of the rules mined, \textcolor{red}{97}\% (WN18RR) and \textcolor{red}{76}\% (family KG) originate from KGs extended using TransE. The large number of rules produced marginalize those mined using other embedding models. Due to this and the fact that the trained TransE model has poor relational embeddings, we will include rules mined from KGs extended with TransE only when examining embedding models, but not when looking at entity selection methods or rank cutoff values.
 
+\begin{lstlisting}[mathescape=true, float, caption={Selection of nonsense rules mined from KGs extended with TransE.},captionpos=b, label={TransE_nonsense_rules}]
+$spouse(x, y)  \Rightarrow father(x, y)$
+$mother(x, y)   \Rightarrow child(x, y)$
+$relative(y, x) \Rightarrow sibling(x, y)$
+$spouse(a, y) \Rightarrow child(x,y)$
+$relative(x, y) \Rightarrow sibling(x, y)$
+$relative(x, z) \wedge sibling(z, y) \Rightarrow mother(x, y)$
+$child(z, x) \wedge mother(z,y) \Rightarrow spouse(x, y)$
+$relative(y, x) \wedge sibling(y, x) \Rightarrow father(x, y)$
+$mother(z, y) \wedge mother(x, z) \Rightarrow child(x, y)$
+$sibling(y, x) \wedge spouse(x, y) \Rightarrow father(x, y)$
+\end{lstlisting}
+
 \section{Effect of parameters}
 In this section we will examine the effects of each of the three main parameters in the KG extension process. Note that when looking at rules with a certain parameter the sets of rules will be a concatenation of all cases where that parameter was used. For example, if we look at the rules mined with ComplEx as the KG embedding model, then this group will contain rules mined from 12 different KG extensions because we need to look at all the combinations of entity selection methods and rank cutoff values ($4\times3=12$). This is differentiated from the case where we look at rules mined from a single extended KG, which we will do in \cref{Rule_comparison}.
 
@@ -64,10 +77,7 @@ In this section we will examine the effects of each of the three main parameters
 
 
 \subsection{Effect of KG embedding model}
-At the first glance of figures \ref{fig:model_pies_family} and \ref{fig:model_pies_wn18rr} it may seem odd that the PCA confidence of rules mined from RandomBaseline extensions is so high. By looking at figures \ref{rule_dist_models_hbar_family} and \ref{rule_dist_models_hbar_wn18rr} it becomes apparent that there in fact fewer different rules mined from these extensions. In the WN18RR case no new rules were found, and a single original rule was also never mined. The omitted rule,
-\[derivationally\_related\_form(x, y)   \Rightarrow derivationally\_related\_form(y, x)\]
-has the lowest PCA confidence out of all the original rules. Since there already was little support in the KG for the rule, the addition of noise may have obscured too much evidence for the relation \textcolor{red}{\texttt{derivationally\_related\_form}} being symmetric for the algorithm to consider the rule significant. 
-% check RandomBaseline_original_rules.ipynb to see if there is a new rule.
+At the first glance of boxplots \ref{fig:PCA_models_wn18rr_boxplot} and \ref{fig:PCA_models_family_boxplot} it may seem odd that the PCA confidence of rules mined from RandomBaseline extensions is so high. Boxplots are used to represent the spread of data through their quartlies \cite{dutoit2012graphical}. The box itself covers $Q_1-Q_3$, with the horizontal line in the box marking the median. The median PCA confidence for the original rules is indicated by the dashed line across the plots. The boxplots used in this thesis also have \textit{whiskers}, which are the lines extending vertically out of the box. Whiskers give an indication of the variability of the data outside the upper and lower quartiles (respectively $Q_1$ and $Q_3$). Points beyond the whiskers are considered outliers.
 
 \begin{figure}[h]
 \centering
@@ -87,8 +97,6 @@ has the lowest PCA confidence out of all the original rules. Since there already
 \label{fig:PCA_models_wn18rr_boxplot}
 \end{figure}
 
-The family KG produced similar results, where AMIE3 failed to find 12 original rules in the RandomBaseline-extended KGs. All of these rules were among those with the lowest PCA confidence of the original rules. When the rules with lowest PCA condifence in a set are removed, then the median PCA confidence naturally goes up. This explains how the RandomBaseline rules have a higher median PCA confidence than the original, shown in figures \ref{fig:model_pies_family} and \ref{fig:model_pies_wn18rr}.
-
 \begin{figure}[h]
 \centering
 \begin{subfigure}{.5\textwidth}
@@ -107,34 +115,42 @@ The family KG produced similar results, where AMIE3 failed to find 12 original r
 \label{fig:PCA_models_family_boxplot}
 \end{figure}
 
+By looking at figures \ref{rule_dist_models_hbar_family} and \ref{rule_dist_models_hbar_wn18rr} it becomes apparent that there in fact fewer different rules mined from these extensions. In the WN18RR case no new rules were found, and a single original rule was also never mined. The omitted rule,
+\[derivationally\_related\_form(x, y)   \Rightarrow derivationally\_related\_form(y, x)\]
+has the lowest PCA confidence out of all the original rules. Since there already was little support in the KG for the rule, the addition of noise may have obscured too much evidence for the relation \textcolor{red}{\texttt{derivationally\_related\_form}} being symmetric for the algorithm to consider the rule significant. 
+% check RandomBaseline_original_rules.ipynb to see if there is a new rule.
 
-As presented in \cref{TransE_sucks}, AMIE3 mines a great deal more rules from KGs extended with TransE. Due to the low mean PCA confidence for these rules (0.038 for WN18RR and 0.089 for the family KG) it is clear that there is little support for the rules in the original KGs. If one however evaluates the TransE rules on the \textit{extended} KGs they were mined from, the PCA confidence increases substantially, as seen in figures \ref{table_rules_models_family} and \ref{table_rules_models_wn18rr}. So even though most of these rules have little support from the original KGs, it was no mistake that AMIE3 mined so many rules from the TransE-extended KGs.
-
-\begin{table}[]
+\begin{table}[htp]
+\centering
 \begin{tabular}{l|cc|cc|cc}
-\multicolumn{1}{c}{\multirow{2}{*}{\textbf{Model}}} & \multicolumn{2}{c}{\textbf{Original rules}} & \multicolumn{2}{c}{\textbf{New rules}} & \multicolumn{2}{c}{\textbf{Orig. rules not found}}         \\
-\multicolumn{1}{c}{}                                & Count    & \% of mined rules    & Count  & \% of mined rules & Count & \multicolumn{1}{c}\% of original rules \\ \hline
+\multicolumn{1}{c}{\multirow{2}{*}{\textbf{Model}}} & \multicolumn{2}{c}{\textbf{Original rules}} & \multicolumn{2}{c}{\textbf{New rules}} & \multicolumn{2}{c}{\textbf{Orig. not found}}         \\
+\multicolumn{1}{c}{}                                & Count    & \% of mined    & Count  & \% of mined & Count & \multicolumn{1}{c}\% of original \\ \hline
 Baseline                                            & 85             & 100\%                      & 0            & 0\%                     & 9           & 10\%                                           \\
 TransE                                              & 94             & 9\%                        & 986          & 91\%                    & 0           & 0\%                                            \\
 DistMult                                            & 93             & 51\%                       & 90           & 49\%                    & 1           & 1\%                                            \\
 ComplEx                                             & 94             & 69\%                       & 43           & 31\%                    & 0           & 0\%                                           
 \end{tabular}
-\label{table_rules_models_family}
 \caption{Distribution of all the rules mined over KG embedding models. KG: family KG.}
+\label{Tab:table_rules_models_family}
 \end{table}
 
-\begin{table}[]
+\begin{table}[htp]
+\centering
 \begin{tabular}{l|cc|cc|cc}
-\multicolumn{1}{c}{\multirow{2}{*}{\textbf{Model}}} & \multicolumn{2}{c}{\textbf{Original rules}} & \multicolumn{2}{c}{\textbf{New rules}} & \multicolumn{2}{c}{\textbf{Orig. rules not found}}         \\
-\multicolumn{1}{c}{}                                & Count    & \% of mined rules    & Count  & \% of mined rules & Count & \multicolumn{1}{c}\% of original rules \\ \hline
+\multicolumn{1}{c}{\multirow{2}{*}{\textbf{Model}}} & \multicolumn{2}{c}{\textbf{Original rules}} & \multicolumn{2}{c}{\textbf{New rules}} & \multicolumn{2}{c}{\textbf{Orig. not found}}         \\
+\multicolumn{1}{c}{}                                & Count    & \% of mined    & Count  & \% of mined & Count & \multicolumn{1}{c}\% of original \\ \hline
 Baseline                                            & 9             & 100\%                      & 0            & 0\%                     & 1           & 10\%                                           \\
 TransE                                              & 10             & 1\%                        & 659          & 99\%                    & 0           & 0\%                                            \\
 DistMult                                            & 10             & 67\%                       & 5           & 33\%                    & 0           & 0\%                                            \\
 ComplEx                                             & 10             & 59\%                       & 7           & 41\%                    & 0           & 0\%                                           
 \end{tabular}
-\label{table_rules_models_wn18rr}
 \caption{Distribution of all the rules mined over KG embedding models. KG: WN18RR.}
+\label{Tab:table_rules_models_wn18rr}
 \end{table}
+
+The family KG produced similar results, where AMIE3 failed to find 12 original rules in the RandomBaseline-extended KGs. All of these rules were among those with the lowest PCA confidence of the original rules. When the rules with lowest PCA condifence in a set are removed, then the median PCA confidence naturally goes up. This explains how the RandomBaseline rules have a higher median PCA confidence than the original, shown in tables \ref{Tab:table_rules_models_family} and \ref{Tab:table_rules_models_wn18rr}.
+
+As presented in \cref{TransE_sucks}, AMIE3 mines a great deal more rules from KGs extended with TransE. Due to the low mean PCA confidence for these rules (0.038 for WN18RR and 0.089 for the family KG) it is clear that there is little support for the rules in the original KGs. If one however evaluates the TransE rules on the \textit{extended} KGs they were mined from, the PCA confidence increases substantially, as seen in figures \ref{fig:_PCA_models_wn18rr_boxplot_sub} and \ref{fig:_PCA_models_family_boxplot_sub}. So even though most of these rules have little support from the original KGs, it was no mistake that AMIE3 mined so many rules from the TransE-extended KGs.
 
 
 DistMult and ComplEx are closely related embedding models as they have similar scoring functions (the scoring function of ComplEx corresponds to that of DistMult but with real embeddings), and perform similarly on benchmark datasets \cite{complEx}. As mentioned in \cref{TransE_peaked_in_2013}, DistMult is not able to represent asymmetric relations. Although AMIE3 can only mine Horn rules, thereby a rule defining the asymmetry of a relation cannot be mined, this may still affect the the quality of the embedding and thus the KG extension. From the results it seems that ComplEx is a somewhat stricter model, in the sense that it ranks candidate triples lower against corrupted triples than DistMult does. This is evidenced by the fact that the KG extension sizes are larger for DistMult than for ComplEx; DistMult is admitting more candidates. For example, of the candidates generated with the entity selection method "probabilistic" from the WN18RR KG, DistMult assigned \textcolor{red}{1468} candidates rank 1 while ComplEx only did this for \textcolor{red}{866} candidates. As a result, more rules are mined from DistMult-extended KGs.
@@ -265,8 +281,35 @@ Overall it seems like \textit{probabilistic}, \textit{random}, and the \textit{l
 \label{fig:PCA_entity_family_boxplot}
 \end{figure}
 
+\begin{table}[htp]
+\centering
+\begin{tabular}{l|cc|cc|cc}
+\multicolumn{1}{c}{\multirow{2}{*}{\textbf{Strategy}}} & \multicolumn{2}{c}{\textbf{Original rules}} & \multicolumn{2}{c}{\textbf{New rules}} & \multicolumn{2}{c}{\textbf{Orig. not found}}         \\
+\multicolumn{1}{c}{}                                & Count    & \% of mined    & Count  & \% of mined & Count & \multicolumn{1}{c}\% of original \\ \hline
+Random                                            & 90             & 71\%                      & 36            & 29\%                     & 4           & 4\%                                           \\
+Most freq.                                              & 88             & 46\%                        & 105          & 54\%                    & 6           & 6\%                                            \\
+Least freq                                            & 94             & 77\%                       & 28           & 33\%                    & 0           & 0\%                                            \\
+Probabilistic                                             & 91             & 73\%                       & 33           & 27\%                    & 3           & 3\%                                           
+\end{tabular}
+\caption{Distribution of all the rules mined over entity selection strategies for the family KG.}
+\label{Tab:table_rules_entities_family}
+\end{table}
 
+\begin{table}[htp]
+\centering
+\begin{tabular}{l|cc|cc|cc}
+\multicolumn{1}{c}{\multirow{2}{*}{\textbf{Strategy}}} & \multicolumn{2}{c}{\textbf{Original rules}} & \multicolumn{2}{c}{\textbf{New rules}} & \multicolumn{2}{c}{\textbf{Orig. not found}}         \\
+\multicolumn{1}{c}{}                                & Count    & \% of mined    & Count  & \% of mined & Count & \multicolumn{1}{c}\% of original \\ \hline
+Random                                            & 10             & 53\%                      & 9            & 47\%                     & 0           & 0\%                                           \\
+Most freq.                                              & 10             & 42\%                        & 14          & 58\%                    & 0           & 0\%                                            \\
+Least freq.                                            & 10             & 48\%                       & 11           & 52\%                    & 0           & 0\%                                            \\
+Probabilistic                                             & 10             & 45\%                       & 12           & 55\%                    & 0           & 0\%                                           
+\end{tabular}
+\caption{Distribution of all the rules mined over entity selection strategies. KG: WN18RR.}
+\label{Tab:table_rules_entities_wn18rr}
+\end{table}
 
+\iffalse
 \begin{figure*}[h]
         \centering
         \begin{subfigure}[b]{0.49\textwidth}
@@ -344,7 +387,7 @@ Overall it seems like \textit{probabilistic}, \textit{random}, and the \textit{l
         \label{fig:entity_pies_family}
     \end{figure*}
 
-
+\fi
 
 
 

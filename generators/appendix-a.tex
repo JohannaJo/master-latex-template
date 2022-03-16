@@ -1,8 +1,269 @@
 \chapter{Results}
-\begin{figure}
+\begin{figure}[h]
 \centering
     \centering
-    \includesvg[inkscapelatex=false,width=0.75\textwidth,keepaspectratio]{figures/appendix/all_sets.svg}
-    \caption{Distribution of all mined rule sets.}
+    \includesvg[inkscapelatex=false,width=0.6\textwidth,keepaspectratio]{figures/appendix/all_sets.svg}
+    \caption{Distribution of all mined rule sets. Each rule set is labeled with the entity selection strategy, embedding model and rank cutoff that was used for that particular KG extension. As mentioned in section \ref{TransE_sucks} can see that when the KGs are extended using TransE the number of new rules that are mined increases drastically.}
     \label{all_sets}
 \end{figure}
+
+
+\begin{figure}[h]
+\centering
+    \centering
+    \includesvg[inkscapelatex=false,width=0.75\textwidth,keepaspectratio]{figures/appendix/all_sets_w_out_TransE.svg}
+    \caption{Distribution of all mined rule sets, excluding the sets mined from KGs extended using TransE. Each rule set is labeled with the entity selection strategy, embedding model and rank cutoff that was used for that particular KG extension. We can observe that no new rules are mined when the RandomBaseline was used to extend the KGs.}
+    \label{all_sets_w_out_TransE}
+\end{figure}
+
+\begin{table}[h]
+\begin{tabular}{lrr}
+\toprule
+                                                                                                      Rule &  Frequencies &  PCA Confidence \\
+\midrule
+                            ?b  DRF  ?a   => ?a  DRF  ?b &           48 &        1.000000 \\
+                   ?a  \_hypernym  ?c  ?c  SDTO  ?b   => ?a  SDTO  ?b &           36 &        0.828871 \\
+                   ?c  \_hypernym  ?a  ?c  SDTO  ?b   => ?a  SDTO  ?b &           34 &        0.726667 \\
+                   ?a  \_has\_part  ?c  ?c  SDTO  ?b   => ?a  SDTO  ?b &           24 &        0.809524 \\
+          ?a  IH  ?c  ?c  SDTO  ?b   => ?a  SDTO  ?b &           24 &        0.886525 \\
+?a  DRF  ?c  ?c  SDTO  ?b   => ?a  SDTO  ?b &           24 &        0.492857 \\
+?c  DRF  ?a  ?c  SDTO  ?b   => ?a  SDTO  ?b &           24 &        0.492857 \\
+                   ?c  \_has\_part  ?a  ?c  SDTO  ?b   => ?a  SDTO  ?b &           24 &        0.771739 \\
+                                               ?a  \_has\_part  ?c  ?b  \_hypernym  ?c   => ?a  \_has\_part  ?b &           21 &        0.104016 \\
+                                      ?a  \_has\_part  ?c  ?b  IH  ?c   => ?a  \_has\_part  ?b &           19 &        0.532544 \\
+\bottomrule
+\end{tabular}
+\caption{Rules mined from the original WN18RR KG, with their corresponding PCA confidences and how many times they were mined from the 48 extensions. DRF = "derivationally related form", STDO = "synset domain topic of" and IH = "instance hypernym".}
+\label{wn18rr_original_rules_table_frequencies}
+\end{table}
+
+\begin{table}[h]
+\begin{tabular}{lrr}
+\toprule
+                                                                                                      Rule &  Frequencies &  PCA Confidence \\
+\midrule
+                            ?b  DRF  ?a   => ?a  DRF  ?b &           48 &        1.000000 \\
+          ?a  IH  ?c  ?c  SDTO  ?b   => ?a  SDTO  ?b &           24 &        0.886525 \\
+                   ?a  \_hypernym  ?c  ?c  SDTO  ?b   => ?a  SDTO  ?b &           36 &        0.828871 \\
+                   ?a  \_has\_part  ?c  ?c  SDTO  ?b   => ?a  SDTO  ?b &           24 &        0.809524 \\
+                   ?c  \_has\_part  ?a  ?c  SDTO  ?b   => ?a  SDTO  ?b &           24 &        0.771739 \\
+                   ?c  \_hypernym  ?a  ?c  SDTO  ?b   => ?a  SDTO  ?b &           34 &        0.726667 \\
+                                      ?a  \_has\_part  ?c  ?b  IH  ?c   => ?a  \_has\_part  ?b &           19 &        0.532544 \\
+?a  DRF  ?c  ?c  SDTO  ?b   => ?a  SDTO  ?b &           24 &        0.492857 \\
+?c  DRF  ?a  ?c  SDTO  ?b   => ?a  SDTO  ?b &           24 &        0.492857 \\
+                                               ?a  \_has\_part  ?c  ?b  \_hypernym  ?c   => ?a  \_has\_part  ?b &           21 &        0.104016 \\
+\bottomrule
+\end{tabular}
+\caption{Rules mined from the original WN18RR KG, with their corresponding PCA confidences and how many times they were mined from the 48 extensions. DRF = "derivationally related form", STDO = "synset domain topic of" and IH = "instance hypernym".}
+\label{wn18rr_original_rules_table_PCA}
+\end{table}
+
+\begin{longtable}{lrr}[h]
+\toprule
+                                                    Rule &  Frequencies &  PCA Confidence \\
+\midrule
+                  ?b  relative  ?a   $\Rightarrow$ ?a  relative  ?b &           48 &        0.846306 \\
+      ?a  mother  ?c  ?c  spouse  ?b   $\Rightarrow$ ?a  father  ?b &           48 &        0.872686 \\
+       ?c  child  ?a  ?c  spouse  ?b   $\Rightarrow$ ?a  father  ?b &           48 &        0.350117 \\
+      ?c  mother  ?a  ?b  sibling  ?c   $\Rightarrow$ ?a  child  ?b &           48 &        0.704016 \\
+        ?a  child  ?c  ?b  child  ?c   $\Rightarrow$ ?a  spouse  ?b &           48 &        0.471973 \\
+      ?b  child  ?c  ?a  sibling  ?c   $\Rightarrow$ ?a  father  ?b &           48 &        0.584069 \\
+      ?c  mother  ?a  ?c  sibling  ?b   $\Rightarrow$ ?a  child  ?b &           48 &        0.703385 \\
+      ?b  child  ?c  ?c  sibling  ?a   $\Rightarrow$ ?a  father  ?b &           48 &        0.583590 \\
+       ?c  child  ?a  ?b  spouse  ?c   $\Rightarrow$ ?a  father  ?b &           48 &        0.351479 \\
+       ?a  child  ?c  ?c  father  ?b   $\Rightarrow$ ?a  spouse  ?b &           48 &        0.471666 \\
+      ?a  mother  ?c  ?b  spouse  ?c   $\Rightarrow$ ?a  father  ?b &           48 &        0.867655 \\
+       ?c  child  ?a  ?c  spouse  ?b   $\Rightarrow$ ?a  mother  ?b &           48 &        0.386296 \\
+       ?b  child  ?c  ?c  mother  ?a   $\Rightarrow$ ?a  spouse  ?b &           48 &        0.480628 \\
+       ?b  child  ?c  ?c  father  ?a   $\Rightarrow$ ?a  spouse  ?b &           48 &        0.469716 \\
+      ?b  child  ?c  ?c  sibling  ?a   $\Rightarrow$ ?a  mother  ?b &           48 &        0.422363 \\
+      ?a  father  ?c  ?b  spouse  ?c   $\Rightarrow$ ?a  mother  ?b &           48 &        0.701812 \\
+     ?c  mother  ?b  ?c  sibling  ?a   $\Rightarrow$ ?a  mother  ?b &           48 &        0.787401 \\
+     ?c  mother  ?b  ?a  sibling  ?c   $\Rightarrow$ ?a  mother  ?b &           48 &        0.787816 \\
+       ?c  child  ?a  ?b  spouse  ?c   $\Rightarrow$ ?a  mother  ?b &           48 &        0.382227 \\
+      ?b  child  ?c  ?a  sibling  ?c   $\Rightarrow$ ?a  mother  ?b &           48 &        0.422559 \\
+       ?a  child  ?c  ?c  mother  ?b   $\Rightarrow$ ?a  spouse  ?b &           48 &        0.477785 \\
+      ?a  father  ?c  ?c  spouse  ?b   $\Rightarrow$ ?a  mother  ?b &           48 &        0.708957 \\
+       ?b  mother  ?c  ?a  spouse  ?c   $\Rightarrow$ ?a  child  ?b &           48 &        0.838288 \\
+     ?c  father  ?b  ?a  sibling  ?c   $\Rightarrow$ ?a  father  ?b &           48 &        0.961023 \\
+      ?c  father  ?a  ?c  sibling  ?b   $\Rightarrow$ ?a  child  ?b &           48 &        0.954328 \\
+        ?c  child  ?b  ?a  spouse  ?c   $\Rightarrow$ ?a  child  ?b &           48 &        0.688723 \\
+       ?c  child  ?a  ?c  child  ?b   $\Rightarrow$ ?a  sibling  ?b &           48 &        0.664745 \\
+   ?c  sibling  ?a  ?c  sibling  ?b   $\Rightarrow$ ?a  sibling  ?b &           48 &        0.564657 \\
+     ?a  father  ?c  ?b  father  ?c   $\Rightarrow$ ?a  sibling  ?b &           48 &        0.658865 \\
+   ?c  sibling  ?b  ?a  sibling  ?c   $\Rightarrow$ ?a  sibling  ?b &           48 &        0.588151 \\
+   ?a  sibling  ?c  ?b  sibling  ?c   $\Rightarrow$ ?a  sibling  ?b &           48 &        0.590059 \\
+   ?c  sibling  ?a  ?b  sibling  ?c   $\Rightarrow$ ?a  sibling  ?b &           48 &        0.584857 \\
+      ?c  child  ?b  ?a  father  ?c   $\Rightarrow$ ?a  sibling  ?b &           48 &        0.662206 \\
+      ?c  child  ?a  ?b  father  ?c   $\Rightarrow$ ?a  sibling  ?b &           48 &        0.668446 \\
+       ?a  child  ?c  ?c  sibling  ?b   $\Rightarrow$ ?a  child  ?b &           48 &        0.850519 \\
+       ?b  father  ?c  ?a  spouse  ?c   $\Rightarrow$ ?a  child  ?b &           48 &        0.588257 \\
+       ?a  child  ?c  ?b  sibling  ?c   $\Rightarrow$ ?a  child  ?b &           48 &        0.851012 \\
+     ?c  father  ?b  ?c  sibling  ?a   $\Rightarrow$ ?a  father  ?b &           48 &        0.961199 \\
+     ?a  mother  ?c  ?b  mother  ?c   $\Rightarrow$ ?a  sibling  ?b &           48 &        0.707149 \\
+       ?b  father  ?c  ?c  spouse  ?a   $\Rightarrow$ ?a  child  ?b &           48 &        0.588533 \\
+      ?c  child  ?b  ?a  mother  ?c   $\Rightarrow$ ?a  sibling  ?b &           48 &        0.709139 \\
+      ?c  father  ?a  ?b  sibling  ?c   $\Rightarrow$ ?a  child  ?b &           48 &        0.954603 \\
+      ?c  child  ?a  ?b  mother  ?c   $\Rightarrow$ ?a  sibling  ?b &           48 &        0.709805 \\
+        ?c  child  ?b  ?c  spouse  ?a   $\Rightarrow$ ?a  child  ?b &           48 &        0.687653 \\
+       ?b  mother  ?c  ?c  spouse  ?a   $\Rightarrow$ ?a  child  ?b &           48 &        0.839947 \\
+                       ?b  child  ?a   $\Rightarrow$ ?a  mother  ?b &           48 &        0.535350 \\
+      ?c  father  ?b  ?c  mother  ?a   $\Rightarrow$ ?a  spouse  ?b &           48 &        0.967952 \\
+      ?c  father  ?a  ?c  mother  ?b   $\Rightarrow$ ?a  spouse  ?b &           48 &        0.953170 \\
+                      ?b  spouse  ?a   $\Rightarrow$ ?a  spouse  ?b &           48 &        0.992355 \\
+                       ?b  father  ?a   $\Rightarrow$ ?a  child  ?b &           48 &        0.998071 \\
+                    ?b  sibling  ?a   $\Rightarrow$ ?a  sibling  ?b &           48 &        0.989634 \\
+                       ?b  mother  ?a   $\Rightarrow$ ?a  child  ?b &           48 &        0.991906 \\
+                       ?b  child  ?a   $\Rightarrow$ ?a  father  ?b &           48 &        0.769746 \\
+ ?c  relative  ?a  ?b  sibling  ?c   $\Rightarrow$ ?a  relative  ?b &           40 &        0.348765 \\
+ ?c  relative  ?a  ?c  sibling  ?b   $\Rightarrow$ ?a  relative  ?b &           40 &        0.351014 \\
+ ?a  relative  ?c  ?c  sibling  ?b   $\Rightarrow$ ?a  relative  ?b &           40 &        0.483459 \\
+ ?a  relative  ?c  ?b  sibling  ?c   $\Rightarrow$ ?a  relative  ?b &           40 &        0.484528 \\
+ ?c  relative  ?b  ?c  sibling  ?a   $\Rightarrow$ ?a  relative  ?b &           39 &        0.126881 \\
+ ?c  relative  ?b  ?a  sibling  ?c   $\Rightarrow$ ?a  relative  ?b &           39 &        0.127978 \\
+ ?b  relative  ?c  ?a  sibling  ?c   $\Rightarrow$ ?a  relative  ?b &           38 &        0.120360 \\
+ ?b  relative  ?c  ?c  sibling  ?a   $\Rightarrow$ ?a  relative  ?b &           38 &        0.120448 \\
+   ?b  child  ?c  ?c  relative  ?a   $\Rightarrow$ ?a  relative  ?b &           37 &        0.273356 \\
+  ?c  father  ?b  ?a  relative  ?c   $\Rightarrow$ ?a  relative  ?b &           37 &        0.372340 \\
+  ?a  relative  ?c  ?c  spouse  ?b   $\Rightarrow$ ?a  relative  ?b &           37 &        0.305043 \\
+  ?a  relative  ?c  ?b  spouse  ?c   $\Rightarrow$ ?a  relative  ?b &           37 &        0.305043 \\
+  ?b  father  ?c  ?a  relative  ?c   $\Rightarrow$ ?a  relative  ?b &           37 &        0.378085 \\
+   ?c  child  ?b  ?c  relative  ?a   $\Rightarrow$ ?a  relative  ?b &           37 &        0.275454 \\
+   ?b  child  ?c  ?a  relative  ?c   $\Rightarrow$ ?a  relative  ?b &           37 &        0.343180 \\
+  ?b  father  ?c  ?c  relative  ?a   $\Rightarrow$ ?a  relative  ?b &           37 &        0.294304 \\
+  ?c  father  ?b  ?c  relative  ?a   $\Rightarrow$ ?a  relative  ?b &           37 &        0.301061 \\
+   ?c  child  ?b  ?a  relative  ?c   $\Rightarrow$ ?a  relative  ?b &           37 &        0.364472 \\
+  ?b  mother  ?c  ?a  relative  ?c   $\Rightarrow$ ?a  relative  ?b &           36 &        0.350490 \\
+  ?c  relative  ?a  ?b  spouse  ?c   $\Rightarrow$ ?a  relative  ?b &           35 &        0.206044 \\
+  ?b  mother  ?c  ?c  relative  ?a   $\Rightarrow$ ?a  relative  ?b &           33 &        0.241645 \\
+  ?c  mother  ?b  ?a  relative  ?c   $\Rightarrow$ ?a  relative  ?b &           33 &        0.283544 \\
+  ?c  father  ?a  ?b  relative  ?c   $\Rightarrow$ ?a  relative  ?b &           33 &        0.179144 \\
+   ?a  child  ?c  ?b  relative  ?c   $\Rightarrow$ ?a  relative  ?b &           32 &        0.148287 \\
+  ?c  relative  ?a  ?c  spouse  ?b   $\Rightarrow$ ?a  relative  ?b &           32 &        0.205761 \\
+   ?a  child  ?c  ?c  relative  ?b   $\Rightarrow$ ?a  relative  ?b &           31 &        0.123643 \\
+    ?c  father  ?a  ?b  father  ?c   $\Rightarrow$ ?a  relative  ?b &           30 &        0.196078 \\
+  ?c  mother  ?b  ?c  relative  ?a   $\Rightarrow$ ?a  relative  ?b &           30 &        0.224490 \\
+  ?c  father  ?a  ?c  relative  ?b   $\Rightarrow$ ?a  relative  ?b &           30 &        0.140871 \\
+?c  relative  ?b  ?a  relative  ?c   $\Rightarrow$ ?a  relative  ?b &           29 &        0.100440 \\
+     ?a  child  ?c  ?b  father  ?c   $\Rightarrow$ ?a  relative  ?b &           27 &        0.153584 \\
+     ?c  child  ?b  ?c  father  ?a   $\Rightarrow$ ?a  relative  ?b &           26 &        0.166667 \\
+      ?c  child  ?b  ?a  child  ?c   $\Rightarrow$ ?a  relative  ?b &           25 &        0.130759 \\
+    ?c  father  ?a  ?b  spouse  ?c   $\Rightarrow$ ?a  relative  ?b &           21 &        0.124101 \\
+  ?a  mother  ?c  ?b  relative  ?c   $\Rightarrow$ ?a  relative  ?b &           21 &        0.104492 \\
+  ?c  mother  ?a  ?b  relative  ?c   $\Rightarrow$ ?a  relative  ?b &           18 &        0.101064 \\
+    ?c  father  ?a  ?c  spouse  ?b   $\Rightarrow$ ?a  relative  ?b &           17 &        0.122083 \\
+    ?c  father  ?b  ?a  father  ?c   $\Rightarrow$ ?a  relative  ?b &           16 &        0.108774 \\
+     ?a  child  ?c  ?b  spouse  ?c   $\Rightarrow$ ?a  relative  ?b &           13 &        0.102020 \\
+     ?a  child  ?c  ?c  spouse  ?b   $\Rightarrow$ ?a  relative  ?b &           13 &        0.102020 \\
+   ?a  father  ?c  ?c  sibling  ?b   $\Rightarrow$ ?a  relative  ?b &           10 &        0.100971 \\
+\bottomrule
+\caption{Rules mined from the original family KG, with their corresponding PCA confidences and how many times they were mined from the 48 extensions. Note that all rules with the $relative$ predicate in the consequent have lower PCA confidence and were mined less frequently.}
+\label{family_original_rules_table_frequencies}
+\end{longtable}
+
+\newpage
+\begin{longtable}{lrr}[h]
+\toprule
+                                                    Rule &  Frequencies &  PCA Confidence \\
+\midrule
+                       ?b  father  ?a   $\Rightarrow$ ?a  child  ?b &           48 &        0.998071 \\
+                      ?b  spouse  ?a   $\Rightarrow$ ?a  spouse  ?b &           48 &        0.992355 \\
+                       ?b  mother  ?a   $\Rightarrow$ ?a  child  ?b &           48 &        0.991906 \\
+                    ?b  sibling  ?a   $\Rightarrow$ ?a  sibling  ?b &           48 &        0.989634 \\
+      ?c  father  ?b  ?c  mother  ?a   $\Rightarrow$ ?a  spouse  ?b &           48 &        0.967952 \\
+     ?c  father  ?b  ?c  sibling  ?a   $\Rightarrow$ ?a  father  ?b &           48 &        0.961199 \\
+     ?c  father  ?b  ?a  sibling  ?c   $\Rightarrow$ ?a  father  ?b &           48 &        0.961023 \\
+      ?c  father  ?a  ?b  sibling  ?c   $\Rightarrow$ ?a  child  ?b &           48 &        0.954603 \\
+      ?c  father  ?a  ?c  sibling  ?b   $\Rightarrow$ ?a  child  ?b &           48 &        0.954328 \\
+      ?c  father  ?a  ?c  mother  ?b   $\Rightarrow$ ?a  spouse  ?b &           48 &        0.953170 \\
+      ?a  mother  ?c  ?c  spouse  ?b   $\Rightarrow$ ?a  father  ?b &           48 &        0.872686 \\
+      ?a  mother  ?c  ?b  spouse  ?c   $\Rightarrow$ ?a  father  ?b &           48 &        0.867655 \\
+       ?a  child  ?c  ?b  sibling  ?c   $\Rightarrow$ ?a  child  ?b &           48 &        0.851012 \\
+       ?a  child  ?c  ?c  sibling  ?b   $\Rightarrow$ ?a  child  ?b &           48 &        0.850519 \\
+                  ?b  relative  ?a   $\Rightarrow$ ?a  relative  ?b &           48 &        0.846306 \\
+       ?b  mother  ?c  ?c  spouse  ?a   $\Rightarrow$ ?a  child  ?b &           48 &        0.839947 \\
+       ?b  mother  ?c  ?a  spouse  ?c   $\Rightarrow$ ?a  child  ?b &           48 &        0.838288 \\
+     ?c  mother  ?b  ?a  sibling  ?c   $\Rightarrow$ ?a  mother  ?b &           48 &        0.787816 \\
+     ?c  mother  ?b  ?c  sibling  ?a   $\Rightarrow$ ?a  mother  ?b &           48 &        0.787401 \\
+                       ?b  child  ?a   $\Rightarrow$ ?a  father  ?b &           48 &        0.769746 \\
+      ?c  child  ?a  ?b  mother  ?c   $\Rightarrow$ ?a  sibling  ?b &           48 &        0.709805 \\
+      ?c  child  ?b  ?a  mother  ?c   $\Rightarrow$ ?a  sibling  ?b &           48 &        0.709139 \\
+      ?a  father  ?c  ?c  spouse  ?b   $\Rightarrow$ ?a  mother  ?b &           48 &        0.708957 \\
+     ?a  mother  ?c  ?b  mother  ?c   $\Rightarrow$ ?a  sibling  ?b &           48 &        0.707149 \\
+      ?c  mother  ?a  ?b  sibling  ?c   $\Rightarrow$ ?a  child  ?b &           48 &        0.704016 \\
+      ?c  mother  ?a  ?c  sibling  ?b   $\Rightarrow$ ?a  child  ?b &           48 &        0.703385 \\
+      ?a  father  ?c  ?b  spouse  ?c   $\Rightarrow$ ?a  mother  ?b &           48 &        0.701812 \\
+        ?c  child  ?b  ?a  spouse  ?c   $\Rightarrow$ ?a  child  ?b &           48 &        0.688723 \\
+        ?c  child  ?b  ?c  spouse  ?a   $\Rightarrow$ ?a  child  ?b &           48 &        0.687653 \\
+      ?c  child  ?a  ?b  father  ?c   $\Rightarrow$ ?a  sibling  ?b &           48 &        0.668446 \\
+       ?c  child  ?a  ?c  child  ?b   $\Rightarrow$ ?a  sibling  ?b &           48 &        0.664745 \\
+      ?c  child  ?b  ?a  father  ?c   $\Rightarrow$ ?a  sibling  ?b &           48 &        0.662206 \\
+     ?a  father  ?c  ?b  father  ?c   $\Rightarrow$ ?a  sibling  ?b &           48 &        0.658865 \\
+   ?a  sibling  ?c  ?b  sibling  ?c   $\Rightarrow$ ?a  sibling  ?b &           48 &        0.590059 \\
+       ?b  father  ?c  ?c  spouse  ?a   $\Rightarrow$ ?a  child  ?b &           48 &        0.588533 \\
+       ?b  father  ?c  ?a  spouse  ?c   $\Rightarrow$ ?a  child  ?b &           48 &        0.588257 \\
+   ?c  sibling  ?b  ?a  sibling  ?c   $\Rightarrow$ ?a  sibling  ?b &           48 &        0.588151 \\
+   ?c  sibling  ?a  ?b  sibling  ?c   $\Rightarrow$ ?a  sibling  ?b &           48 &        0.584857 \\
+      ?b  child  ?c  ?a  sibling  ?c   $\Rightarrow$ ?a  father  ?b &           48 &        0.584069 \\
+      ?b  child  ?c  ?c  sibling  ?a   $\Rightarrow$ ?a  father  ?b &           48 &        0.583590 \\
+   ?c  sibling  ?a  ?c  sibling  ?b   $\Rightarrow$ ?a  sibling  ?b &           48 &        0.564657 \\
+                       ?b  child  ?a   $\Rightarrow$ ?a  mother  ?b &           48 &        0.535350 \\
+ ?a  relative  ?c  ?b  sibling  ?c   $\Rightarrow$ ?a  relative  ?b &           40 &        0.484528 \\
+ ?a  relative  ?c  ?c  sibling  ?b   $\Rightarrow$ ?a  relative  ?b &           40 &        0.483459 \\
+       ?b  child  ?c  ?c  mother  ?a   $\Rightarrow$ ?a  spouse  ?b &           48 &        0.480628 \\
+       ?a  child  ?c  ?c  mother  ?b   $\Rightarrow$ ?a  spouse  ?b &           48 &        0.477785 \\
+        ?a  child  ?c  ?b  child  ?c   $\Rightarrow$ ?a  spouse  ?b &           48 &        0.471973 \\
+       ?a  child  ?c  ?c  father  ?b   $\Rightarrow$ ?a  spouse  ?b &           48 &        0.471666 \\
+       ?b  child  ?c  ?c  father  ?a   $\Rightarrow$ ?a  spouse  ?b &           48 &        0.469716 \\
+      ?b  child  ?c  ?a  sibling  ?c   $\Rightarrow$ ?a  mother  ?b &           48 &        0.422559 \\
+      ?b  child  ?c  ?c  sibling  ?a   $\Rightarrow$ ?a  mother  ?b &           48 &        0.422363 \\
+       ?c  child  ?a  ?c  spouse  ?b   $\Rightarrow$ ?a  mother  ?b &           48 &        0.386296 \\
+       ?c  child  ?a  ?b  spouse  ?c   $\Rightarrow$ ?a  mother  ?b &           48 &        0.382227 \\
+  ?b  father  ?c  ?a  relative  ?c   $\Rightarrow$ ?a  relative  ?b &           37 &        0.378085 \\
+  ?c  father  ?b  ?a  relative  ?c   $\Rightarrow$ ?a  relative  ?b &           37 &        0.372340 \\
+   ?c  child  ?b  ?a  relative  ?c   $\Rightarrow$ ?a  relative  ?b &           37 &        0.364472 \\
+       ?c  child  ?a  ?b  spouse  ?c   $\Rightarrow$ ?a  father  ?b &           48 &        0.351479 \\
+ ?c  relative  ?a  ?c  sibling  ?b   $\Rightarrow$ ?a  relative  ?b &           40 &        0.351014 \\
+  ?b  mother  ?c  ?a  relative  ?c   $\Rightarrow$ ?a  relative  ?b &           36 &        0.350490 \\
+       ?c  child  ?a  ?c  spouse  ?b   $\Rightarrow$ ?a  father  ?b &           48 &        0.350117 \\
+ ?c  relative  ?a  ?b  sibling  ?c   $\Rightarrow$ ?a  relative  ?b &           40 &        0.348765 \\
+   ?b  child  ?c  ?a  relative  ?c   $\Rightarrow$ ?a  relative  ?b &           37 &        0.343180 \\
+  ?a  relative  ?c  ?c  spouse  ?b   $\Rightarrow$ ?a  relative  ?b &           37 &        0.305043 \\
+  ?a  relative  ?c  ?b  spouse  ?c   $\Rightarrow$ ?a  relative  ?b &           37 &        0.305043 \\
+  ?c  father  ?b  ?c  relative  ?a   $\Rightarrow$ ?a  relative  ?b &           37 &        0.301061 \\
+  ?b  father  ?c  ?c  relative  ?a   $\Rightarrow$ ?a  relative  ?b &           37 &        0.294304 \\
+  ?c  mother  ?b  ?a  relative  ?c   $\Rightarrow$ ?a  relative  ?b &           33 &        0.283544 \\
+   ?c  child  ?b  ?c  relative  ?a   $\Rightarrow$ ?a  relative  ?b &           37 &        0.275454 \\
+   ?b  child  ?c  ?c  relative  ?a   $\Rightarrow$ ?a  relative  ?b &           37 &        0.273356 \\
+  ?b  mother  ?c  ?c  relative  ?a   $\Rightarrow$ ?a  relative  ?b &           33 &        0.241645 \\
+  ?c  mother  ?b  ?c  relative  ?a   $\Rightarrow$ ?a  relative  ?b &           30 &        0.224490 \\
+  ?c  relative  ?a  ?b  spouse  ?c   $\Rightarrow$ ?a  relative  ?b &           35 &        0.206044 \\
+  ?c  relative  ?a  ?c  spouse  ?b   $\Rightarrow$ ?a  relative  ?b &           32 &        0.205761 \\
+    ?c  father  ?a  ?b  father  ?c   $\Rightarrow$ ?a  relative  ?b &           30 &        0.196078 \\
+  ?c  father  ?a  ?b  relative  ?c   $\Rightarrow$ ?a  relative  ?b &           33 &        0.179144 \\
+     ?c  child  ?b  ?c  father  ?a   $\Rightarrow$ ?a  relative  ?b &           26 &        0.166667 \\
+     ?a  child  ?c  ?b  father  ?c   $\Rightarrow$ ?a  relative  ?b &           27 &        0.153584 \\
+   ?a  child  ?c  ?b  relative  ?c   $\Rightarrow$ ?a  relative  ?b &           32 &        0.148287 \\
+  ?c  father  ?a  ?c  relative  ?b   $\Rightarrow$ ?a  relative  ?b &           30 &        0.140871 \\
+      ?c  child  ?b  ?a  child  ?c   $\Rightarrow$ ?a  relative  ?b &           25 &        0.130759 \\
+ ?c  relative  ?b  ?a  sibling  ?c   $\Rightarrow$ ?a  relative  ?b &           39 &        0.127978 \\
+ ?c  relative  ?b  ?c  sibling  ?a   $\Rightarrow$ ?a  relative  ?b &           39 &        0.126881 \\
+    ?c  father  ?a  ?b  spouse  ?c   $\Rightarrow$ ?a  relative  ?b &           21 &        0.124101 \\
+   ?a  child  ?c  ?c  relative  ?b   $\Rightarrow$ ?a  relative  ?b &           31 &        0.123643 \\
+    ?c  father  ?a  ?c  spouse  ?b   $\Rightarrow$ ?a  relative  ?b &           17 &        0.122083 \\
+ ?b  relative  ?c  ?c  sibling  ?a   $\Rightarrow$ ?a  relative  ?b &           38 &        0.120448 \\
+ ?b  relative  ?c  ?a  sibling  ?c   $\Rightarrow$ ?a  relative  ?b &           38 &        0.120360 \\
+    ?c  father  ?b  ?a  father  ?c   $\Rightarrow$ ?a  relative  ?b &           16 &        0.108774 \\
+  ?a  mother  ?c  ?b  relative  ?c   $\Rightarrow$ ?a  relative  ?b &           21 &        0.104492 \\
+     ?a  child  ?c  ?b  spouse  ?c   $\Rightarrow$ ?a  relative  ?b &           13 &        0.102020 \\
+     ?a  child  ?c  ?c  spouse  ?b   $\Rightarrow$ ?a  relative  ?b &           13 &        0.102020 \\
+  ?c  mother  ?a  ?b  relative  ?c   $\Rightarrow$ ?a  relative  ?b &           18 &        0.101064 \\
+   ?a  father  ?c  ?c  sibling  ?b   $\Rightarrow$ ?a  relative  ?b &           10 &        0.100971 \\
+?c  relative  ?b  ?a  relative  ?c   $\Rightarrow$ ?a  relative  ?b &           29 &        0.100440 \\
+\bottomrule
+\caption{Rules mined from the original family KG, with their corresponding PCA confidences and how many times they were mined from the 48 extensions. Note that all rules with the $relative$ predicate in the consequent have lower PCA confidence and were mined less frequently.}
+\label{family_original_rules_table_PCA}
+\end{longtable}
+
+
+
