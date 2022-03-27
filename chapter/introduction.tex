@@ -3,3 +3,7 @@
 Knowledge bases that are large and interesting are generally not complete. They may for example be extracted from natural language resources and may contain facts that are wrong or exhibit gaps in their knowledge. Most of the data that is present, however, is correct and hence implicitly contain meaningful rules. For example the Wikidata dataset that contains information about many individuals will implicitly contain the fact that siblings tend to have the same mother:
 \[siblingOf(a, b) \wedge motherOf(c, a) \Rightarrow motherOf(c, b)\]
 There will of course be exceptions to this rule, but generally it will hold. The rules describe information about relational data, and hence will only use binary predicates. The rules will also be Horn, meaning that any number of predicates may be used in the body of the rule, but only one predicate is implied in the rule. This form has useful properties in knowledge representation and reasoning. When extracting rules from knowledge graphs they therefore tend to be Horn rules on binary predicates.
+
+
+
+TODO: Talk about machine learning in general. Will refer to the Deep Learning book by Goodfellow et al., which is publicly available at https://www.deeplearningbook.org/.

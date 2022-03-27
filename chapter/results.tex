@@ -23,7 +23,7 @@ In the KG extension process there are 48 \footnote{4 (KG embedding models) $\tim
 \label{TransE_sucks} 
 Upon examining the number of rules mined per KG extension one immediately sees some startling results. Most rule sets don't differ drastically in size, apart from those where TransE was used, where these rule sets are \textit{exceptionally} larger. See \cref{all_sets} in the appendix to observe the difference. When looking at the mean PCA confidence of the rules sets one also notes that the score for the TransE sets are mostly around 0.1, while the remaining rule sets have a score on average around 0.5.
 
-\begin{figure}[h]
+\begin{figure}[htbp]
 \centering
 \begin{subfigure}{.5\textwidth}
   \centering
@@ -79,7 +79,7 @@ In this section we will examine the effects of each of the three main parameters
 \subsection{Effect of KG embedding model}
 At the first glance of boxplots \ref{fig:PCA_models_wn18rr_boxplot} and \ref{fig:PCA_models_family_boxplot} it may seem odd that the PCA confidence of rules mined from RandomBaseline extensions is so high. Boxplots are used to represent the spread of data through their quartlies \cite{dutoit2012graphical}. The box itself covers $Q_1-Q_3$, with the horizontal line in the box marking the median. The median PCA confidence for the original rules is indicated by the dashed line across the plots. The boxplots used in this thesis also have \textit{whiskers}, which are the lines extending vertically out of the box. Whiskers give an indication of the variability of the data outside the upper and lower quartiles (respectively $Q_1$ and $Q_3$). Points beyond the whiskers are considered outliers.
 
-\begin{figure}[h]
+\begin{figure}[htbp]
 \centering
 \begin{subfigure}{.5\textwidth}
   \centering
@@ -97,7 +97,7 @@ At the first glance of boxplots \ref{fig:PCA_models_wn18rr_boxplot} and \ref{fig
 \label{fig:PCA_models_wn18rr_boxplot}
 \end{figure}
 
-\begin{figure}[h]
+\begin{figure}[htbp]
 \centering
 \begin{subfigure}{.5\textwidth}
   \centering
@@ -158,7 +158,7 @@ DistMult and ComplEx are closely related embedding models as they have similar s
 The combined set of rules found from ComplEx-extended KGs include all the original rules, both for WN18RR and the family KG.  This is almost also the case for DistMult, but it fails to find the original rule $child(x, y) \Rightarrow mother(y,x)$ in the family KG. This rule has the second lowest PCA confidence of all the original family KG rules.
 
 \iffalse
-    \begin{figure*}[h]
+    \begin{figure*}[htbp]
         \centering
         \begin{subfigure}[b]{0.49\textwidth}
             \centering
@@ -197,7 +197,7 @@ The combined set of rules found from ComplEx-extended KGs include all the origin
     \end{figure*}
     
     
-    \begin{figure*}[h]
+    \begin{figure*}[htbp]
         \centering
         \begin{subfigure}[b]{0.49\textwidth}
             \centering
@@ -245,7 +245,7 @@ In the WN18RR KG all original rules were found, but in the family KG only the \t
 
 Overall it seems like \textit{probabilistic}, \textit{random}, and the \textit{least frequent} entity selection strategies all are appropriate in regard to maintaining PCA confidence. If however the goal is to mine many new rules then \textit{most frequent} apears to be best suited, though at the sacrifice of PCA confidence.
 
-\begin{figure}[h]
+\begin{figure}[htbp]
 \centering
 \begin{subfigure}{.5\textwidth}
   \centering
@@ -263,7 +263,7 @@ Overall it seems like \textit{probabilistic}, \textit{random}, and the \textit{l
 \label{fig:PCA_entity_wn18rr_boxplot}
 \end{figure}
 
-\begin{figure}[h]
+\begin{figure}[htbp]
 \centering
 \begin{subfigure}{.5\textwidth}
   \centering
@@ -310,7 +310,7 @@ Probabilistic                                             & 10             & 45\
 \end{table}
 
 \iffalse
-\begin{figure*}[h]
+\begin{figure*}[htb]
         \centering
         \begin{subfigure}[b]{0.49\textwidth}
             \centering
@@ -349,7 +349,7 @@ Probabilistic                                             & 10             & 45\
     \end{figure*}
     
     
-    \begin{figure*}[h]
+    \begin{figure*}[htb]
         \centering
         \begin{subfigure}[b]{0.49\textwidth}
             \centering
@@ -396,7 +396,7 @@ Probabilistic                                             & 10             & 45\
 \subsection{Effect of rank cutoff value}
 Rank cutoff values determine which candidates are admitted to the KG. Only those with rank on the cutoff or above are accepted. Therefore, the lower the rank cutoff, the more candidates are added to the KG. The box plots in \cref{rank_extensions_boxplot} show evidence of this. The pie charts in figures \ref{rank_pies_family} and \ref{rank_pies_wn18rr} both show that when the rank cutoff was 1, all the original rules were found. Decrease in rank cutoff led to the mining of more new rules, but  also led to some original rules not being mined, especially in the WN18RR case. PCA confidence-wise the rank cutoff values had a slightly different effect on the two datasets. In the WN18RR dataset there was little difference in PCA confidence over the ranks when calculated over the original KG, while for the family KG the PCA confidence was increased at rank cutoff 4 and 7, with no change at rank cutoff 1. When calculated over the KG extensions rank 1 and 4 did worse than the mean of the original rules, while rank cutoff 7 did significantly better. On the family KG PCA confidence calculated on the extended KGs led to little variety over the rank values. Rank 1 resulted on the same median as the original rules, rank 4 just above and rank 7 just below. Overall it seems like if the goal is to find many new rules, then a higher rank cutoff values is more appropriate.
 
-\begin{figure}[h]
+\begin{figure}[htb]
 \centering
 \begin{subfigure}{.5\textwidth}
   \centering
@@ -414,7 +414,7 @@ Rank cutoff values determine which candidates are admitted to the KG. Only those
 \label{rank_extensions_boxplot}
 \end{figure}
 
-\begin{figure}[h]
+\begin{figure}[htb]
 \centering
 \begin{subfigure}{.5\textwidth}
   \centering
@@ -432,7 +432,7 @@ Rank cutoff values determine which candidates are admitted to the KG. Only those
 \label{fig:PCA_rank_wn18rr_boxplot}
 \end{figure}
 
-\begin{figure}[h]
+\begin{figure}[htb]
 \centering
 \begin{subfigure}{.5\textwidth}
   \centering
@@ -447,7 +447,7 @@ Rank cutoff values determine which candidates are admitted to the KG. Only those
   \label{fig:_PCA_rank_family_boxplot_sub}
 \end{subfigure}
 \caption{Distribution of PCA confidence of mined rules by rank cutoff values. PCA confidence scores are calculated on the original family KG and the extended family KG from which the rules are mined. The dashed line represents the median PCA confidence of the rules mined from the original family KG.}
-\label{fig:PCA_entity_family_boxplot}
+\label{fig:PCA_rank_family_boxplot}
 \end{figure}
 
 
@@ -456,7 +456,7 @@ Rank cutoff values determine which candidates are admitted to the KG. Only those
 
 
 
-\begin{figure*}[h]
+\begin{figure*}[htbp]
         \centering
         \begin{subfigure}[b]{0.3\textwidth}
             \centering
@@ -479,7 +479,7 @@ Rank cutoff values determine which candidates are admitted to the KG. Only those
             \includegraphics[width=\textwidth]{figures/results/ranks/pie_charts/('rank_cutoff', 7)_family.png}
             \caption[]%
             {{\small Rank 7}}    
-            \label{fig:rank_1_pie_family}
+            \label{fig:rank_7_pie_family}
         \end{subfigure}
         \hfill
         \caption[]
@@ -488,7 +488,7 @@ Rank cutoff values determine which candidates are admitted to the KG. Only those
     \end{figure*}
     
     
-    \begin{figure*}[h]
+    \begin{figure*}[htbp]
         \centering
         \begin{subfigure}[b]{0.3\textwidth}
             \centering
@@ -519,7 +519,96 @@ Rank cutoff values determine which candidates are admitted to the KG. Only those
         \label{rank_pies_wn18rr}
     \end{figure*}
     
+\subsection{Summary of effect of parameters}
+The three parameters for KG extension were shown to have a varying degree of influence. All entity selection strategies, apart from \textit{most likely}, performed equally well. This was consistent with the assumption of the authors of AmpliGraph, being that the most frequent entities are less likely to have missing facts \cite{ampligraph}. Of the KG embedding models, TransE led to a substantially greater number of new rules being mined compared to the other models, but these rules had very low PCA confidence when calculated over the original dataset. ComplEx and DistMult performed similarly in regard to PCA confidence, with slightly more new rules being mined with DistMult due to the model giving candidate triples a higher score than ComplEx did. The rank cutoff value gave expected results, where a value that accepted more new candidate triples led to more new rules being minded. When calculated over the original KG, the PCA confidence in rules did not significantly vary among the rank cutoff values. 
 
 \newpage
 \section{Rule comparison}
+In the WN18RR dataset there was one rule, 
+\[derivationally\_related\_form(y, x) \Rightarrow derivationally\_related\_form(x, y)\]
+which was mined in all 48 KG extensions. It has PCA confidence of 1, meaning that there are no data points in WN18RR that do not follow the rule. In table \ref{wn18rr_original_rules_table_PCA} all original rules sorted by their PCA Confidence are listed. How often these rules were mined from KG extensions is also listed under the "Frequencies" column. Using Spearman's rank correlation coefficient a correlation coefficient of 0.65 with $p$-value 0.04. These values are positively correlated with the PCA confidence, meaning that as the PCA confidence increases as the frequency increases. From the family KG 94 original rules were mined, and the corresponding table \ref{family_original_rules_table_PCA} is listed in the appendix. For these rules the PCA confidence and frequencies were also positively correlated with correlation coefficient 0.86 and $p$-value $5.85e^{-29}$. The rule mined the least number of times is
+\[father(x,z) \wedge sibling(z, y) \Rightarrow relative(x, y)\]
+which only was mined in 10 out of the 48 extensions. Consistently with the correlation between PCA confidence and mining frequency this is the rule with the second lowest PCA confidence. The table \ref{family_original_rules_table_PCA} also shows us that all rules that had the \textit{relative} predicate were not mined for all 48 extensions, and all with different predicates in the antecedent were mined from all extensions. This could be due to the simple fact that \textit{relative} is the least frequently used relation in the KG, leading to less supporting data points and correspondingly lower PCA confidence.
+
+
+
 \label{Rule_comparison}
+\begin{table}[htbp]
+\begin{tabular}{lrr}
+\toprule
+                                                                                                      Rule &  Frequencies &  PCA Confidence \\
+\midrule
+                            ?b  DRF  ?a   $\Rightarrow$ ?a  DRF  ?b &           48 &        1.000000 \\
+          ?a  IH  ?c  ?c  SDTO  ?b   $\Rightarrow$ ?a  SDTO  ?b &           24 &        0.886525 \\
+                   ?a  \_hypernym  ?c  ?c  SDTO  ?b   $\Rightarrow$ ?a  SDTO  ?b &           36 &        0.828871 \\
+                   ?a  \_has\_part  ?c  ?c  SDTO  ?b   $\Rightarrow$ ?a  SDTO  ?b &           24 &        0.809524 \\
+                   ?c  \_has\_part  ?a  ?c  SDTO  ?b   $\Rightarrow$ ?a  SDTO  ?b &           24 &        0.771739 \\
+                   ?c  \_hypernym  ?a  ?c  SDTO  ?b   $\Rightarrow$ ?a  SDTO  ?b &           34 &        0.726667 \\
+                                      ?a  \_has\_part  ?c  ?b  IH  ?c   $\Rightarrow$ ?a  \_has\_part  ?b &           19 &        0.532544 \\
+?a  DRF  ?c  ?c  SDTO  ?b   $\Rightarrow$ ?a  SDTO  ?b &           24 &        0.492857 \\
+?c  DRF  ?a  ?c  SDTO  ?b   $\Rightarrow$ ?a  SDTO  ?b &           24 &        0.492857 \\
+                                               ?a  \_has\_part  ?c  ?b  \_hypernym  ?c   $\Rightarrow$ ?a  \_has\_part  ?b &           21 &        0.104016 \\
+\bottomrule
+\end{tabular}
+\caption{Rules mined from the original WN18RR KG, with their corresponding PCA confidences and how many times they were mined from the 48 extensions. DRF = ``\textit{derivationally related form}", STDO = ``\textit{synset domain topic of}" and IH = ``\textit{instance hypernym}".}
+\label{wn18rr_original_rules_table_PCA}
+\end{table}
+
+
+
+\subsection{PCA distribution}
+For both the WN18RR and family KG the PCA confidence of the original rules is relatively spread out. A few rules have a PCA confidence of 1 or close to 1, and none have PCA confidence below 0.1. This makes sense, because this would imply the absence of supporting datapoints and thus AMIE3 would never mine the rule. The majority of new rules on the other hand \textit{do} however have a PCA confidence of 0. This means that most, if not all, the support for new rules lies in the extension of the KG. If all sets of supporting datapoints are dependent on the extension, then when PCA confidence is measured on the original KG this new rule would get a PCA confidence score of 0. If one looks closely at figure \ref{fig:PCA_rule_dist_new_original_famiy_sub} one can see that two new rules do have PCA confidence above 0.2. These were however also rejected by AMIE3 because the PCA body size (the number of instances of that rule) is so small that the PCA confidence calculated is not very reliable.
+
+When plotting the PCA confidence of new rules calculated over the KGs from which they were mined, the new rules become somewhat more evenly distributed along the PCA confidence interval. Figures \ref{fig:_PCA_rule_dist_new_original_wn18rr_sub} and \ref{fig:_PCA_rule_dist_new_original_family_sub} shows this, where the PCA confidence of the new rules here is not calculated over the original KG, rather the KG from which they were mined that gave them the best PCA confidence score. This method was chosen to highlight the extent to which the extensions changes the PCA confidence of new rules.
+
+\begin{figure}[htbp]
+\centering
+\begin{subfigure}{.5\textwidth}
+  \centering
+    \includesvg[inkscapelatex=false,width=1\textwidth,keepaspectratio]{figures/results/rule_comparison/PCA_rule_dist_new_original_wn18rr.svg}
+    \caption{WN18RR - Original KG}
+  \label{fig:PCA_rule_dist_new_original_wn18rr_sub}
+\end{subfigure}%
+\begin{subfigure}{.5\textwidth}
+  \centering
+    \includesvg[inkscapelatex=false,width=1\textwidth,keepaspectratio]{figures/results/rule_comparison/PCA_rule_dist_new_original_family.svg}
+    \caption{Family - Original KG}
+  \label{fig:PCA_rule_dist_new_original_family_sub}
+\end{subfigure}
+\begin{subfigure}{.5\textwidth}
+  \centering
+    \includesvg[inkscapelatex=false,width=1\textwidth,keepaspectratio]{figures/results/rule_comparison/_PCA_rule_dist_new_original_wn18rr.svg}
+    \caption{WN18RR - Extended KG}
+  \label{fig:_PCA_rule_dist_new_original_wn18rr_sub}
+\end{subfigure}%
+\begin{subfigure}{.5\textwidth}
+  \centering
+    \includesvg[inkscapelatex=false,width=1\textwidth,keepaspectratio]{figures/results/rule_comparison/_PCA_rule_dist_new_original_family.svg}
+    \caption{Family - Extended KG}
+  \label{fig:_PCA_rule_dist_new_original_family_sub}
+\end{subfigure}
+\caption[PCA conf. dist. of new and original rules]{Distribution of PCA confidence of original rules and new rules. The PCA confidence of all rules has been calculated over the original KG in subfigures \ref{fig:PCA_rule_dist_new_original_wn18rr_sub} and \ref{fig:PCA_rule_dist_new_original_family_sub}, while in subfigures \ref{fig:_PCA_rule_dist_new_original_wn18rr_sub} and \ref{fig:_PCA_rule_dist_new_original_family_sub} the PCA confidence of the new rules is calculated over the extended KG from which they were mined that resulted in the best PCA confidence score. The PCA confidence of original rules is always calculated over the original KG.}
+\label{fig:PCA_rule_dist_new_original}
+\end{figure}
+
+
+\section{Summary of findings}
+
+We restate the central questions for the experiment posed at the beginning of this chapter. These questions were:
+\begin{enumerate}
+    \item Does adding new plausible facts lead to new rules being mined? 
+    \item How does the PCA confidence of these rules compare to the rules mined from the original KG?
+    \item Can the rules mined from the original KG also be mined after the KG is extended?
+\end{enumerate}
+
+Questions 1 is the simplest, and our experiment has clearly shown that, yes, adding new plausible facts does result in new rules being mined. Examples of rules that were mined after extending the KGs are:
+TODO: list some good rules
+
+We saw in figure \ref{fig:PCA_rule_dist_new_original} that the PCA confidence of new rules was most often zero or close to zero when calculated over the original KG, but when measured on the extended KGs from which they were mined the scores were significantly better and had similar distributions to the original rules. In regard to question 3, a strong correlation was found between the PCA confidence of original rules and how often the rule was mined from extended KGs. The higher the PCA confidence, the more likely the rule will be mined from the extended KG.
+
+
+
+\section{Limitations of experiment}
+The experiment has many limitations, most related to computational restrictions. When generating candidates, for example, the optimal approach would be to generate all possible candidates, and evaluate them all. This is simply not possible due to computational limitations. As mentioned in section \ref{canidate_triple_generation}, there are more intelligent strategies for entity selection, but these were also too computationally intensive to take into use. A larger and better set of candidate triples would substantially strengthen the conclusions about KG embedding model and rank cutoff values when evaluating parameters in the KG extension process. This is because when only a small fraction of the possible candidates are ranked by models, we get an incomplete picture of the model's behaviour.
+
+The hyperparameter search for the KG embedding models could also be improved upon with greater computational resources, but it is not as influential as increasing the candidate set size and quality. This is due to the fact the random search has been shown to measure well against grid search \cite{li2017hyperband}, so the effect on the performance of the model is likely to be minimal.

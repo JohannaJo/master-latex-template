@@ -32,7 +32,9 @@ family_predicates_dict = {
 All triples that did not use one of the six selected family predicates were filtered out, and the IDs were converted to meaningful names so that the resulting rules mined would be easily readable. The python dictionary in \cref{family_predicated_dict} shows the chosen predicates. A few other family predicates were considered, but did not have enough corresponding data points or were too similar to other selected predicates. Common family-related predicates such as \texttt{grandchild} or \texttt{sister} are also not currently used in Wikidata. From a discussion in the Wikidata community it seems that all properties considered redundant were removed \cite{kinship_discussion}. Pykeen's distribution of the dataset was used for the experiments \cite{ali2021pykeen}. The resulting subset of Wikidata5M contained around 250 000 triples and will henceforth be referred to as the \textit{family KG}.
 
 \subsection{WN18RR}
-WN18RR is a smaller KG with 93 003 triples and only 11 relations \cite{dettmers2018convolutional}. It is an improved version of the WN18 dataset, where it was found that there was information leakage between the training and test set of WN18 through inverse relations. A large number of test triples could be identified simply by inverting triples in the training set \cite{toutanova2015observed}. WN18RR addresses this issue. The KG contains triples scraped from WordNet, a lexical database for English \cite{wordNet}. In WordNet nouns, verbs, adjectives and adverbs are grouped into sets of semantic synonyms called
+WN18RR is a smaller KG with 93 003 triples and only 11 relations \cite{dettmers2018convolutional}. It is an improved version of the WN18 dataset, where it was found that there was information leakage between the training and test set of WN18 through inverse relations. A large number of test triples could be identified simply by inverting triples in the training set \cite{toutanova2015observed}. For example the relation \texttt{has\_child} is the inverse relation of \texttt{has\_parent}, meaning that if the triple \texttt{(Ann, has\_parent, Carol)} is in the training set, then one can infer that \texttt{(Carol, has\_child, Ann)} likely is in the test set, thereby the test data is no longer consideres "unseen" not a fair data set to evaluate the model on. WN18RR addresses this issue. 
+
+WN18RR contains triples scraped from WordNet, a lexical database for English \cite{wordNet}. In WordNet nouns, verbs, adjectives and adverbs are grouped into sets of semantic synonyms called
 \textit{synsets} which express a distinct concept. For example \texttt{\{man\}} and \texttt{\{adult male\}} belong to the same synset. Synsets are connected to other synsets by semantic relations. The most commonly used relation in WN18RR is \texttt{hypernym}. A synset \texttt{X} is a hypernym of synset \texttt{Y}, if every \texttt{Y} is a kind of \texttt{X}. For example the triple 
 \centerline{\texttt{02121808 \quad hypernym \quad 02121620}}
 represents the information that the synset \texttt{cat} is a hypernym of the synset \texttt{house cat}. Or more simply phrased: \textit{All house cats are cats}.
@@ -60,6 +62,15 @@ represents the information that the synset \texttt{cat} is a hypernym of the syn
 \caption{Frequency of relations in WN18RR KG and whether they were included in the final KG.}
 \end{table}
 
+Though it is not vital for the reader to understand the semantics behind the relations in this dataset, it may be more rewarding to understand the terms when later reading rules mined from the WN18RR KG. The relation \texttt{hypernym} was described above, so now the remaining five relations are succintly explained.
+\begin{itemize}
+    \item \texttt{derivationally related form} \newline A concept $A$ derives from another concept $B$. \texttt{perfectly} is the derivationally related form of \texttt{perfect}.
+    \item \texttt{member meronym}  \newline A concept $A$ is a member of a concept $B$. \texttt{class} is a member meronym of \texttt{student}.
+    \item \texttt{has part} \newline A whole concept $A$ has a part $B$. \texttt{cat} has part \texttt{tail}.
+    \item \texttt{synset domain topic of}  \newline A concept $A$ is the scientific field which concept $B$ belongs in. \texttt{computer science} is the synset domain topic of \texttt{deep learning}.
+    \item \texttt{instance hypernym}  \newline denotes the type of an instance. \texttt{Bergen} has instance hypernym \texttt{city}.
+\end{itemize}
+
 WN18RR was chosen due to the few number of relations in it, and with a KG already containing few relations most of the data could be included.
 By taking all triples containing one of the six most frequent relations, in total 88227 datapoints, 95\% of WN18RR was used. This was intended to produce a more complete KG. The dataset was loaded using AmpliGraph \cite{ampligraph}.
 
@@ -68,7 +79,7 @@ There are many publicly available knowledge graph embedding libraries \cite{libk
 
 Each model has a number of hyperparameters that could be optimised. As the search space grows it has been shown that random search is more optimal than grid search, where each combination needs to be tested \cite{bergstra2012random}. Due to limited computational resources, this approach to hyperparameter optimisation was selected. It is not an optimal approach, but serves as a practical and effective solution that measures well against more sophisticated methods such as Baysian optimisation \cite{li2017hyperband}.
 
-\begin{table}[h]
+\begin{table}[htbp]
 \centering
 \begin{tabular}{|l|l|}
 \hline
@@ -91,7 +102,7 @@ For the implementation of model selection AmpliGraph's \texttt{select\_best\_mod
 
 \subsection{Model selection results}
 The final model of all three embedding architectures had good results on the WN18RR dataset, and even better results on the family KG. Each model had an MRR score above 0.9 on the family KG and around 0.6 on the WN18RR. TransE seemed to perform slightly worse than DistMult and ComplEx on the family KG. On the WN18RR dataset TransE had a lower hits@1 score, while it outperformed both DistMult and ComplEx in both hits@3 and hits@10.
-\begin{table}[h]
+\begin{table}[htbp]
 \centering
 \begin{tabular}{|l||ccccc||ccccc|}
 \hline
@@ -107,40 +118,40 @@ The final model of all three embedding architectures had good results on the WN1
 \end{table}
 
 
-\begin{figure}[h]
+\begin{figure}[htbp]
 \centering
 \begin{subfigure}{.5\textwidth}
   \centering
   \includegraphics[width=1\linewidth]{figures/model_selection/family_mrr.png}
   \caption{MRR scores}
-  \label{fig:sub1}
+  \label{fig:model_selection_mrr_family}
 \end{subfigure}%
 \begin{subfigure}{.5\textwidth}
   \centering
   \includegraphics[width=1\linewidth]{figures/model_selection/family_hit_scores.png}
   \caption{Hits@n scores}
-  \label{fig:sub2}
+  \label{fig:model_selection_hit_scores_family}
 \end{subfigure}
 \caption{KG embedding test performance results for Wikidata5M (family KG).}
-\label{fig:test}
+\label{fig:model_selection_metrics_family}
 \end{figure}
 
-\begin{figure}[h]
+\begin{figure}[htbp]
 \centering
 \begin{subfigure}{.5\textwidth}
   \centering
   \includegraphics[width=1\linewidth]{figures/model_selection/wn18rr_mrr.png}
   \caption{MRR scores}
-  \label{fig:sub1}
+  \label{fig:model_selection_mrr_wn18rr}
 \end{subfigure}%
 \begin{subfigure}{.5\textwidth}
   \centering
   \includegraphics[width=1\linewidth]{figures/model_selection/wn18rr_hit_scores.png}
   \caption{Hits@n scores}
-  \label{fig:sub2}
+  \label{fig:model_selection_hit_scores_wn18rr}
 \end{subfigure}
 \caption{KG embedding test performance results for WN18RR}
-\label{fig:test}
+\label{fig:model_selection_metrics_wn18rr}
 \end{figure}
 
 
@@ -166,6 +177,7 @@ With a set of ranked candidate triples all that remains is to decide what the mi
 
 
 \subsection{Candidate triple generation}
+\label{canidate_triple_generation}
 Both in the family KG and in WN18RR the number of potential facts is huge, and so in order to avoid having to evaluate all of them a number of strategies can be used to select plausible facts. In AmpliGraph's implementation of plausible candidate generation, they make the assumption that densely connected entities are less likely to have missing true statements. In a KG embedding tutorial at the European Conference on Artificial Intelligence in 2020, members of the AmpliGraph team say that this assumption has been true for their empirical evaluations, but is not necessarily true for all datasets \cite{kge_tutorial}.  As stated, AmpliGraph has implemented different strategies, many of which have to do with graph clustering, but these were too computationally intensive to take into use. Four simpler strategies for entity selection were instead used:
 \begin{itemize}
     \item Random selection of entities.
@@ -174,7 +186,7 @@ Both in the family KG and in WN18RR the number of potential facts is huge, and s
     \item Probabilistic selection based on the frequency of the entities in the dataset, where the least frequent entities are most likely to be selected.
 \end{itemize}
 
-\begin{table}[h]
+\begin{table}[htbp]
 \centering
 \begin{tabular}{rcl|lcc}
 \multicolumn{3}{c|}{\textbf{KG}}                    &  & \multicolumn{1}{l}{\textbf{Entity}} & \multicolumn{1}{l}{\textbf{Freq.}} \\\hline
@@ -200,7 +212,7 @@ If we look at \cref{entity_selection_KG} as an example KG and need to select thr
 and any three candidates would be selected with the \textit{random} strategy. Note that selection is without replacement. Once the entities were selected, all possible triples were generated with them and the six relations. Then, all the triples already included in the original KG were excluded from the resulting candidate triples. If one were to pick the \textit{most frequent} strategy, then the resulting set of candidate triples would be that depicted in \cref{canidate_triples_most_frequent}. Of course the more candidate triples there are to choose from, the better the extension will be because then there is a higher chance of plausible facts being suggested. Again, computational limitations restricted this. After trying different candidate set sizes it was eventually decided that selecting 1000 entities for candidate triple generation was a feasible number. This meant that $ 1000 \times 6 \times 1000 = 6 \times 10^6 $ triples (minus those that already appeared in the KG) were considered for each KG extension.
 
 
-\begin{table}[h]
+\begin{table}[htbp]
 \centering
 \begin{tabular}{rcllrcl}
 \multicolumn{7}{c}{\textbf{Candiate Triples}}                                                                                                                                                                                                       \\

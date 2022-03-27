@@ -19,6 +19,11 @@
 \usepackage{cleveref}
 \usepackage{svg}
 \usepackage{longtable}
+% For examples
+\newcounter{example}[section]
+\newenvironment{example}[1][]{\refstepcounter{example}\par\medskip
+   \noindent \textbf{Example~\theexample. #1} \rmfamily}{\medskip}
+
 \usepackage{amsthm} % for proofs
 \usetikzlibrary{positioning}
 \usetikzlibrary{decorations.text}

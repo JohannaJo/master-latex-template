@@ -1,5 +1,5 @@
 \chapter{Results}
-\begin{figure}[h]
+\begin{figure}[htbp]
 \centering
     \centering
     \includesvg[inkscapelatex=false,width=0.6\textwidth,keepaspectratio]{figures/appendix/all_sets.svg}
@@ -8,57 +8,57 @@
 \end{figure}
 
 
-\begin{figure}[h]
+\begin{figure}[htbp]
 \centering
     \centering
     \includesvg[inkscapelatex=false,width=0.75\textwidth,keepaspectratio]{figures/appendix/all_sets_w_out_TransE.svg}
     \caption{Distribution of all mined rule sets, excluding the sets mined from KGs extended using TransE. Each rule set is labeled with the entity selection strategy, embedding model and rank cutoff that was used for that particular KG extension. We can observe that no new rules are mined when the RandomBaseline was used to extend the KGs.}
     \label{all_sets_w_out_TransE}
 \end{figure}
-
-\begin{table}[h]
+\iffalse
+\begin{table}
 \begin{tabular}{lrr}
 \toprule
                                                                                                       Rule &  Frequencies &  PCA Confidence \\
 \midrule
-                            ?b  DRF  ?a   => ?a  DRF  ?b &           48 &        1.000000 \\
-                   ?a  \_hypernym  ?c  ?c  SDTO  ?b   => ?a  SDTO  ?b &           36 &        0.828871 \\
-                   ?c  \_hypernym  ?a  ?c  SDTO  ?b   => ?a  SDTO  ?b &           34 &        0.726667 \\
-                   ?a  \_has\_part  ?c  ?c  SDTO  ?b   => ?a  SDTO  ?b &           24 &        0.809524 \\
-          ?a  IH  ?c  ?c  SDTO  ?b   => ?a  SDTO  ?b &           24 &        0.886525 \\
-?a  DRF  ?c  ?c  SDTO  ?b   => ?a  SDTO  ?b &           24 &        0.492857 \\
-?c  DRF  ?a  ?c  SDTO  ?b   => ?a  SDTO  ?b &           24 &        0.492857 \\
-                   ?c  \_has\_part  ?a  ?c  SDTO  ?b   => ?a  SDTO  ?b &           24 &        0.771739 \\
-                                               ?a  \_has\_part  ?c  ?b  \_hypernym  ?c   => ?a  \_has\_part  ?b &           21 &        0.104016 \\
-                                      ?a  \_has\_part  ?c  ?b  IH  ?c   => ?a  \_has\_part  ?b &           19 &        0.532544 \\
+                            ?b  DRF  ?a   $\Rightarrow$ ?a  DRF  ?b &           48 &        1.000000 \\
+                   ?a  \_hypernym  ?c  ?c  SDTO  ?b   $\Rightarrow$ ?a  SDTO  ?b &           36 &        0.828871 \\
+                   ?c  \_hypernym  ?a  ?c  SDTO  ?b   $\Rightarrow$ ?a  SDTO  ?b &           34 &        0.726667 \\
+                   ?a  \_has\_part  ?c  ?c  SDTO  ?b   $\Rightarrow$ ?a  SDTO  ?b &           24 &        0.809524 \\
+          ?a  IH  ?c  ?c  SDTO  ?b   $\Rightarrow$ ?a  SDTO  ?b &           24 &        0.886525 \\
+?a  DRF  ?c  ?c  SDTO  ?b   $\Rightarrow$ ?a  SDTO  ?b &           24 &        0.492857 \\
+?c  DRF  ?a  ?c  SDTO  ?b   $\Rightarrow$ ?a  SDTO  ?b &           24 &        0.492857 \\
+                   ?c  \_has\_part  ?a  ?c  SDTO  ?b   $\Rightarrow$ ?a  SDTO  ?b &           24 &        0.771739 \\
+                                               ?a  \_has\_part  ?c  ?b  \_hypernym  ?c   $\Rightarrow$ ?a  \_has\_part  ?b &           21 &        0.104016 \\
+                                      ?a  \_has\_part  ?c  ?b  IH  ?c   $\Rightarrow$ ?a  \_has\_part  ?b &           19 &        0.532544 \\
 \bottomrule
 \end{tabular}
-\caption{Rules mined from the original WN18RR KG, with their corresponding PCA confidences and how many times they were mined from the 48 extensions. DRF = "derivationally related form", STDO = "synset domain topic of" and IH = "instance hypernym".}
+\caption{Rules mined from the original WN18RR KG, with their corresponding PCA confidences and how many times they were mined from the 48 extensions. DRF = ``\textit{derivationally related form}", STDO = ``\textit{synset domain topic of}" and IH = ``\textit{instance hypernym}".}
 \label{wn18rr_original_rules_table_frequencies}
 \end{table}
 
-\begin{table}[h]
+\begin{table}
 \begin{tabular}{lrr}
 \toprule
                                                                                                       Rule &  Frequencies &  PCA Confidence \\
 \midrule
-                            ?b  DRF  ?a   => ?a  DRF  ?b &           48 &        1.000000 \\
-          ?a  IH  ?c  ?c  SDTO  ?b   => ?a  SDTO  ?b &           24 &        0.886525 \\
-                   ?a  \_hypernym  ?c  ?c  SDTO  ?b   => ?a  SDTO  ?b &           36 &        0.828871 \\
-                   ?a  \_has\_part  ?c  ?c  SDTO  ?b   => ?a  SDTO  ?b &           24 &        0.809524 \\
-                   ?c  \_has\_part  ?a  ?c  SDTO  ?b   => ?a  SDTO  ?b &           24 &        0.771739 \\
-                   ?c  \_hypernym  ?a  ?c  SDTO  ?b   => ?a  SDTO  ?b &           34 &        0.726667 \\
-                                      ?a  \_has\_part  ?c  ?b  IH  ?c   => ?a  \_has\_part  ?b &           19 &        0.532544 \\
-?a  DRF  ?c  ?c  SDTO  ?b   => ?a  SDTO  ?b &           24 &        0.492857 \\
-?c  DRF  ?a  ?c  SDTO  ?b   => ?a  SDTO  ?b &           24 &        0.492857 \\
-                                               ?a  \_has\_part  ?c  ?b  \_hypernym  ?c   => ?a  \_has\_part  ?b &           21 &        0.104016 \\
+                            ?b  DRF  ?a   $\Rightarrow$ ?a  DRF  ?b &           48 &        1.000000 \\
+          ?a  IH  ?c  ?c  SDTO  ?b   $\Rightarrow$ ?a  SDTO  ?b &           24 &        0.886525 \\
+                   ?a  \_hypernym  ?c  ?c  SDTO  ?b   $\Rightarrow$ ?a  SDTO  ?b &           36 &        0.828871 \\
+                   ?a  \_has\_part  ?c  ?c  SDTO  ?b   $\Rightarrow$ ?a  SDTO  ?b &           24 &        0.809524 \\
+                   ?c  \_has\_part  ?a  ?c  SDTO  ?b   $\Rightarrow$ ?a  SDTO  ?b &           24 &        0.771739 \\
+                   ?c  \_hypernym  ?a  ?c  SDTO  ?b   $\Rightarrow$ ?a  SDTO  ?b &           34 &        0.726667 \\
+                                      ?a  \_has\_part  ?c  ?b  IH  ?c   $\Rightarrow$ ?a  \_has\_part  ?b &           19 &        0.532544 \\
+?a  DRF  ?c  ?c  SDTO  ?b   $\Rightarrow$ ?a  SDTO  ?b &           24 &        0.492857 \\
+?c  DRF  ?a  ?c  SDTO  ?b   $\Rightarrow$ ?a  SDTO  ?b &           24 &        0.492857 \\
+                                               ?a  \_has\_part  ?c  ?b  \_hypernym  ?c   $\Rightarrow$ ?a  \_has\_part  ?b &           21 &        0.104016 \\
 \bottomrule
 \end{tabular}
-\caption{Rules mined from the original WN18RR KG, with their corresponding PCA confidences and how many times they were mined from the 48 extensions. DRF = "derivationally related form", STDO = "synset domain topic of" and IH = "instance hypernym".}
+\caption{Rules mined from the original WN18RR KG, with their corresponding PCA confidences and how many times they were mined from the 48 extensions. DRF = ``\textit{derivationally related form}", STDO = ``\textit{synset domain topic of}" and IH = ``\textit{instance hypernym}".}
 \label{wn18rr_original_rules_table_PCA}
 \end{table}
 
-\begin{longtable}{lrr}[h]
+\begin{longtable}{lrr}
 \toprule
                                                     Rule &  Frequencies &  PCA Confidence \\
 \midrule
@@ -160,9 +160,11 @@
 \caption{Rules mined from the original family KG, with their corresponding PCA confidences and how many times they were mined from the 48 extensions. Note that all rules with the $relative$ predicate in the consequent have lower PCA confidence and were mined less frequently.}
 \label{family_original_rules_table_frequencies}
 \end{longtable}
+\fi
+
 
 \newpage
-\begin{longtable}{lrr}[h]
+\begin{longtable}{lrr}
 \toprule
                                                     Rule &  Frequencies &  PCA Confidence \\
 \midrule
@@ -264,6 +266,3 @@
 \caption{Rules mined from the original family KG, with their corresponding PCA confidences and how many times they were mined from the 48 extensions. Note that all rules with the $relative$ predicate in the consequent have lower PCA confidence and were mined less frequently.}
 \label{family_original_rules_table_PCA}
 \end{longtable}
-
-
-
