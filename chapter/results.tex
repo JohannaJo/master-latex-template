@@ -538,16 +538,16 @@ which only was mined in 10 out of the 48 extensions. Consistently with the corre
 \toprule
                                                                                                       Rule &  Frequencies &  PCA Confidence \\
 \midrule
-                            ?b  DRF  ?a   $\Rightarrow$ ?a  DRF  ?b &           48 &        1.000000 \\
-          ?a  IH  ?c  ?c  SDTO  ?b   $\Rightarrow$ ?a  SDTO  ?b &           24 &        0.886525 \\
-                   ?a  \_hypernym  ?c  ?c  SDTO  ?b   $\Rightarrow$ ?a  SDTO  ?b &           36 &        0.828871 \\
-                   ?a  \_has\_part  ?c  ?c  SDTO  ?b   $\Rightarrow$ ?a  SDTO  ?b &           24 &        0.809524 \\
-                   ?c  \_has\_part  ?a  ?c  SDTO  ?b   $\Rightarrow$ ?a  SDTO  ?b &           24 &        0.771739 \\
-                   ?c  \_hypernym  ?a  ?c  SDTO  ?b   $\Rightarrow$ ?a  SDTO  ?b &           34 &        0.726667 \\
-                                      ?a  \_has\_part  ?c  ?b  IH  ?c   $\Rightarrow$ ?a  \_has\_part  ?b &           19 &        0.532544 \\
-?a  DRF  ?c  ?c  SDTO  ?b   $\Rightarrow$ ?a  SDTO  ?b &           24 &        0.492857 \\
-?c  DRF  ?a  ?c  SDTO  ?b   $\Rightarrow$ ?a  SDTO  ?b &           24 &        0.492857 \\
-                                               ?a  \_has\_part  ?c  ?b  \_hypernym  ?c   $\Rightarrow$ ?a  \_has\_part  ?b &           21 &        0.104016 \\
+                            DRF(y, x)   $\Rightarrow$ DRF(x, y) &           48 &        1.000000 \\
+          IH(x, z) $\wedge$ SDTO(z, y)   $\Rightarrow$ SDTO(x, y) &           24 &        0.886525 \\
+                   hypernym(x, z) $\wedge$ SDTO(z, y)   $\Rightarrow$ SDTO(x, y) &           36 &        0.828871 \\
+                   has\_part(x, z) $\wedge$ SDTO(z, y)   $\Rightarrow$ SDTO(x, y) &           24 &        0.809524 \\
+                   has\_part(z, x) $\wedge$ SDTO(z, y)   $\Rightarrow$ SDTO(x, y) &           24 &        0.771739 \\
+                   hypernym(z, x) $\wedge$ SDTO(z, y)   $\Rightarrow$ SDTO(x, y) &           34 &        0.726667 \\
+                                      has\_part(x, z) $\wedge$ IH(y, z)   $\Rightarrow$ has\_part(x, y) &           19 &        0.532544 \\
+DRF(x, z) $\wedge$ SDTO(z, y)   $\Rightarrow$ SDTO(x, y) &           24 &        0.492857 \\
+DRF(z, x) $\wedge$ SDTO(z, y)   $\Rightarrow$ SDTO(x, y) &           24 &        0.492857 \\
+                                               has\_part(x, z) $\wedge$ hypernym(y, z)   $\Rightarrow$ has\_part(x, y) &           21 &        0.104016 \\
 \bottomrule
 \end{tabular}
 \caption[Rules mined from the original WN18RR KG]{Rules mined from the original WN18RR KG, with their corresponding PCA confidences and how many times they were mined from the 48 extensions. DRF = ``\textit{derivationally related form}", STDO = ``\textit{synset domain topic of}" and IH = ``\textit{instance hypernym}".}
