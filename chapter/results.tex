@@ -37,7 +37,7 @@ Upon examining the number of rules mined per KG extension one immediately sees s
   \caption{Family KG}
   \label{fig:sub2}
 \end{subfigure}
-\caption{Distribution of number of mined rules over different embedding models.}
+\caption[Number of mined rules over embedding models]{Distribution of number of mined rules over different embedding models.}
 \label{fig:test}
 \end{figure}
 
@@ -63,7 +63,7 @@ In this section we will examine the effects of each of the three main parameters
 \centering
     \centering
     \includesvg[inkscapelatex=false,width=1\textwidth,keepaspectratio]{figures/results/rule_dist_models_hbar_family.svg}
-    \caption{Distribution of rules over KG embedding models on the family KG.}
+    \caption[Rules and their types over KG embedding models - family KG]{Distribution of rules over KG embedding models on the family KG.}
     \label{rule_dist_models_hbar_family}
 \end{figure}
 
@@ -71,7 +71,7 @@ In this section we will examine the effects of each of the three main parameters
 \centering
     \centering
     \includesvg[inkscapelatex=false,width=1\textwidth,keepaspectratio]{figures/results/rule_dist_models_hbar_wn18rr.svg}
-    \caption{Distribution of rules over KG embedding models on the WN18RR KG.}
+    \caption[Rules and their types over KG embedding models - WN18RR KG]{Distribution of rules over KG embedding models on the WN18RR KG.}
     \label{rule_dist_models_hbar_wn18rr}
 \end{figure}
 
@@ -93,7 +93,7 @@ At the first glance of boxplots \ref{fig:PCA_models_wn18rr_boxplot} and \ref{fig
   \caption{Extended KG}
   \label{fig:_PCA_models_wn18rr_boxplot_sub}
 \end{subfigure}
-\caption{Distribution of PCA confidence of mined rules by KG embedding models. PCA confidence scores are calculated on the original WN18RR and the extended WN18RR from which the rules are mined. The dashed line represents the median PCA confidence of the rules mined from the original WN18RR KG.}
+\caption[Dist. of PCA conf. rules by KG embedding models - WN18RR KG.]{Distribution of PCA confidence of mined rules by KG embedding models. PCA confidence scores are calculated on the original WN18RR and the extended WN18RR from which the rules are mined. The dashed line represents the median PCA confidence of the rules mined from the original WN18RR KG.}
 \label{fig:PCA_models_wn18rr_boxplot}
 \end{figure}
 
@@ -111,7 +111,7 @@ At the first glance of boxplots \ref{fig:PCA_models_wn18rr_boxplot} and \ref{fig
   \caption{Extended KG}
   \label{fig:_PCA_models_family_boxplot_sub}
 \end{subfigure}
-\caption{Distribution of PCA confidence of mined rules by KG embedding models. PCA confidence scores are calculated on the original family KG and the extended family KG from which the rules are mined. The dashed line represents the median PCA confidence of the rules mined from the original family KG.}
+\caption[Dist. of PCA conf. rules by KG embedding models - family KG.]{Distribution of PCA confidence of mined rules by KG embedding models. PCA confidence scores are calculated on the original family KG and the extended family KG from which the rules are mined. The dashed line represents the median PCA confidence of the rules mined from the original family KG.}
 \label{fig:PCA_models_family_boxplot}
 \end{figure}
 
@@ -130,7 +130,7 @@ TransE                                              & 94             & 9\%      
 DistMult                                            & 93             & 51\%                       & 90           & 49\%                    & 1           & 1\%                                            \\
 ComplEx                                             & 94             & 69\%                       & 43           & 31\%                    & 0           & 0\%                                           
 \end{tabular}
-\caption{Distribution of all the rules mined over KG embedding models. KG: family KG.}
+\caption[Dist. rules over KG embedding models - family KG.]{Distribution of all the rules mined over KG embedding models. KG: family KG.}
 \label{Tab:table_rules_models_family}
 \end{table}
 
@@ -144,7 +144,7 @@ TransE                                              & 10             & 1\%      
 DistMult                                            & 10             & 67\%                       & 5           & 33\%                    & 0           & 0\%                                            \\
 ComplEx                                             & 10             & 59\%                       & 7           & 41\%                    & 0           & 0\%                                           
 \end{tabular}
-\caption{Distribution of all the rules mined over KG embedding models. KG: WN18RR.}
+\caption[Dist. rules over KG embedding models - WN18RR KG.]{Distribution of all the rules mined over KG embedding models. KG: WN18RR.}
 \label{Tab:table_rules_models_wn18rr}
 \end{table}
 
@@ -259,7 +259,7 @@ Overall it seems like \textit{probabilistic}, \textit{random}, and the \textit{l
   \caption{Extended KG}
   \label{fig:_PCA_entity_wn18rr_boxplot_sub}
 \end{subfigure}
-\caption{Distribution of PCA confidence of mined rules by entity selection strategies. PCA confidence scores are calculated on the original WN18RR and the extended WN18RR from which the rules are mined. The dashed line represents the median PCA confidence of the rules mined from the original WN18RR KG.}
+\caption[Dist. of PCA conf. of rules by entity selection strategies - WN18RR KG.]{Distribution of PCA confidence of mined rules by entity selection strategies. PCA confidence scores are calculated on the original WN18RR and the extended WN18RR from which the rules are mined. The dashed line represents the median PCA confidence of the rules mined from the original WN18RR KG.}
 \label{fig:PCA_entity_wn18rr_boxplot}
 \end{figure}
 
@@ -277,7 +277,7 @@ Overall it seems like \textit{probabilistic}, \textit{random}, and the \textit{l
   \caption{Extended KG}
   \label{fig:_PCA_entity_family_boxplot_sub}
 \end{subfigure}
-\caption{Distribution of PCA confidence of mined rules by entity selection strategies. PCA confidence scores are calculated on the original family KG and the extended family KG from which the rules are mined. The dashed line represents the median PCA confidence of the rules mined from the original family KG.}
+\caption[Dist. of PCA conf. of rules by entity selection strategies - family KG.]{Distribution of PCA confidence of mined rules by entity selection strategies. PCA confidence scores are calculated on the original family KG and the extended family KG from which the rules are mined. The dashed line represents the median PCA confidence of the rules mined from the original family KG.}
 \label{fig:PCA_entity_family_boxplot}
 \end{figure}
 
@@ -291,7 +291,7 @@ Most freq.                                              & 88             & 46\% 
 Least freq                                            & 94             & 77\%                       & 28           & 33\%                    & 0           & 0\%                                            \\
 Probabilistic                                             & 91             & 73\%                       & 33           & 27\%                    & 3           & 3\%                                           
 \end{tabular}
-\caption{Distribution of all the rules mined over entity selection strategies for the family KG.}
+\caption[Dist. of rules over entity selection strategies - family KG.]{Distribution of all the rules mined over entity selection strategies for the family KG.}
 \label{Tab:table_rules_entities_family}
 \end{table}
 
@@ -305,7 +305,7 @@ Most freq.                                              & 10             & 42\% 
 Least freq.                                            & 10             & 48\%                       & 11           & 52\%                    & 0           & 0\%                                            \\
 Probabilistic                                             & 10             & 45\%                       & 12           & 55\%                    & 0           & 0\%                                           
 \end{tabular}
-\caption{Distribution of all the rules mined over entity selection strategies. KG: WN18RR.}
+\caption[Dist. of rules over entity selection strategies - WN18RR KG.]{Distribution of all the rules mined over entity selection strategies. KG: WN18RR.}
 \label{Tab:table_rules_entities_wn18rr}
 \end{table}
 
@@ -428,7 +428,7 @@ Rank cutoff values determine which candidates are admitted to the KG. Only those
   \caption{Extended KG}
   \label{fig:_PCA_rank_wn18rr_boxplot_sub}
 \end{subfigure}
-\caption{Distribution of PCA confidence of mined rules over rank cutoff values. PCA confidence scores are calculated on the original WN18RR and the extended WN18RR from which the rules are mined. The dashed line represents the median PCA confidence of the rules mined from the original WN18RR KG.}
+\caption[Dist. of PCA conf. of rules over rank cutoff values - WN18RR KG.]{Distribution of PCA confidence of mined rules over rank cutoff values. PCA confidence scores are calculated on the original WN18RR and the extended WN18RR from which the rules are mined. The dashed line represents the median PCA confidence of the rules mined from the original WN18RR KG.}
 \label{fig:PCA_rank_wn18rr_boxplot}
 \end{figure}
 
@@ -446,7 +446,7 @@ Rank cutoff values determine which candidates are admitted to the KG. Only those
   \caption{Extended KG}
   \label{fig:_PCA_rank_family_boxplot_sub}
 \end{subfigure}
-\caption{Distribution of PCA confidence of mined rules by rank cutoff values. PCA confidence scores are calculated on the original family KG and the extended family KG from which the rules are mined. The dashed line represents the median PCA confidence of the rules mined from the original family KG.}
+\caption[Dist. of PCA conf. of rules over rank cutoff values - family KG.]{Distribution of PCA confidence of mined rules by rank cutoff values. PCA confidence scores are calculated on the original family KG and the extended family KG from which the rules are mined. The dashed line represents the median PCA confidence of the rules mined from the original family KG.}
 \label{fig:PCA_rank_family_boxplot}
 \end{figure}
 
@@ -482,7 +482,7 @@ Rank cutoff values determine which candidates are admitted to the KG. Only those
             \label{fig:rank_7_pie_family}
         \end{subfigure}
         \hfill
-        \caption[]
+        \caption[Distribution of rules over KG rank cutoff values - family KG.]
         {\small Distribution of all the rules mined over KG rank cutoff values. KG: family KG.} 
         \label{rank_pies_family}
     \end{figure*}
@@ -514,7 +514,7 @@ Rank cutoff values determine which candidates are admitted to the KG. Only those
             \label{fig:rank_7_pie_wn18rr}
         \end{subfigure}
         \hfill
-        \caption[ ]
+        \caption[Distribution of rules over KG rank cutoff values - WN18RR KG.]
         {\small Distribution of all the rules mined over rank cutoff values. KG: WN18RR.} 
         \label{rank_pies_wn18rr}
     \end{figure*}
@@ -550,14 +550,14 @@ which only was mined in 10 out of the 48 extensions. Consistently with the corre
                                                ?a  \_has\_part  ?c  ?b  \_hypernym  ?c   $\Rightarrow$ ?a  \_has\_part  ?b &           21 &        0.104016 \\
 \bottomrule
 \end{tabular}
-\caption{Rules mined from the original WN18RR KG, with their corresponding PCA confidences and how many times they were mined from the 48 extensions. DRF = ``\textit{derivationally related form}", STDO = ``\textit{synset domain topic of}" and IH = ``\textit{instance hypernym}".}
+\caption[Rules mined from the original WN18RR KG]{Rules mined from the original WN18RR KG, with their corresponding PCA confidences and how many times they were mined from the 48 extensions. DRF = ``\textit{derivationally related form}", STDO = ``\textit{synset domain topic of}" and IH = ``\textit{instance hypernym}".}
 \label{wn18rr_original_rules_table_PCA}
 \end{table}
 
 
 
 \subsection{PCA distribution}
-For both the WN18RR and family KG the PCA confidence of the original rules is relatively spread out. A few rules have a PCA confidence of 1 or close to 1, and none have PCA confidence below 0.1. This makes sense, because this would imply the absence of supporting datapoints and thus AMIE3 would never mine the rule. The majority of new rules on the other hand \textit{do} however have a PCA confidence of 0. This means that most, if not all, the support for new rules lies in the extension of the KG. If all sets of supporting datapoints are dependent on the extension, then when PCA confidence is measured on the original KG this new rule would get a PCA confidence score of 0. If one looks closely at figure \ref{fig:PCA_rule_dist_new_original_famiy_sub} one can see that two new rules do have PCA confidence above 0.2. These were however also rejected by AMIE3 because the PCA body size (the number of instances of that rule) is so small that the PCA confidence calculated is not very reliable.
+For both the WN18RR and family KG the PCA confidence of the original rules is relatively spread out. A few rules have a PCA confidence of 1 or close to 1, and none have PCA confidence below 0.1. This makes sense, because this would imply the absence of supporting datapoints and thus AMIE3 would never mine the rule. The majority of new rules on the other hand \textit{do} however have a PCA confidence of 0. This means that most, if not all, the support for new rules lies in the extension of the KG. If all sets of supporting datapoints are dependent on the extension, then when PCA confidence is measured on the original KG this new rule would get a PCA confidence score of 0. If one looks closely at figure \ref{fig:PCA_rule_dist_new_original_family_sub} one can see that two new rules do have PCA confidence above 0.2. These were however also rejected by AMIE3 because the PCA body size (the number of instances of that rule) is so small that the PCA confidence calculated is not very reliable.
 
 When plotting the PCA confidence of new rules calculated over the KGs from which they were mined, the new rules become somewhat more evenly distributed along the PCA confidence interval. Figures \ref{fig:_PCA_rule_dist_new_original_wn18rr_sub} and \ref{fig:_PCA_rule_dist_new_original_family_sub} shows this, where the PCA confidence of the new rules here is not calculated over the original KG, rather the KG from which they were mined that gave them the best PCA confidence score. This method was chosen to highlight the extent to which the extensions changes the PCA confidence of new rules.
 
@@ -587,7 +587,7 @@ When plotting the PCA confidence of new rules calculated over the KGs from which
     \caption{Family - Extended KG}
   \label{fig:_PCA_rule_dist_new_original_family_sub}
 \end{subfigure}
-\caption[PCA conf. dist. of new and original rules]{Distribution of PCA confidence of original rules and new rules. The PCA confidence of all rules has been calculated over the original KG in subfigures \ref{fig:PCA_rule_dist_new_original_wn18rr_sub} and \ref{fig:PCA_rule_dist_new_original_family_sub}, while in subfigures \ref{fig:_PCA_rule_dist_new_original_wn18rr_sub} and \ref{fig:_PCA_rule_dist_new_original_family_sub} the PCA confidence of the new rules is calculated over the extended KG from which they were mined that resulted in the best PCA confidence score. The PCA confidence of original rules is always calculated over the original KG.}
+\caption[PCA conf. dist. of new and original rules.]{Distribution of PCA confidence of original rules and new rules. The PCA confidence of all rules has been calculated over the original KG in subfigures \ref{fig:PCA_rule_dist_new_original_wn18rr_sub} and \ref{fig:PCA_rule_dist_new_original_family_sub}, while in subfigures \ref{fig:_PCA_rule_dist_new_original_wn18rr_sub} and \ref{fig:_PCA_rule_dist_new_original_family_sub} the PCA confidence of the new rules is calculated over the extended KG from which they were mined that resulted in the best PCA confidence score. The PCA confidence of original rules is always calculated over the original KG.}
 \label{fig:PCA_rule_dist_new_original}
 \end{figure}
 

@@ -28,13 +28,12 @@ Additional knowledge can be inferred from KGs through inductive or deductive met
     
 \end{tikzpicture}
 
-\caption[Visual example of a KG.]{Example of a KG, where the dotted line represents a relationship that can be deductively inferred.} \label{fig:KGexample}
+\caption[Simple visual example of a KG.]{Example of a KG, where the dotted line represents a relationship that can be deductively inferred.} \label{fig:KGexample}
 \end{figure}
 
 In this thesis we will loosely follow the Resource Description Framework (RDF) standard and view KGs as sets of semantic triples. RDF is a standard for representation and exchange of graph data introduced by \gls{w3c}. Semantic triples are the data types used in the RDF data model. A triple, as the name suggests, is a tuple of three elements. It has the form (subject, predicate, object) and can therefore represent statements about semantic data, for example ``\textit{Cats are mammals}", or ``\textit{Ann knows Bob}". These RDF statements express relationships between two web resources, these resources being the subject and the object, while the predicate encapsulates the nature of the relationship. The relationship is phrased in a directional way, and so a set of RDF statements can also be viewed as a directed graph. The graph represents these triple statements, where the predicate in the triple denotes the edge going from the subject to the object, both of which are vertices.
 
 \begin{lstlisting}[caption={Example of RDF triple set written in informal pseudocode.}, label={RDF_triples_example}]
-label={RDF_triples_example}]
 <Leo> <is a> <cat>
 <cat> <is a> <mammal>
 <Ann> <knows> <Bob>
@@ -80,7 +79,7 @@ label={RDF_triples_example}]
     
 \end{tikzpicture}
 
-\caption{Informal visualization of the KG consisting of the example triples from Listing \ref{RDF_triples_example}} \label{fig:KG_example_2}
+\caption[Visualization of RDF triple example in listing \ref{RDF_triples_example}]{Informal visualization of the KG consisting of the example triples from Listing \ref{RDF_triples_example}} \label{fig:KG_example_2}
 \end{figure}
 
 With this type of data organisation one can for example query for a list of all people who own cats in the dataset. Treating KGs as a set of triples is the data model used in this thesis.
@@ -94,7 +93,7 @@ In the context of KGs the OWA is often more justified, as most large interesting
 \begin{figure}[htp]
     \centering
     \includegraphics[width=10cm]{figures/kb_venn.png}
-    \caption{KB prediction under incompleteness}
+    \caption{KB prediction under incompleteness.}
     \label{KB_predictions}
 \end{figure}
 
@@ -185,7 +184,7 @@ where the words with an overhead arrow denote \textit{word2vec}'s vector embeddi
 \begin{figure}[htp]
     \centering
     \includesvg[inkscapelatex=false,width=0.4\textwidth,keepaspectratio]{figures/KG_embeddings/IKEA_TransE.svg}
-    \caption{Visualization of entity and relation embedding for TransE.}
+    \caption[TransE embedding.]{Visualization of entity and relation embedding for TransE.}
     \label{IKEA_TransE}
 \end{figure}
 

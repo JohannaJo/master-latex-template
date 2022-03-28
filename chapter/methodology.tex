@@ -6,7 +6,7 @@ and results compared.
 \begin{figure}[htp]
     \centering
     \includegraphics[width=16cm]{figures/ontology_mining_pipeline.jpg}
-    \caption{Diagram representing KG extension and rule mining pipeline.}
+    \caption[Experiment pipeline diagram.]{Diagram representing KG extension and rule mining pipeline.}
 \end{figure}
 
 \section{Knowledge Graph Datasets}
@@ -59,7 +59,7 @@ represents the information that the synset \texttt{cat} is a hypernym of the syn
 &similar to & 86\\
 \hline
 \end{tabular}
-\caption{Frequency of relations in WN18RR KG and whether they were included in the final KG.}
+\caption[Freq. of relations in WN18RR.]{Frequency of relations in WN18RR KG and whether they were included in the final KG.}
 \end{table}
 
 Though it is not vital for the reader to understand the semantics behind the relations in this dataset, it may be more rewarding to understand the terms when later reading rules mined from the WN18RR KG. The relation \texttt{hypernym} was described above, so now the remaining five relations are succintly explained.
@@ -94,7 +94,7 @@ Pairwise loss margin    & 0.5, 1, 2                    \\ \hline
 %Learning rate       & Random number in range(0.0001, 0.01) \\ \hline
 \end{tabular}
 %\label{{hyperparameter_table}
-\caption{Hyperparameter values to search through in model selection.}
+\caption[Hyperparameter values for model selection.]{Hyperparameter values to search through during model selection.}
 \end{table}
 The AmpliGraph documentation was a main inspiration when deciding which hyperparameters to focus on. It was for example stated in the documentation that they received the best results with the adam optimizer, therefore other optimisers were not considered in the hyperparameter search \cite{ampligraph_documentation}. For each hyperparameter combination a learning rate randomly chosen in the range of 0.0001 - 0.01 was selected, another design choice borrowed from AmpliGraph.
 
@@ -114,7 +114,7 @@ The final model of all three embedding architectures had good results on the WN1
 \textbf{DistMult}      & 152.37  & 0.62    & 0.59   & 0.63      & 0.66   & 7.45    & 0.98     & 0.98    & 0.99   & 0.99    \\ 
 \textbf{ComplEx}        & 139.36    & 0.59      & 0.57      & 0.60      & 0.63      & 4.64     & 0.99     & 0.98     & 0.99      & 0.99  \\ \hline
 \end{tabular}
-\caption{Results of selected models evaluated on test set.}
+\caption[Test results of selected model.]{Results of selected models evaluated on test set.}
 \end{table}
 
 
@@ -132,7 +132,7 @@ The final model of all three embedding architectures had good results on the WN1
   \caption{Hits@n scores}
   \label{fig:model_selection_hit_scores_family}
 \end{subfigure}
-\caption{KG embedding test performance results for Wikidata5M (family KG).}
+\caption[KG embedding test  results for family KG.]{KG embedding test performance results for family KG.}
 \label{fig:model_selection_metrics_family}
 \end{figure}
 
@@ -150,7 +150,7 @@ The final model of all three embedding architectures had good results on the WN1
   \caption{Hits@n scores}
   \label{fig:model_selection_hit_scores_wn18rr}
 \end{subfigure}
-\caption{KG embedding test performance results for WN18RR}
+\caption[KG embedding test  results for WN18RR KG.]{KG embedding test performance results for WN18RR}
 \label{fig:model_selection_metrics_wn18rr}
 \end{figure}
 
@@ -199,11 +199,11 @@ Both in the family KG and in WN18RR the number of potential facts is huge, and s
 \textit{Felix} & \textit{friend}  & \textit{Gina}  &  & Gina                                & 1                                      \\
 \textit{Dave}  & \textit{friend}  & \textit{Eve}   &  & \multicolumn{1}{l}{}                & \multicolumn{1}{l}{}                  
 \end{tabular}
+\caption[Example KG with frequency table of entities.]{Example KG with frequency table of entities.}
 \label{entity_selection_KG}
-\caption{Example KG with frequency table of entities.}
 \end{table}
 
-If we look at \cref{entity_selection_KG} as an example KG and need to select three entities for candidate generate, then with the 
+If we look at listing \ref{entity_selection_KG} as an example KG and need to select three entities for candidate generate, then with the 
 \begin{itemize}
     \item \textit{most frequent} strategy the entity set would be \{\textit{Ann, Bob, Carl}\},
     \item \textit{least frequent} strategy the entity set would be \{\textit{Dave, Felix, Gina}\},
@@ -226,7 +226,7 @@ and any three candidates would be selected with the \textit{random} strategy. No
 \textit{Carl}                        & \textit{sibling}                        & \textit{Bob}                          &  & \textit{Carl}                        & \textit{friend}                        & \textit{Bob}                          \\
 \textit{Carl}                        & \textit{sibling}                        & \textit{Carl}                        &  & \textit{Carl}                        & \textit{friend}                        & \textit{Carl}                       
 \end{tabular}
-\caption{Candidate triples for \cref{entity_selection_KG} KG, using entity selection method \textit{most frequent}, and entity set size 3. Triples in red are already present in the KG, and are removed from the candidates set.}
+\caption[Candidate triples for example KG]{Candidate triples for the KG in listing \ref{entity_selection_KG}, using entity selection method \textit{most frequent}, and entity set size 3. Triples in red are already present in the KG, and are removed from the candidates set.}
 \label{canidate_triples_most_frequent}
 \end{table}
 
