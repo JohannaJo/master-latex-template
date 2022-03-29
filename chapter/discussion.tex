@@ -1,8 +1,46 @@
 \chapter{Discussion}
 
 
-\section{Mining ontologies through queries}
 
+
+Larger rules.
+
+
+\section{Mining ontologies through queries}
+This approach is similar to the KG extension and mining pipleline used for experiments in this thesis, but differs in the manner in which the KG embeddings are used to add implicit information to the KG. Instead of a rule mining algorithm that takes a KG as input, this approach uses the HORN algorithm by Angluin et al \cite{DBLP:journals/ml/AngluinFP92}. which requires and ``oracle" it can pose queries to. The oracle is a type of ``teacher" that is considered to be an expert on the rules we would like to learn, with the idea being to use a well-trained KG embedding model as the oracle for the HORN algorithm. We will now give a brief introduction to propositional logic, and then describe the HORN algorithm, before explaining why it was incompatible with RDF-style KGs.
+
+\subsection{Propositional logic}
+
+Propositional logic (PL) is a branch of logic that deals with statements, or ``propositions", that can be either true or false. Propositions can be combined using Boolean operators, for example ``and" $\wedge$ (conjunction), ``or" $\vee$ (disjunction) and ``not" $\neg$ (negation). Atomic propositions are propositions without operators, and are also called \textit{literals}. Literals are Boolean variables $v$ or their negation $\neg v$. For example, two literals $v_1, v_2$ can be combined to one proposition $P$ with the ``or" operator: $P = \neg v_1 \vee v_2$. Now $P$ evaluates to false if $v_1$ is evaluated to false or if $v_2$ is evaluated to true. The proposition $P$ will only evaluate to false if $v_1$ is true \textit{and} $v_2$ is false. A \textit{clause} is a disjunction of literals, so $P$ is a clause. The proposition $P$ is also considered a \textit{Horn clause}, which is a clause where at most one literal is not negated. 
+
+The implication operator is denoted by $\rightarrow$, and can be thought of as an "if-then" operator. So the proposition $v_1 \rightarrow v_2$ can be thought of as ``\textit{if} $v_1$\textit{ is true, then }$v_2$ \textit{is true}". The statement is thus only falsified if $v_1$ is true and $v_2$ is false. If $v_2$ is true then it does not matter what $v_1$ evaluates to, and similarly if $v_1$ is false then it does not matter what $v_2$ evaluates to. If we recall how $P$ evaluates to true and false we also see that $P = v_1 \rightarrow v_2 = \neg v_1 \vee v_2$. 
+Thus, in a Horn clause all the negated rules are in the antecedent (on the left side of the implication arrow) and the single non-negated clause is the consequent (on the right side of the implication arrow). For example the proposition \[Q = v_1 \wedge v_3 \wedge v_4\rightarrow v_2 = \neg v_1 \vee \neg v_3 \vee \neg v_4\vee v_2\] is also a Horn clause. The rule mining algorithm AMIE3 used in this thesis mined rules in the form of Horn clauses. One could also say that it mines a single \textit{Horn sentence}, which is a conjunction of Horn clauses. A Horn sentence is true only if every Horn clauses within is evaluated to true.
+
+The truth value of propositions is determined by the \textit{valuation} of the literals used. A valuation assigns truth values to each literal. For example under the valuation \[\mathcal{V_{+}}=\{v_1 = false, v_2 = false, v_3 = true, v_4 = true\}\] $Q$ would be true, while under the valuation \[\mathcal{V_{-}}=\{v_1 = true, v_2 = false, v_3 = true, v_4 = true\}\] $Q$ would be false.
+
+\subsection{The HORN algorithm}
+Similarly to AMIE3, the HORN algorithm is designed to output a set of rules in the form of HORN clauses. It does this by posing equivalence queries and membership queries. An equivalence query asks if the current hypothesis, in the form of a set of Horn clauses, is equivalent with the set of Horn clauses that the oracle knows. If the oracle answers ``yes", then the target set of rules has been found and the algorithm terminates, otherwise a ``no" answer is accompanied with a valuation in which the target and hypothesis are evaluated to different Boolean values. A \textit{positive} valuation is one which makes the target Horn sentence true, while a \textit{negative} valuation is one which evaluated the target to false. If we consider $Q$ as the target Horn sentence, then the valuation $\mathcal{V}_{+}$ is a positive example of $Q$ and $\mathcal{V}_{-}$ is a negative example of $Q$.
+
+A membership query is simply whether a given valuation is a positive or negative, to which the oracle only answers ``yes" or ``no". We will now focus on the implementation of the oracle and why this was incompatible with the set-of-triples data format. For more information on the HORN algorithm, please refer to the work \textit{Learning conjunctions of Horn clauses} by Angluin et al. \cite{DBLP:journals/ml/AngluinFP92}. The important takeaway for this algorithm is that it runs in polynomial time on the size of the target and the number of variables considered.
+
+
+\subsection{Incompatibility of KGs as triples and PL}
+If the oracle were a machine learning model, it would need to be able to classify valuations as positive or negative. The equivalence query could be simulated with many membership queries, where if enough valuations are tested one can with high probability determine whether the target is logically equivalent with the hypothesis. So all we really need to simulate the oracle is a binary classifier. This approach rested on the idea that with enough valuations labeled as positive and negative, one could train a model to implicitly represent the target Horn sentence that determines if the valuations are positive or negative. 
+
+The problem with applying this idea to KGs arises immediately when trying to express all entities and relations of KG with literals, something one needs to do in order to create a set of positive valuations that collectively represent the all information in the KG. The approach of assigning an individual literal to each entity and relation is not feasible. YAGO4 \cite{pellissier2020yago}, for example, contains over 50 million distinct entities, meaning that each data point in the training set would have at least 50 million features. One can attempt to assign roles to entities to limit the number of elements to encode, but the erasure of the unique identity of entities leads to further problems when it comes to maintaining patters in the data. To demonstrate this let us again use the KG from example \ref{mini_KG_rules}. We assign roles to all the individuals in the KG, which in this simple example will be the role of ``adult" and ``child". \texttt{Carol} will be an adult, and \texttt{Ann} and \texttt{Bob} children. Now we have reduced the number of entities by one, and the KG now looks like this:
+
+\begin{example}[An even simpler KG.]
+\begin{lstlisting}[]
+<child> <hasParent> <adult>
+<adult> <hasChild> <child>
+<adult> <hasChild> <child>
+<child> <hasSibling> <child>
+<child> <hasSibling> <child>
+\end{lstlisting}
+\label{mini_simple_KG_rules}
+\end{example}
+
+Now the KG has been simplified and almost half the data points have become redundant. If we now consider the rule $hasSibling(x, y) \wedge hasParent(y,z) \Rightarrow hasParent(x,z)$, which previously predicted the new triple \texttt{(Bob, hasParent, Carol)}, it now only predicts \texttt{(child, hasParent, adult)} which is not new information. By removing the identity of the individuals in the family, we removed the information that Ann is specifically the sibling of Bob and has Carol as a parent, which implied that Bob also had Carol as a parent. Hence, the valuations must represent all unique entities, or create replacement labels that maintain all the relevant information about the roles entities have in the KG. This becomes unfeasible with large KGs, such as the mentioned YAGO4.
 
 \section{Future work}
 How much noise needs to be added for a rule to not be mined anymore.
