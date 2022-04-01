@@ -602,13 +602,20 @@ We restate the central questions for the experiment posed at the beginning of th
 \end{enumerate}
 
 Questions 1 is the simplest, and our experiment has clearly shown that, yes, adding new plausible facts does result in new rules being mined. Examples of rules that were mined after extending the KGs are:
-TODO: list some good rules
-
-We saw in figure \ref{fig:PCA_rule_dist_new_original} that the PCA confidence of new rules was most often zero or close to zero when calculated over the original KG, but when measured on the extended KGs from which they were mined the scores were significantly better and had similar distributions to the original rules. In regard to question 3, a strong correlation was found between the PCA confidence of original rules and how often the rule was mined from extended KGs. The higher the PCA confidence, the more likely the rule will be mined from the extended KG.
+                            \begin{center}
+                            relative(z, x) $\wedge$ relative(y, z) $\Rightarrow$ relative(x, y) \\
+                          father(x, y) $\wedge$ mother(x, y) $\Rightarrow$ child(x, y) \\
+                            father(y, z) $\wedge$ mother(x, z) $\Rightarrow$ sibling(x, y) \\
+                            relative(z, y) $\wedge$ spouse(x, z) $\Rightarrow$ relative(x, y) \\
+                             relative(x, z) $\wedge$ relative(y, z) $\Rightarrow$ relative(x, y) \\
+                            father(x, z) $\wedge$ mother(y, z) $\Rightarrow$ sibling(x, y) \\
+                             \end{center}
+At close inspection these rules aren't very good, and as seen in figure \ref{fig:PCA_rule_dist_new_original} the PCA confidence of new rules was most often zero or close to zero when calculated over the original KG. However, when measured on the extended KGs from which they were mined the scores were significantly better and had similar distributions to the original rules. In regard to question 3, a strong correlation was found between the PCA confidence of original rules and how often the rule was mined from extended KGs. The higher the PCA confidence, the more likely the rule will be mined from the extended KG.
 
 
 
 \section{Limitations of experiment}
+\label{experiment_limitations}
 The experiment has many limitations, most related to computational restrictions. When generating candidates, for example, the optimal approach would be to generate all possible candidates, and evaluate them all. This is simply not possible due to computational limitations. As mentioned in section \ref{canidate_triple_generation}, there are more intelligent strategies for entity selection, but these were also too computationally intensive to take into use. A larger and better set of candidate triples would substantially strengthen the conclusions about KG embedding model and rank cutoff values when evaluating parameters in the KG extension process. This is because when only a small fraction of the possible candidates are ranked by models, we get an incomplete picture of the model's behaviour.
 
 The hyperparameter search for the KG embedding models could also be improved upon with greater computational resources, but it is not as influential as increasing the candidate set size and quality. This is due to the fact the random search has been shown to measure well against grid search \cite{li2017hyperband}, so the effect on the performance of the model is likely to be minimal.
