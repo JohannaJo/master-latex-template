@@ -14,14 +14,16 @@ Regarding extension methods we will look at three parameters:
     \item the \textit{rank cutoff value} for admitting candidates to the KG
 \end{itemize}
 and their role in the quantity and PCA confidence of the rules that are mined.
+
 \section{Overview of results}
-This section will give a brief overview of the results and focuses on the fact that most of the rules mined derive from KGs extended using TransE.
+This section will give a brief overview of the results and focuses on the fact that the KG embedding choice has a considerable influence on the number of rules being mined. The majority of rules were mined from TransE-extended KGs, and were rules that upon inspection had little meaning to them. As speculated in section \ref{selected_KG_embedding_models}, the findings show that the TransE model was not a success, and this section justifies why results from this model are omitted in some later parts of the data analysis.
+
 \subsection{KG extension sizes}
 In the KG extension process there are 48 \footnote{4 (KG embedding models) $\times$ 4 (entity selection methods) $\times$ 3 (rank cutoff) = 48 parameter combinations.} different parameter combinations. This means that there are 48 different KG extensions for each original KG. Extension set sizes range from approximately 800 to 33500 triples, where the RandomBaseline model admitted the most candidates. This makes sense, as the models assign a random score to facts, so that many more receive a high rank. The \textit{trained} models give most candidates a low score because most triples usually are bad candidates. Note that the extension sizes were about the same for both datasets, while WN18RR and the family KG respectively have 88 227 and 258 235 facts, therefore the extensions for WN18RR are relatively larger than for the family KG.
 
 \subsection{Rule set sizes and mean PCA confidence}
 \label{TransE_sucks} 
-Upon examining the number of rules mined per KG extension one immediately sees some startling results. Most rule sets don't differ drastically in size, apart from those where TransE was used, where these rule sets are \textit{exceptionally} larger. See \cref{all_sets} in the appendix to observe the difference. When looking at the mean PCA confidence of the rules sets one also notes that the score for the TransE sets are mostly around 0.1, while the remaining rule sets have a score on average around 0.5.
+Upon examining the number of rules mined per KG extension one immediately sees some startling results.\todo[inline]{The results are called startling, but the reader is referred to the appendix to see the surprising graph?} Most rule sets don't differ drastically in size, apart from those where TransE was used, where these rule sets are \textit{exceptionally} larger. See \cref{all_sets} in the appendix to observe the difference. When looking at the mean PCA confidence of the rules sets one also notes that the score for the TransE sets are mostly around 0.1, while the remaining rule sets have a score on average around 0.5.
 
 \begin{figure}[htbp]
 \centering
@@ -41,7 +43,7 @@ Upon examining the number of rules mined per KG extension one immediately sees s
 \label{fig:test}
 \end{figure}
 
-As discussed in Section \ref{TransE_peaked_in_2013} TransE is not able to learn certain relation qualities, and upon further inspection of the embedding vectors for relations in TransE the vector values all tend toward zero. It seems that while scoring decently on the performance metrics during model selection, TransE has not properly embedded the relations in the KG. Of the rules mined, \textcolor{red}{97}\% (WN18RR) and \textcolor{red}{76}\% (family KG) originate from KGs extended using TransE. The large number of rules produced marginalize those mined using other embedding models. Due to this and the fact that the trained TransE model has poor relational embeddings, we will include rules mined from KGs extended with TransE only when examining embedding models, but not when looking at entity selection methods or rank cutoff values.
+As discussed in Section \ref{TransE_peaked_in_2013} TransE is not able to learn certain relation qualities, and upon further inspection of the embedding vectors for relations in TransE the vector values all tend toward zero. This can partially be explained by TransE's tendency to push the embeddings of symmetric relations toward the zero vector, mentioned in section \ref{KG_embeddings_section}. It seems that while scoring decently on the performance metrics during model selection, TransE has not properly embedded the relations in the KG. Of the rules mined, \textcolor{red}{97}\% (WN18RR) and \textcolor{red}{76}\% (family KG) originate from KGs extended using TransE. The large number of rules produced marginalize those mined using other embedding models. Due to this and the fact that the trained TransE model has poor relational embeddings, we will include rules mined from KGs extended with TransE only when examining embedding models, but not when looking at entity selection methods or rank cutoff values.
 
 \begin{lstlisting}[mathescape=true, float, caption={Selection of nonsense rules mined from KGs extended with TransE.},captionpos=b, label={TransE_nonsense_rules}]
 $spouse(x, y)  \Rightarrow father(x, y)$
@@ -519,7 +521,7 @@ Rank cutoff values determine which candidates are admitted to the KG. Only those
         \label{rank_pies_wn18rr}
     \end{figure*}
     
-\subsection{Summary of effect of parameters}
+\subsection{Summary of effect of parameters}\todo[inline]{Should this be moved to the results summary in section \ref{results_summary}?}
 The three parameters for KG extension were shown to have a varying degree of influence. All entity selection strategies, apart from \textit{most likely}, performed equally well. This was consistent with the assumption of the authors of AmpliGraph, being that the most frequent entities are less likely to have missing facts \cite{ampligraph}. Of the KG embedding models, TransE led to a substantially greater number of new rules being mined compared to the other models, but these rules had very low PCA confidence when calculated over the original dataset. ComplEx and DistMult performed similarly in regard to PCA confidence, with slightly more new rules being mined with DistMult due to the model giving candidate triples a higher score than ComplEx did. The rank cutoff value gave expected results, where a value that accepted more new candidate triples led to more new rules being minded. When calculated over the original KG, the PCA confidence in rules did not significantly vary among the rank cutoff values. 
 
 \newpage
@@ -593,7 +595,7 @@ When plotting the PCA confidence of new rules calculated over the KGs from which
 
 
 \section{Summary of findings}
-
+\label{results_summary}
 We restate the central questions for the experiment posed at the beginning of this chapter. These questions were:
 \begin{enumerate}
     \item Does adding new plausible facts lead to new rules being mined? 
@@ -612,7 +614,7 @@ Questions 1 is the simplest, and our experiment has clearly shown that, yes, add
                              \end{center}
 At close inspection these rules aren't very good, and as seen in figure \ref{fig:PCA_rule_dist_new_original} the PCA confidence of new rules was most often zero or close to zero when calculated over the original KG. However, when measured on the extended KGs from which they were mined the scores were significantly better and had similar distributions to the original rules. In regard to question 3, a strong correlation was found between the PCA confidence of original rules and how often the rule was mined from extended KGs. The higher the PCA confidence, the more likely the rule will be mined from the extended KG.
 
-
+%In regard to the influence the parameters had on the outcomes of the experiment, the chosen KG embedding model clearly had the most influence. TransE performed ever worse than the baseline model, resulting in unusually many nonsense rules being mined in comparison to the embedding models. ComplEx and DistMult resulted in fewer rules with higher PCA confidence, with ComplEx being more conservative in the ranking of candidate triples. All entity selection methods gave similar resluts, apart from \textit{most frequent} which resulted in 
 
 \section{Limitations of experiment}
 \label{experiment_limitations}
