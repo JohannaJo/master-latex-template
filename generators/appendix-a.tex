@@ -266,3 +266,15 @@ relative(z, y) $\wedge$ relative(x, z)   $\Rightarrow$ relative(x, y) &         
 \caption[Rules mined from the original family KG]{Rules mined from the original family KG, with their corresponding PCA confidences and how many times they were mined from the 48 extensions. Note that all rules with the $relative$ predicate in the consequent have lower PCA confidence and were mined less frequently.}
 \label{family_original_rules_table_PCA}
 \end{longtable}
+
+
+\section{Propositional logic}
+\label{propositional_logic}
+Propositional logic (PL) is a branch of logic that deals with statements, or ``propositions", that can be either true or false. Propositions can be combined using boolean operators, for example ``and" $\wedge$ (conjunction) and ``or" $\vee$ (disjunction). Atomic propositions are propositions without operators, and are also called \textit{literals}. Literals are boolean variables $v$ or their negation $\neg v$. For example, two literals $v_1, v_2$ can be combined to one proposition $P$ with the ``or" operator:
+\[P = \neg v_1 \vee v_2\]
+Now $P$ evaluates to true if $v_1$ is evaluated to false or if $v_2$ is evaluated to true. The proposition $P$ will only evaluate to false if $v_1$ is true \textit{and} $v_2$ is false. A \textit{clause} is a disjunction of literals, so $P$ is a clause. The proposition $P$ is also considered a \textit{Horn clause}, which is a clause where at most one literal is not negated. 
+
+The implication operator is denoted by $\rightarrow$, and can be thought of as an "if-then" operator. The proposition $v_1 \rightarrow v_2$ can be read as ``\textit{if} $v_1$\textit{ is true, then }$v_2$ \textit{is true}". The statement is thus only falsified if $v_1$ is true and $v_2$ is false. If $v_2$ is true then it does not matter what $v_1$ evaluates to, and similarly if $v_1$ is false then it does not matter what $v_2$ evaluates to. If we compare this to the circumstances under which $P$ evaluated to true and false we also see that $P = v_1 \rightarrow v_2 = \neg v_1 \vee v_2$. 
+Thus, in a Horn clauses can be treated as rules, where all the negated literals are in the antecedent (on the left side of the implication arrow) and the single non-negated literal is the consequent (on the right side of the implication arrow). For example the proposition \[Q = v_1 \wedge v_3 \wedge v_4\rightarrow v_2 = \neg v_1 \vee \neg v_3 \vee \neg v_4\vee v_2\] is also a Horn clause. The rule mining algorithm AMIE3 used in this thesis mined rules in the form of Horn clauses. One could also say that it mines a single \textit{Horn sentence}, which is a conjunction of Horn clauses. A Horn sentence is true only if every Horn clause within is evaluated to true.
+
+The truth value of propositions is determined by the \textit{valuation} of the literals used. A valuation assigns truth values to each literal. For example under the valuation \[\mathcal{V_{+}}=\{v_1 = false, v_2 = false, v_3 = true, v_4 = true\}\] $Q$ would be true, while under the valuation \[\mathcal{V_{-}}=\{v_1 = true, v_2 = false, v_3 = true, v_4 = true\}\] $Q$ would be false.

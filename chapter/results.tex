@@ -60,61 +60,56 @@ $sibling(y, x) \wedge spouse(x, y) \Rightarrow father(x, y)$
 
 \section{Effect of parameters}
 In this section we will examine the effects of each of the three main parameters in the KG extension process. Note that when looking at rules with a certain parameter the sets of rules will be a concatenation of all cases where that parameter was used. For example, if we look at the rules mined with ComplEx as the KG embedding model, then this group will contain rules mined from 12 different KG extensions because we need to look at all the combinations of entity selection methods and rank cutoff values ($4\times3=12$). This is differentiated from the case where we look at rules mined from a single extended KG, which we will do in \cref{Rule_comparison}.
-
-\begin{figure}
+\begin{figure}[htbp]
 \centering
-    \centering
-    \includesvg[inkscapelatex=false,width=1\textwidth,keepaspectratio]{figures/results/rule_dist_models_hbar_family.svg}
-    \caption[Rules and their types over KG embedding models - family KG]{Distribution of rules over KG embedding models on the family KG.}
-    \label{rule_dist_models_hbar_family}
+\begin{subfigure}{1\textwidth}
+  \centering
+  \includesvg[inkscapelatex=false,width=0.9\textwidth,keepaspectratio]{figures/results/rule_dist_models_hbar_family.svg}
+  \caption{Family KG}
+  \label{rule_dist_models_hbar_family}
+\end{subfigure}%
+\hfill
+\begin{subfigure}{1\textwidth}
+  \centering
+  \includesvg[inkscapelatex=false,width=0.9\textwidth,keepaspectratio]{figures/results/rule_dist_models_hbar_wn18rr.svg}
+  \caption{WN18RR KG}
+  \label{rule_dist_models_hbar_wn18rr}
+\end{subfigure}
+\caption[Rules and their types over KG embedding models]{Distribution of rules over KG embedding models. Note that the bar for TransE extends far beyond the chart.}
+\label{rule_dist_models_hbar}
 \end{figure}
-
-\begin{figure}
-\centering
-    \centering
-    \includesvg[inkscapelatex=false,width=1\textwidth,keepaspectratio]{figures/results/rule_dist_models_hbar_wn18rr.svg}
-    \caption[Rules and their types over KG embedding models - WN18RR KG]{Distribution of rules over KG embedding models on the WN18RR KG.}
-    \label{rule_dist_models_hbar_wn18rr}
-\end{figure}
-
 
 \subsection{Effect of KG embedding model}
-At the first glance of boxplots \ref{fig:PCA_models_wn18rr_boxplot} and \ref{fig:PCA_models_family_boxplot} it may seem odd that the PCA confidence of rules mined from RandomBaseline extensions is so high. Boxplots are used to represent the spread of data through their quartlies \cite{dutoit2012graphical}. The box itself covers $Q_1-Q_3$, with the horizontal line in the box marking the median. The median PCA confidence for the original rules is indicated by the dashed line across the plots. The boxplots used in this thesis also have \textit{whiskers}, which are the lines extending vertically out of the box. Whiskers give an indication of the variability of the data outside the upper and lower quartiles (respectively $Q_1$ and $Q_3$). Points beyond the whiskers are considered outliers.
+At the first glance of the boxplots in figure \ref{fig:PCA_models_boxplot} it may seem odd that the PCA confidence of rules mined from RandomBaseline extensions is so high. Boxplots are used to represent the spread of data through their quartlies \cite{dutoit2012graphical}. The box itself covers $Q_1-Q_3$, with the horizontal line in the box marking the median. The median PCA confidence for the original rules is indicated by the dashed line across the plots. The boxplots used in this thesis also have \textit{whiskers}, which are the lines extending vertically out of the box. Whiskers give an indication of the variability of the data outside the upper and lower quartiles (respectively $Q_1$ and $Q_3$). Points beyond the whiskers are considered outliers.
 
 \begin{figure}[htbp]
 \centering
 \begin{subfigure}{.5\textwidth}
   \centering
   \includegraphics[width=1\linewidth]{figures/results/PCA_models/PCA-models_wn18rr.png}
-  \caption{Original KG}
+  \caption{Original WN18RR KG}
   \label{fig:PCA-models_wn18rr_boxplot_sub}
 \end{subfigure}%
 \begin{subfigure}{.5\textwidth}
   \centering
   \includegraphics[width=1\linewidth]{figures/results/PCA_models/_PCA-models_wn18rr.png}
-  \caption{Extended KG}
+  \caption{Extended WN18RR KG}
   \label{fig:_PCA_models_wn18rr_boxplot_sub}
 \end{subfigure}
-\caption[Dist. of PCA conf. rules by KG embedding models - WN18RR KG.]{Distribution of PCA confidence of mined rules by KG embedding models. PCA confidence scores are calculated on the original WN18RR and the extended WN18RR from which the rules are mined. The dashed line represents the median PCA confidence of the rules mined from the original WN18RR KG.}
-\label{fig:PCA_models_wn18rr_boxplot}
-\end{figure}
-
-\begin{figure}[htbp]
-\centering
 \begin{subfigure}{.5\textwidth}
   \centering
   \includegraphics[width=1\linewidth]{figures/results/PCA_models/PCA-models_family.png}
-  \caption{Original KG}
+  \caption{Original family KG}
   \label{fig:models_family_boxplot_sub}
 \end{subfigure}%
 \begin{subfigure}{.5\textwidth}
   \centering
   \includegraphics[width=1\linewidth]{figures/results/PCA_models/_PCA-models_family.png}
-  \caption{Extended KG}
+  \caption{Extended family KG}
   \label{fig:_PCA_models_family_boxplot_sub}
 \end{subfigure}
-\caption[Dist. of PCA conf. rules by KG embedding models - family KG.]{Distribution of PCA confidence of mined rules by KG embedding models. PCA confidence scores are calculated on the original family KG and the extended family KG from which the rules are mined. The dashed line represents the median PCA confidence of the rules mined from the original family KG.}
-\label{fig:PCA_models_family_boxplot}
+\caption[Dist. of PCA conf. rules by KG embedding models]{Distribution of PCA confidence of mined rules by KG embedding models. PCA confidence scores are calculated on the original KG and the extended KG from which the rules are mined. The dashed line represents the median PCA confidence of the rules mined from the original KG.}
+\label{fig:PCA_models_boxplot}
 \end{figure}
 
 By looking at figures \ref{rule_dist_models_hbar_family} and \ref{rule_dist_models_hbar_wn18rr} it becomes apparent that there in fact fewer different rules mined from these extensions. In the WN18RR case no new rules were found, and a single original rule was also never mined. The omitted rule,
@@ -160,6 +155,7 @@ DistMult and ComplEx are closely related embedding models as they have similar s
 The combined set of rules found from ComplEx-extended KGs include all the original rules, both for WN18RR and the family KG.  This is almost also the case for DistMult, but it fails to find the original rule $child(x, y) \Rightarrow mother(y,x)$ in the family KG. This rule has the second lowest PCA confidence of all the original family KG rules.
 
 \iffalse
+% OLD PIE CHARTS
     \begin{figure*}[htbp]
         \centering
         \begin{subfigure}[b]{0.49\textwidth}
@@ -241,7 +237,7 @@ The combined set of rules found from ComplEx-extended KGs include all the origin
 
 \newpage
 \subsection{Effect of entity selection method}
-The \textit{probabilistic}, \textit{random}, and the \textit{least frequent} entity selection strategies perform relatively similarly if we look at the PCA confidence box plots in figures \ref{fig:PCA_entity_wn18rr_boxplot} and \ref{fig:PCA_entity_family_boxplot}. The \textit{most frequent} strategy, however, performs worse, both on the WN18RR and family KG. This is consistent with AmpliGraph's assumption that the most frequent entities are less likely to have missing facts \cite{kge_tutorial}.
+The \textit{probabilistic}, \textit{random}, and the \textit{least frequent} entity selection strategies perform relatively similarly if we look at the PCA confidence box plots in figure \ref{fig:PCA_entity_boxplot}. The \textit{most frequent} strategy, however, performs worse, both on the WN18RR and family KG. This is consistent with AmpliGraph's assumption that the most frequent entities are less likely to have missing facts \cite{kge_tutorial}.
 
 In the WN18RR KG all original rules were found, but in the family KG only the \textit{least frequent} strategy resulted in all the original rules being mined. It also resulted in the least new rules being mined, while the \textit{most frequent} strategy led to the most new rules.
 
@@ -252,35 +248,29 @@ Overall it seems like \textit{probabilistic}, \textit{random}, and the \textit{l
 \begin{subfigure}{.5\textwidth}
   \centering
   \includegraphics[width=1\linewidth]{figures/results/entity_selection/PCA-entity_wn18rr.png}
-  \caption{Original KG}
+  \caption{Original WN18RR KG}
   \label{fig:PCA-entity_wn18rr_boxplot_sub}
 \end{subfigure}%
 \begin{subfigure}{.5\textwidth}
   \centering
   \includegraphics[width=1\linewidth]{figures/results/entity_selection/_PCA-entity_wn18rr.png}
-  \caption{Extended KG}
+  \caption{Extended WN18RR KG}
   \label{fig:_PCA_entity_wn18rr_boxplot_sub}
 \end{subfigure}
-\caption[Dist. of PCA conf. of rules by entity selection strategies - WN18RR KG.]{Distribution of PCA confidence of mined rules by entity selection strategies. PCA confidence scores are calculated on the original WN18RR and the extended WN18RR from which the rules are mined. The dashed line represents the median PCA confidence of the rules mined from the original WN18RR KG.}
-\label{fig:PCA_entity_wn18rr_boxplot}
-\end{figure}
-
-\begin{figure}[htbp]
-\centering
 \begin{subfigure}{.5\textwidth}
   \centering
   \includegraphics[width=1\linewidth]{figures/results/entity_selection/PCA-entity_family.png}
-  \caption{Original KG}
+  \caption{Original family KG}
   \label{fig:models_entity_boxplot_sub}
 \end{subfigure}%
 \begin{subfigure}{.5\textwidth}
   \centering
   \includegraphics[width=1\linewidth]{figures/results/entity_selection/_PCA-entity_family.png}
-  \caption{Extended KG}
+  \caption{Extended family KG}
   \label{fig:_PCA_entity_family_boxplot_sub}
 \end{subfigure}
-\caption[Dist. of PCA conf. of rules by entity selection strategies - family KG.]{Distribution of PCA confidence of mined rules by entity selection strategies. PCA confidence scores are calculated on the original family KG and the extended family KG from which the rules are mined. The dashed line represents the median PCA confidence of the rules mined from the original family KG.}
-\label{fig:PCA_entity_family_boxplot}
+\caption[Dist. of PCA conf. of rules by entity selection strategies]{Distribution of PCA confidence of mined rules by entity selection strategies. PCA confidence scores are calculated on the original KG and the extended KG from which the rules are mined. The dashed line represents the median PCA confidence of the rules mined from the original KG.}
+\label{fig:PCA_entity_boxplot}
 \end{figure}
 
 \begin{table}[htp]
@@ -416,40 +406,34 @@ Rank cutoff values determine which candidates are admitted to the KG. Only those
 \label{rank_extensions_boxplot}
 \end{figure}
 
-\begin{figure}[htb]
+\begin{figure}[!htb]
 \centering
 \begin{subfigure}{.5\textwidth}
   \centering
   \includegraphics[width=1\linewidth]{figures/results/ranks/PCA-rank_wn18rr.png}
-  \caption{Original KG}
+  \caption{Original WN18RR KG}
   \label{fig:PCA-rank_wn18rr_boxplot_sub}
 \end{subfigure}%
 \begin{subfigure}{.5\textwidth}
   \centering
   \includegraphics[width=1\linewidth]{figures/results/ranks/_PCA-rank_wn18rr.png}
-  \caption{Extended KG}
+  \caption{Extended WN18RR KG}
   \label{fig:_PCA_rank_wn18rr_boxplot_sub}
 \end{subfigure}
-\caption[Dist. of PCA conf. of rules over rank cutoff values - WN18RR KG.]{Distribution of PCA confidence of mined rules over rank cutoff values. PCA confidence scores are calculated on the original WN18RR and the extended WN18RR from which the rules are mined. The dashed line represents the median PCA confidence of the rules mined from the original WN18RR KG.}
-\label{fig:PCA_rank_wn18rr_boxplot}
-\end{figure}
-
-\begin{figure}[htb]
-\centering
 \begin{subfigure}{.5\textwidth}
   \centering
   \includegraphics[width=1\linewidth]{figures/results/ranks/PCA-rank_family.png}
-  \caption{Original KG}
+  \caption{Original family KG}
   \label{fig:models_rank_boxplot_sub}
 \end{subfigure}%
 \begin{subfigure}{.5\textwidth}
   \centering
   \includegraphics[width=1\linewidth]{figures/results/ranks/_PCA-rank_family.png}
-  \caption{Extended KG}
+  \caption{Extended family KG}
   \label{fig:_PCA_rank_family_boxplot_sub}
 \end{subfigure}
-\caption[Dist. of PCA conf. of rules over rank cutoff values - family KG.]{Distribution of PCA confidence of mined rules by rank cutoff values. PCA confidence scores are calculated on the original family KG and the extended family KG from which the rules are mined. The dashed line represents the median PCA confidence of the rules mined from the original family KG.}
-\label{fig:PCA_rank_family_boxplot}
+\caption[Dist. of PCA conf. of rules over rank cutoff values]{Distribution of PCA confidence of mined rules over rank cutoff values. PCA confidence scores are calculated on the original KG and the extended KG from which the rules are mined. The dashed line represents the median PCA confidence of the rules mined from the original KG.}
+\label{fig:PCA_rank_boxplot}
 \end{figure}
 
 
@@ -458,39 +442,7 @@ Rank cutoff values determine which candidates are admitted to the KG. Only those
 
 
 
-\begin{figure*}[htbp]
-        \centering
-        \begin{subfigure}[b]{0.3\textwidth}
-            \centering
-            \includegraphics[width=\textwidth]{figures/results/ranks/pie_charts/('rank_cutoff', 1)_family.png}
-            \caption[]%
-            {{\small Rank 1}}    
-            \label{fig:rank_1_pie_family}
-        \end{subfigure}
-        %\hfill
-        \begin{subfigure}[b]{0.3\textwidth}  
-            \centering 
-            \includegraphics[width=\textwidth]{figures/results/ranks/pie_charts/('rank_cutoff', 4)_family.png}
-            \caption[]%
-            {{\small Rank 4}}    
-            \label{fig:rank_4_pie_family}
-        \end{subfigure}
-        %\vskip\baselineskip
-        \begin{subfigure}[b]{0.3\textwidth}   
-            \centering 
-            \includegraphics[width=\textwidth]{figures/results/ranks/pie_charts/('rank_cutoff', 7)_family.png}
-            \caption[]%
-            {{\small Rank 7}}    
-            \label{fig:rank_7_pie_family}
-        \end{subfigure}
-        \hfill
-        \caption[Distribution of rules over KG rank cutoff values - family KG.]
-        {\small Distribution of all the rules mined over KG rank cutoff values. KG: family KG.} 
-        \label{rank_pies_family}
-    \end{figure*}
-    
-    
-    \begin{figure*}[htbp]
+\begin{figure*}[!htbp]
         \centering
         \begin{subfigure}[b]{0.3\textwidth}
             \centering
@@ -515,10 +467,31 @@ Rank cutoff values determine which candidates are admitted to the KG. Only those
             {{\small Rank 7}}    
             \label{fig:rank_7_pie_wn18rr}
         \end{subfigure}
-        \hfill
-        \caption[Distribution of rules over KG rank cutoff values - WN18RR KG.]
-        {\small Distribution of all the rules mined over rank cutoff values. KG: WN18RR.} 
-        \label{rank_pies_wn18rr}
+        \begin{subfigure}[b]{0.3\textwidth}
+            \centering
+            \includegraphics[width=\textwidth]{figures/results/ranks/pie_charts/('rank_cutoff', 1)_family.png}
+            \caption[]%
+            {{\small Rank 1}}    
+            \label{fig:rank_1_pie_family}
+        \end{subfigure}
+        \begin{subfigure}[b]{0.3\textwidth}  
+            \centering 
+            \includegraphics[width=\textwidth]{figures/results/ranks/pie_charts/('rank_cutoff', 4)_family.png}
+            \caption[]%
+            {{\small Rank 4}}    
+            \label{fig:rank_4_pie_family}
+        \end{subfigure}
+        %\vskip\baselineskip
+        \begin{subfigure}[b]{0.3\textwidth}   
+            \centering 
+            \includegraphics[width=\textwidth]{figures/results/ranks/pie_charts/('rank_cutoff', 7)_family.png}
+            \caption[]%
+            {{\small Rank 7}}    
+            \label{fig:rank_7_pie_family}
+        \end{subfigure}
+        \caption[Distribution of rules over KG rank cutoff values - family KG.]
+        {\small Distribution of all the rules mined over KG rank cutoff values. KG: family KG.} 
+        \label{rank_pies_family}
     \end{figure*}
     
 \subsection{Summary of effect of parameters}\todo[inline]{Should this be moved to the results summary in section \ref{results_summary}?}
@@ -565,25 +538,25 @@ When plotting the PCA confidence of new rules calculated over the KGs from which
 
 \begin{figure}[htbp]
 \centering
-\begin{subfigure}{.5\textwidth}
+\begin{subfigure}{.49\textwidth}
   \centering
     \includesvg[inkscapelatex=false,width=1\textwidth,keepaspectratio]{figures/results/rule_comparison/PCA_rule_dist_new_original_wn18rr.svg}
     \caption{WN18RR - Original KG}
   \label{fig:PCA_rule_dist_new_original_wn18rr_sub}
-\end{subfigure}%
-\begin{subfigure}{.5\textwidth}
+\end{subfigure}
+\begin{subfigure}{.49\textwidth}
   \centering
     \includesvg[inkscapelatex=false,width=1\textwidth,keepaspectratio]{figures/results/rule_comparison/PCA_rule_dist_new_original_family.svg}
     \caption{Family - Original KG}
   \label{fig:PCA_rule_dist_new_original_family_sub}
 \end{subfigure}
-\begin{subfigure}{.5\textwidth}
+\begin{subfigure}{.49\textwidth}
   \centering
     \includesvg[inkscapelatex=false,width=1\textwidth,keepaspectratio]{figures/results/rule_comparison/_PCA_rule_dist_new_original_wn18rr.svg}
     \caption{WN18RR - Extended KG}
   \label{fig:_PCA_rule_dist_new_original_wn18rr_sub}
 \end{subfigure}%
-\begin{subfigure}{.5\textwidth}
+\begin{subfigure}{.49\textwidth}
   \centering
     \includesvg[inkscapelatex=false,width=1\textwidth,keepaspectratio]{figures/results/rule_comparison/_PCA_rule_dist_new_original_family.svg}
     \caption{Family - Extended KG}

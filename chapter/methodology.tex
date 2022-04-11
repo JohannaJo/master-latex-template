@@ -1,4 +1,4 @@
-\chapter{Methodology and material}
+\chapter{Rule mining on extended knowledge graphs}
 In this chapter, we will first briefly summarize the KG extension and mining process, before exploring each component separately.
 
 The process starts with a KG. From this KG we want to first mine rules, then extend it with new plausible facts, and lastly mine rules again on the extended KG. Candidates for additions to the KG are generated according to strategies that attempt to maximise the plausibility of the candidates. Once this set of candidate triples has been generated, the best of these are added to the KG. While there is no direct way to give an absolute score to these triples, a KG embedding trained on the original KG can rank the candidate triples against a set of corrupted triples. With the candidates ranked, one can accept all candidates above some appropriately chosen cutoff, and add them to the KG. Then rules can be mined and evaluated on both the original and extended KG, 
