@@ -295,7 +295,6 @@ If we take the KG from example \ref{mini_KG_rules} and the rule $hasChild(x, y) 
 
 If one wants to mine rules that only describe the data at hand, and has a relatively complete KG, then this is a good measure of confidence. If the aim on the other hand is to mine rules that predict new facts then standard confidence is not a good measurement as it penalizes rules that make predictions outside of the current knowledge.
 
-\textcolor{orange}{READ FROM THIS POINT}
 
 \subsubsection{PCA Confidence}
 This measurement for confidence differs from standard confidence in its definition of what is a false prediction. Under standard confidence any triple outside the KG is a false prediction, while this confidence metric adopts PCA, introduced in section \ref{Integrity_of_KGs}. The definition of a false prediction is thus more conservative, so not all triples outside the KG are considered false. The PCA confidence of the rule is the ration of its predictions that are not labeled as false by the PCA \cite{amie}:
@@ -344,9 +343,6 @@ Depending on the intended application of the mined rules, different metrics are 
 
 \subsubsection{The role of AMIE3 in experiments}
 The rule miner required for the experiments in this thesis had to have reasonable running time and have the ability to mine rules of acceptable quality. The PCA confidence measure, while not perfect, was deemed an adequate indication of quality, and therefore the AMIE-algorithms that employed this measure seemed appropriate for the task. The AMIE3 algorithm was of course the best of the three, and it performed well against other recent rule mining algorithms, such as Ontological Pathfinding \cite{op} and RudiK \cite{rudik}. Furthermore, the authors of AMIE3 had made their publication publicly available on GitHub with clear instructions on how to use it. For these reasons the AMIE3 algorithm was chosen as the rule miner for the experiments of this thesis.
-
-
-\textcolor{orange}{YOU HAVE REACHED THE END OF THE SECTION TO READ.}
 
 
 
