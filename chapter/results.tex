@@ -45,10 +45,9 @@ Upon examining the number of rules mined per KG extension one immediately sees s
 
 As discussed in Section \ref{TransE_peaked_in_2013} TransE is not able to learn certain relation qualities, and upon further inspection of the embedding vectors for relations in TransE the vector values all tend toward zero (see \ref{TransE_embedding_family} and \ref{TransE_embedding_WN18RR} if you are curious). This can partially be explained by TransE's tendency to push the embeddings of symmetric relations toward the zero vector and it's lack of ability to effectively embed complex relations. Both issues explained in section \ref{KG_embeddings_section}. It seems that while scoring decently on the performance metrics during model selection, TransE has not properly embedded the relations in the KG. 
 
-It is interesting that the number of rules mined from TransE-extended KGs is not proportional to the number of triples added to the original KG, which is much lower relatively speaking. This means that there is something particular about the triples that TransE ranks highly which results in more patterns being detected in the dataset. If we look at the mentioned weaknesses of the embedding model we can reach some plausible explanations. To explain this, let us consider the KG from example \ref{mini_simple_KG_rules}, in which Carol has children Ann and Bob, and Ann and Bob are explicitly stated to be each others siblings.
+It is interesting that the number of rules mined from TransE-extended KGs is not proportional to the number of triples added to the original KG, which is much lower relatively speaking. This means that there is something particular about the triples that TransE ranks highly which results in more patterns being detected in the dataset. If we look at the mentioned weaknesses of the embedding model we can reach some plausible explanations. To explain this, let us consider the KG from example \ref{mini_simple_KG_rules}, in which Carol has children Ann and Bob, and Ann and Bob are explicitly stated to be each others siblings. As TransE is not good at embedding complex relations, Ann and Bob are likely to be identically represented in the embedding space. According to the results, each relation in the family KG is represented as a null-vector in the TransE embedding. Thus all relations are considered essentially equivalent to each other. So, Ann and Bob are equivalently represented, and as are all relations. With these assumptions, meaningless triple such as
+(Carol, has\_spouse, Ann), (Carol, has\_spouse, Bob) and (Bob, has\_child, Ann) would score highly according to our TransE model. TransE will essentially score all triples with the original relation changed to another highly. This would lead to more triples sharing common entities, resulting in more patterns arising in the data. Therefore any combination of relations in the body and consequent would gain some degree of support in the extended KG, and hence be mined with AMIE3. Some resulting nonsense rules from TransE extensions are shown in listing \ref{TransE_nonsense_rules}.
 
-TheThe baseline model added a lot more triples  
-If we consider the simple KG from example \ref{mini_simple_KG_rules}, in which Carol has children Ann and Bob
 
 
 
@@ -58,7 +57,7 @@ Of the rules mined, \textcolor{red}{97}\% (WN18RR) and \textcolor{red}{76}\% (fa
 $spouse(x, y)  \Rightarrow father(x, y)$
 $mother(x, y)   \Rightarrow child(x, y)$
 $relative(y, x) \Rightarrow sibling(x, y)$
-$spouse(a, y) \Rightarrow child(x,y)$
+$spouse(x, y) \Rightarrow child(x,y)$
 $relative(x, y) \Rightarrow sibling(x, y)$
 $relative(x, z) \wedge sibling(z, y) \Rightarrow mother(x, y)$
 $child(z, x) \wedge mother(z,y) \Rightarrow spouse(x, y)$
