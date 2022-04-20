@@ -33,12 +33,12 @@ Additional knowledge can be inferred from KGs through inductive or deductive met
 
 In this thesis we will loosely follow the Resource Description Framework (RDF) standard and view KGs as sets of semantic triples. RDF is a standard for representation and exchange of graph data introduced by \gls{w3c}. Semantic triples are the data types used in the RDF data model. A triple, as the name suggests, is a tuple of three elements. It has the form (subject, predicate, object) and can therefore represent statements about semantic data, for example ``\textit{cats are mammals}", or ``\textit{Ann knows Bob}". 
 \begin{lstlisting}[caption={Example of RDF triple set written in informal pseudocode.}, label={RDF_triples_example}]
-<Leo> <is a> <cat>
-<cat> <is a> <mammal>
-<Ann> <knows> <Bob>
-<Ann> <is a> <person>
-<Bob> <is a> <person>
-<Ann> <has pet> <Leo>
+(Leo, is_a, cat)
+(cat, is_a, mammal)
+(Ann, is_a, person)
+(Bob, is_a, person)
+(Ann, knows, Bob)
+(Ann, has_pet, Leo)
 \end{lstlisting}
 RDF statements express relationships between two web resources, these resources being the subject and the object, while the predicate encapsulates the nature of the relationship. The relationship is phrased in a directional way, and so a set of RDF statements can also be viewed as a directed graph. The graph represents these triple statements, where the predicate in the triple denotes the edge going from the subject to the object, both of which are vertices.
 
@@ -91,7 +91,7 @@ TODO:
 
 \subsection{Incompleteness}
 \label{Integrity_of_KGs}
-Generally, KGs contain only true facts. As with all databases, there is seldom a use in documenting all things that are not true. KGs are also generally incomplete, as it is impossible to store information about \textit{all} entities and relationships in the world. By the \textit{closed world assumption} (CWA) all facts not present in the KG are considered false. For example, by the KG in figure \ref{fig:KG_example_2} the statement \texttt{<Ann> <has sibling> <Bob>} is false under the CWA, as it is not present in the KG. So under the CWA Bob is not a sibling of Ann. The \textit{open world assumption} (OWA) makes no such claims and  the validity of a triple not present in the KG is considered unknown. In the above example, Bob is therefore neither considered a sibling of Ann nor not a sibling of Ann under the OWA.
+Generally, KGs contain only true facts. As with all databases, there is seldom a use in documenting all things that are not true. KGs are also generally incomplete, as it is impossible to store information about \textit{all} entities and relationships in the world. By the \textit{closed world assumption} (CWA) all facts not present in the KG are considered false. For example, by the KG in figure \ref{fig:KG_example_2} the statement \texttt{(Ann, has\_sibling, Bob)} is false under the CWA, as it is not present in the KG. So under the CWA Bob is not a sibling of Ann. The \textit{open world assumption} (OWA) makes no such claims and  the validity of a triple not present in the KG is considered unknown. In the above example, Bob is therefore neither considered a sibling of Ann nor not a sibling of Ann under the OWA.
 
 In the context of KGs the OWA is often more justified, as most large interesting KGs are far from complete. For example, the KG Wikidata5M does not contain information about the national bird of countries. This of course does not make the statement ``\textit{The kiwi is the national bird of New Zealand}" any less true. The information has simply not been included in the KG. Another example is Freebase, the precursor to Wikidata, in which 70\% of people listed had the place-of-birth attribute missing \cite{west2014knowledge}.
 
@@ -114,7 +114,7 @@ When considering false facts we use the words ``\textit{known}" and ``\textit{un
 In the context of the predictions of the rule, we want to maximize B over D. Under the OWA, however, there are no false facts, so we don't know what B and D are. The authors of AMIE therefore introduced a new paradigm called the \textit{partial completeness assumption} (PCA) \cite{amie}. It assumes that if $r(x, y) \in KB true$ for some entities $x$, $y$, then
 \[\forall y' : r(x, y') \in KBtrue \cup NEWtrue \Rightarrow r(x, y') \in KBtrue\]
 , where $x$ is the \textit{head} of the triple (the first variable in the binary predicate) and $y$ is the \textit{tail} of the rule (the second varaible in the binary predicate).
-This assumption says that if the KG already has $r$-related information about the entity $x$,  then it contains \textit{all} $r$-related information about $x$. For example if a KG only contains \texttt{<Ann> <has sibling> <Bob>} and no other sibling entries with Ann as the head, then by the PCA Bob is Ann's only sibling. All other facts claiming that Ann has other siblings will therefore be negative examples. If we then however ask what \textit{friends} Ann has in a knowledge base without information about Ann's friends, then one cannot conclude that Ann is friendless. PCA is a more particular version of the broad \textit{partial-closed world assumption} (PCWA), where the KG generally is treated under the OWA, but parts of it that are considered complete are treated under the CWA \cite{motro1989integrity}. The PCA is particular in the sense that it specifically defines what parts of the KG should be treated under closed-world semantics.
+This assumption says that if the KG already has $r$-related information about the entity $x$,  then it contains \textit{all} $r$-related information about $x$. For example if a KG only contains \texttt{(Ann, has\_sibling, Bob)} and no other sibling entries with Ann as the head, then by the PCA Bob is Ann's only sibling. All other facts claiming that Ann has other siblings will therefore be negative examples. If we then however ask what \textit{friends} Ann has in a knowledge base without information about Ann's friends, then one cannot conclude that Ann is friendless. PCA is a more particular version of the broad \textit{partial-closed world assumption} (PCWA), where the KG generally is treated under the OWA, but parts of it that are considered complete are treated under the CWA \cite{motro1989integrity}. The PCA is particular in the sense that it specifically defines what parts of the KG should be treated under closed-world semantics.
 
 \section{Knowledge Graph Embeddings}
 \label{KG_embeddings}
@@ -128,7 +128,6 @@ Given $\mathcal{K}$ and $d$, a KG embedding seeks to represent all entities and 
     \label{KG_embdding_diag}
 \end{figure}
 
-TODO: talk about training and overfitting \newline
 The procedure for training KG embedding models is similar to any other statistical-based machine learning. The values of the embeddings are usually initialized as random values. These embeddings are continuously optimized through a training loop, which stops once the stop condition is met. The stop condition could for example be that the training set has been iterated over a certain number of times, often is also is when the model starts overfitting on the training set. For each triple in the training set, $\eta$ negative counterexamples are generated by triple corruption. This is done by swapping out either the head $h$ or tail $t$ (not both) with some other $h', t' \in \mathbb{E}$ \cite{TransE}. Both the original triple and the corrupted triples are added to the training batch. A \textit{scoring function} is used to measure the ``goodness" or plausibility of a triple. The model should give a good score to triples from the KG, and a bad score to the corrupted triples. By updating the embedding to optimize the scoring function the model should at the end of training have meaningful embeddings that can accurately evaluate unseen triples. In the training process this is done by minimizing the model's \textit{loss function}.
 
 \subsection{Loss functions}
@@ -199,7 +198,7 @@ If $\text{\textbf{(h, r, t)}}$ denote an embedding of a head, relation and tail,
 Let $d$ denote the dimension of the embedding space. Per entity one vector $\textbf{e}\in \mathbb{R}^d$ needs to be learned and per relationship one translation vector $\textbf{d}_r\in \mathbb{R}^d$ needs to be learned. Let $n_e$ and $n_r$ be the number of unique entities and relations respectively. The number of parameters needed to be learned for TransE is thus $\mathcal{O}(n_e d + n_r d)$.
 
 
-TransE does have some limitations. For example, it is not capable of properly embedding complex relations, meaning 1-N, N-1, or N-N relations. Imagine a complex relation such that $\forall i \in \{1,2, ..., n\}$, $(h, r, t_i )\in \mathcal{S}$, where $\mathcal{S}$ is the set of correct triples. Following the TransE approach, $\textbf{h}+\textbf{r}\approx \textbf{t}_i$, therefore $\textbf{t}_1 \approx \textbf{t}_2 \approx ... \approx \textbf{t}_i$, even though the tail entities are not semantically similar. Taking an example from figure \ref{IKEA_TransE}, the store IKEA sells both furniture and food, causing TransE to perhaps give the semantically dissimilar concepts a similar entity embedding. 
+TransE does have some limitations. For example, it is not capable of properly embedding complex relations, meaning 1-N, N-1, or N-N relations \cite{transH, transR}. Imagine a complex relation such that $\forall i \in \{1,2, ..., n\}$, $(h, r, t_i )\in \mathcal{S}$, where $\mathcal{S}$ is the set of correct triples. Following the TransE approach, $\textbf{h}+\textbf{r}\approx \textbf{t}_i$, therefore $\textbf{t}_1 \approx \textbf{t}_2 \approx ... \approx \textbf{t}_i$, even though the tail entities are not necessarily semantically similar. Taking an example depicted in figure \ref{IKEA_TransE}, the store IKEA sells both furniture and food, causing TransE to give the semantically dissimilar concepts a similar entity embedding. 
 
 For a symmetric relation $r_{sym}$, TransE will assign high scores to both $(h, r_{sym}, t)$ and $(t, r_{sym}, h)$. This results in the embedding for $r_{sym}$ to be pushed toward zero in addition to the embedding of the entities $h$ and $t$ toward each other \cite{wang2018evaluating}. When $r_{sym} \approx 0$, then the relation is treated as if it were reflexive. This is problematic when embedding symmetric relations, especially those that additionally are \textit{not} reflexive. Other translation-based models, such as TransH \cite{transH}, TranR \cite{transR} and TransD \cite{transD}, have later been proposed to alleviate some of the limitations of TransE.
 
@@ -240,28 +239,28 @@ Rule-based machine learning has as a goal to create rules that make new true pre
 Classically, a rule is comprised of a condition and consequent, or a so-called "if-then" statement. \begin{center} \textbf{IF} \textit{`the condition is met'} \textbf{THEN} \textit{`the consequent holds'} \end{center}
 The condition of the rule specifies attributes in the data on which the rule will be applied. If these attributes are present in this data, the condition is met. Once this happens, the attributes in the consequent should necessarily also be met. We define an \textit{atom} to be a triple in which the head and/or tail are variables. A \textit{Horn rule} is a rule where the consequent of a rule is a single atom, while the body is a set of atoms. We denote a Horn rule by $B \Rightarrow r(x, y)$ where $B$ is the antecedent and $r(x, y)$ the consequent. Two examples of such rules are \ref{example_rule_1} and \ref{example_rule_2}, where the first is satisfied by the KG in example below, while the latter is not.
 \begin{equation}
-hasSibling(x, y) \Rightarrow hasSibling(y,x)
+has\_sibling(x, y) \Rightarrow has\_sibling(y,x)
 \label{example_rule_1}
 \end{equation}
 \begin{equation}
-    hasSibling(x, y), hasParent(y,z) \Rightarrow hasParent(x,z)
+    has\_sibling(x, y), has\_parent(y,z) \Rightarrow has\_parent(x,z)
     \label{example_rule_2}
 \end{equation}
 
 
 \begin{example}[A simple KG.]
 \begin{lstlisting}[]
-<Ann> <hasParent> <Carol>
-<Carol> <hasChild> <Ann>
-<Carol> <hasChild> <Bob>
-<Ann> <hasSibling> <Bob>
-<Bob> <hasSibling> <Ann>
+(Ann, has_parent, Carol)
+(Carol, has_child, Ann)
+(Carol, has_child, Bob)
+(Ann, has_sibling, Bob)
+(Bob, has_sibling, Ann)
 \end{lstlisting}
 \label{mini_KG_rules}
 \end{example}
 
 
-Consider the two rules and the example KG with numbered triples given above. Under this knowledge base the antecedent of the first rule is satisfied by both triple 2 and 3 listed in the example. The resulting consequent of rule \ref{example_rule_1} is also present in the knowledge base. So the predicate $hasSibling$ is reflexive in this knowledge base. The antecedent of the second rule is satisfied by triples 1 and 3 in the knowledge base, but the resulting consequent would then be $hasParent(Bob, Carol)$. Since \texttt{<BoB> <hasParent> <Carol>} is not present in the knowledge base, rule \ref{example_rule_2} does not hold. If we know that this rule is reliable, we could for example extend the incomplete knowledge base with this triple.
+Consider the two rules and the example KG with numbered triples given above. Under this knowledge base the antecedent of the first rule is satisfied by both triple 2 and 3 listed in the example. The resulting consequent of rule \ref{example_rule_1} is also present in the knowledge base. So the predicate $has\_sibling$ is reflexive in this knowledge base. The antecedent of the second rule is satisfied by triples 1 and 3 in the knowledge base, but the resulting consequent would then be $has\_parent(Bob, Carol)$. Since \texttt{(BoB, has\_parent, Carol)} is not present in the knowledge base, rule \ref{example_rule_2} does not hold. If we know that this rule is reliable, we could for example extend the incomplete knowledge base with this triple.
 
 Within rule-based machine learning there are many different approaches, including learning classifier systems \cite{sigaud2007learning} and association rule mining \cite{agrawal1993mining}, the latter of which is the approach used in this thesis. Both aim to create a set of rules to act as a model for a set of data. The association rule mining approach will now be explained further.
 
@@ -275,8 +274,8 @@ The goal is to find formal rules that make true predictions that go beyond the e
 
 \subsubsection{Support}
 The \textit{support} of a rule is the quantity of correct predictions. If we recall figure \cref{KB_predictions} with KG prediction under incompleteness, the support of a rule $B \rightarrow r(x,y)$ is area A. What counts as an instance of a correct prediction can vary. The authors of AMIE point out that if one chooses the number of instantiations of the rule, then the measure becomes non-monotonic \cite{amie3}. They give an example with the rule:
-\[marriedTo(x, y) \Rightarrow marriedTo(y, x)\]
-where if $hasGender(x, male)$ is added to the body, then the number of instantiations in the KG can only decrease because there are stricter requirements for what can be in the body of the rule. If on the other hand $hasFriend(x, z)$ is added to the body then the number of instantiations may increase,because for every $x$ there can be many $z$ possibly resulting in many more instantiations of the rule. In order to preserve monoticity and only a single measure of support for each rule the authors of AMIE define support of a rule $B\Rightarrow r(x, y)$ to be the number of distinct object-subject pairs in the KB that appear in the head and tail:
+\[married\_to(x, y) \Rightarrow married\_to(y, x)\]
+where if $has\_gender(x, male)$ is added to the body, then the number of instantiations in the KG can only decrease because there are stricter requirements for what can be in the body of the rule. If on the other hand $has\_friend(x, z)$ is added to the body then the number of instantiations may increase,because for every $x$ there can be many $z$ possibly resulting in many more instantiations of the rule. In order to preserve monoticity and only a single measure of support for each rule the authors of AMIE define support of a rule $B\Rightarrow r(x, y)$ to be the number of distinct object-subject pairs in the KB that appear in the head and tail:
 \[supp(B\Rightarrow r(x, y)) :=  \# (x, y) : \exists z_1 , ...,z_m : \vec{B} \wedge r(x, y)\]
 
 where $z_1, ..., z_m$ are variables in the body of the rule that don't appear in the head. Now the support of a rule decreases monotonically if more atoms are added to the body and two equivalent rules cannot have different values for support.
@@ -290,7 +289,7 @@ Head coverage is fully correlated with support, and hence is also monotonic. We 
 \subsubsection{Standard Confidence} Confidence is the proportion of a rule's true predictions out of all its predictions. In order to determine if a new fact is true or false, one must make assumptions about the facts missing from the KG. The \textit{standard confidence} adopts the CWA and labels all facts not already present in the KG as false. Thus, the standard confidence of a rule is the ratio of its predictions that are in the KG:
 \[conf(\vec{B}\Rightarrow r(x, y)) := \frac{supp(\vec{B}\Rightarrow r(x, y))}{\#(x, y):\exists z_1 ,..., z_m : \vec{B}}\]
 
-If we take the KG from example \ref{mini_KG_rules} and the rule $hasChild(x, y) \Rightarrow hasParent(y, x)$, then the rule implies two datapoints: \texttt{(Ann, hasParent, Carol)} and \texttt{(Bob, hasParent, Carol)}. The first triple is in the KG, while the second is not, therefore the rule has predicted one correct and one incorrect triple, thus the standard confidence is 0.5.
+If we take the KG from example \ref{mini_KG_rules} and the rule $has\_child(x, y) \Rightarrow has\_parent(y, x)$, then the rule implies two datapoints: \texttt{(Ann, has\_parent, Carol)} and \texttt{(Bob, has\_parent, Carol)}. The first triple is in the KG, while the second is not, therefore the rule has predicted one correct and one incorrect triple, thus the standard confidence is 0.5.
 
 
 If one wants to mine rules that only describe the data at hand, and has a relatively complete KG, then this is a good measure of confidence. If the aim on the other hand is to mine rules that predict new facts then standard confidence is not a good measurement as it penalizes rules that make predictions outside of the current knowledge.
@@ -300,7 +299,7 @@ If one wants to mine rules that only describe the data at hand, and has a relati
 This measurement for confidence differs from standard confidence in its definition of what is a false prediction. Under standard confidence any triple outside the KG is a false prediction, while this confidence metric adopts PCA, introduced in section \ref{Integrity_of_KGs}. The definition of a false prediction is thus more conservative, so not all triples outside the KG are considered false. The PCA confidence of the rule is the ration of its predictions that are not labeled as false by the PCA \cite{amie}:
 \[pcaconf(\vec{B}\Rightarrow r(x, y)) := \frac{supp(\vec{B}\Rightarrow r(x, y))}{\#(x, y):\exists z_1 ,..., z_m, y' : \vec{B} \wedge r(x, y')}\]
 
-Again, given the KG from example \ref{mini_KG_rules} and the rule $hasChild(x, y) \Rightarrow hasParent(y, x)$, the rule implies two datapoints: \texttt{(Ann, hasParent, Carol)} and \texttt{(Bob, hasParent, Carol)}. The first is in the KG, therefore correct, while the latter is outside the KG. As there are no \texttt{hasParent} triples with \texttt{Bob} as the subject in the KG, we cannot under the PCA assume that \texttt{(Bob, hasParent, Carol)} is a false triple. Hence, the PCA confidence of the rule is 1.0, in contrast to the standard confidence of 0.5.
+Again, given the KG from example \ref{mini_KG_rules} and the rule $has\_child(x, y) \Rightarrow has\_parent(y, x)$, the rule implies two datapoints: \texttt{(Ann, has\_parent, Carol)} and \texttt{(Bob, has\_parent, Carol)}. The first is in the KG, therefore correct, while the latter is outside the KG. As there are no \texttt{has\_parent} triples with \texttt{Bob} as the subject in the KG, we cannot under the PCA assume that \texttt{(Bob, has\_parent, Carol)} is a false triple. Hence, the PCA confidence of the rule is 1.0, in contrast to the standard confidence of 0.5.
 
 This is the standard PCA confidence measure, but it could of course also be calculated on the head entity of the consequent instead of the tail, ie.: 
 \[pcaconf_{head}(\vec{B}\Rightarrow r(x, y)) := \frac{supp(\vec{B}\Rightarrow r(x, y))}{\#(x, y):\exists z_1 ,..., z_m, x' : \vec{B} \wedge r(x', y)}\]
@@ -308,7 +307,7 @@ This is the standard PCA confidence measure, but it could of course also be calc
 Note that the PCA confidence calculated on the \textit{tail} of the consequent is the metric used throughout this thesis to indicate the quality of rules.
 
 \subsubsection{GPRO and GRANK confidence}
-The work of Ebisu et al. \cite{gpro} showed that PCA confidence may underestimate the likelihood of a predicted triple due to non-unique mappings of variables in rules. Consider for example the rule $hasParent(x, z) \wedge hasChild(z, y) \Rightarrow hasSibling(x, y)$, and the KG from example \ref{mini_KG_rules}. By mapping both $x$ and $y$ to the entity \texttt{Ann}, body of this rule can be instantiated with the triples \texttt{Ann, hasParent, Carol} and \texttt{(Carol, hasChild, Ann)}, resulting in the incorrect fact that Ann is her own sibling. The refinement of PCA confidence, called \textit{graph pattern probability model} (GRPO) confidence, excludes instances such as these that don't map variables to unique entities when computing confidence. As with PCA confidence, GPRO confidence can be calculated on both the head and tail of the consequent.
+The work of Ebisu et al. \cite{gpro} showed that PCA confidence may underestimate the likelihood of a predicted triple due to non-unique mappings of variables in rules. Consider for example the rule $has\_parent(x, z) \wedge has\_child(z, y) \Rightarrow has\_sibling(x, y)$, and the KG from example \ref{mini_KG_rules}. By mapping both $x$ and $y$ to the entity \texttt{Ann}, body of this rule can be instantiated with the triples \texttt{Ann, has\_parent, Carol} and \texttt{(Carol, has\_child, Ann)}, resulting in the incorrect fact that Ann is her own sibling. The refinement of PCA confidence, called \textit{graph pattern probability model} (GRPO) confidence, excludes instances such as these that don't map variables to unique entities when computing confidence. As with PCA confidence, GPRO confidence can be calculated on both the head and tail of the consequent.
 
 Ebisu et al. also proposed a refinement of GPRO confidence, called GRANK confidence \cite{gpro}, which takes into account the number of instantiations of the body of the rule for a given instantiation of the head atom. This metric is more sensitive to the number of facts per relation.
 
@@ -322,7 +321,7 @@ AMIE is a rule mining system introduced in 2013 by Galárraga et al. \cite{amie}
 \subsubsection{The AMIE rule mining algorithm}
 The algorithm employs a type of breadth first search when exploring the search space for possible rules. It starts with the empty rule, which it and extends it. It is extended in a way that if this breadth-first extension continues, the entire search space can be generated. This is of course not desired, and so AMIE employs a number of methods to limit the search for rules. One can think of this as methods of pruning the breadth first search tree. We will first explain how rules are extended, and then how the search space is pruned.
 
-A rule is treated as a sequence of atoms, where the first atom is the head and the rest make up the body. It is considered \textit{closed}, if every variable is shared by at least two predicates. These rules can also be thought of as \textit{closed-path} rules, as the sequence of relations in the body of the rule form a path from the subject argument to the object argument of the head atom in the rule. The rule $hasChild(y, x) \Rightarrow hasParent(x, y)$ is closed. If we were to add an atom to the body with a fresh (new and unused) variable, a resulting rule $hasSibling(z, x) \wedge hasChild(y, x) \Rightarrow hasParent(x, y)$, would be open. The algorithm only outputs closed rules. This ensures that rules don't contain unrelated atoms or variables. When traversing the search space, AMIE extends rules by adding one of three different atom types:
+A rule is treated as a sequence of atoms, where the first atom is the head and the rest make up the body. It is considered \textit{closed}, if every variable is shared by at least two predicates. These rules can also be thought of as \textit{closed-path} rules, as the sequence of relations in the body of the rule form a path from the subject argument to the object argument of the head atom in the rule. The rule $has\_child(y, x) \Rightarrow has\_parent(x, y)$ is closed. If we were to add an atom to the body with a fresh (new and unused) variable, a resulting rule $has\_sibling(z, x) \wedge has\_child(y, x) \Rightarrow has\_parent(x, y)$, would be open. The algorithm only outputs closed rules. This ensures that rules don't contain unrelated atoms or variables. When traversing the search space, AMIE extends rules by adding one of three different atom types:
 \begin{enumerate}
     \item \textit{Dangling atom}: an atom with a fresh variable and a shared variable is added. A shared variable is a variable that occurs in some other atom of the rule.
     \item \textit{Instantiated atom}: an atom with an entity and an argument (variable or entity) shared with the rule.
