@@ -33,7 +33,7 @@ The problem with applying this idea to KGs arises immediately when trying to exp
 Now the KG has been simplified and almost half the data points have become redundant. If we now consider the rule \[hasSibling(x, y) \wedge hasParent(y,z) \Rightarrow hasParent(x,z)\] which previously predicted the new triple \texttt{(Bob, hasParent, Carol)}, it now only predicts \texttt{(child, hasParent, adult)} which is not new information. By removing the identity of the individuals in the family, we removed the information that Ann is specifically the sibling of Bob and has Carol as a parent, which implied that Bob \textit{also} had Carol as a parent. Hence, the valuations must represent all unique entities, or find a way to create replacement labels that maintain all the relevant information about the roles entities have in the KG. This becomes unfeasible with large KGs, such as the mentioned YAGO4.
 
 \section{Further work}
-\textcolor{orange}{NO NEED TO READ THIS UNFINISHED SECTION}
+
 
 There are a great number of ways to expand upon the work in this thesis. As mentioned in section \ref{experiment_limitations} the main limitations of the experiment itself were due to computational restrictions. The quality of the results is likely to substantially improve if larger and more interesting KGs were used, as when KGs are restricted to only six relation types there is little area to create rules within. The \textit{form} of the rules was also limited. Rules contained no entities, only variables, therefore relevant rules such as
 \[wonAward(x, Spellemannprisen) \Rightarrow citizenOf(x, Norway)\]
