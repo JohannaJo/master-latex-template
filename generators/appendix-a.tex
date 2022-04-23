@@ -114,6 +114,86 @@
 \label{TransE_embedding_WN18RR}
 \end{longtable}
 
+\begin{longtable}{lrl}
+\toprule
+                                                                                                      Rule &  PCA Conf. &  Found \\
+\midrule
+                                               has\_part(x, z) $\wedge$ hypernym(y, z)   $\Rightarrow$ has\_part(x, y) &           0.104 &                    False \\
+DRF(x, z) $\wedge$ SDT(z, y)   $\Rightarrow$ SDT(x, y) &           0.493 &                     True \\
+DRF(z, x) $\wedge$ SDT(z, y)   $\Rightarrow$ SDT(x, y) &           0.493 &                     True \\
+                                      has\_part(x, z) $\wedge$ IH(y, z)   $\Rightarrow$ has\_part(x, y) &           0.533 &                     True \\
+                   hypernym(z, x) $\wedge$ SDT(z, y)   $\Rightarrow$ SDT(x, y) &           0.727 &                     True \\
+                   has\_part(z, x) $\wedge$ SDT(z, y)   $\Rightarrow$ SDT(x, y) &           0.772 &                     True \\
+                   has\_part(x, z) $\wedge$ SDT(z, y)   $\Rightarrow$ SDT(x, y) &           0.810 &                     True \\
+                   hypernym(x, z) $\wedge$ SDT(z, y)   $\Rightarrow$ SDT(x, y) &           0.829 &                     True \\
+          IH(x, z) $\wedge$ SDT(z, y)   $\Rightarrow$ SDT(x, y) &           0.887 &                     True \\
+                            DRF(y, x)   $\Rightarrow$ DRF(x, y) &           1.000 &                     True \\
+\bottomrule
+\caption{All rules mined with AMIE3 from the original WN18RR KG, sorted by their calculated PCA confidence in ascending order. The rightmost column indicates whether this rule was found in at least one of the KG extensions made with the RandomBaseline KGE. As the table shows, the rule not found after extending the KG in such a way is that with lowest PCA confidence. \textbf{DRF} = \textit{derivationally\_related\_form}, \textbf{IH} = \textit{instance\_hypernym} and \textbf{SDT} = \textit{synset\_domain\_topic of}.}
+\label{original_rules_found_by_baseline_WN18RR}
+\end{longtable}
+
+
+\begin{longtable}{lrl}
+\toprule
+                                                    Rule &  PCA Conf. &  Found \\
+\midrule
+relative(z, y)  $\wedge$ relative(x, z)   $\Rightarrow$ relative(x, y) &           0.100 &                    False \\
+   father(x, z) $\wedge$ sibling(z, y)   $\Rightarrow$ relative(x, y) &           0.101 &                    False \\
+  mother(z, x)$\wedge$ relative(y, z)   $\Rightarrow$ relative(x, y) &           0.101 &                    False \\
+     child(x, z)  $\wedge$ spouse(y, z)   $\Rightarrow$ relative(x, y) &           0.102 &                    False \\
+     child(x, z) $\wedge$ spouse(z, y)   $\Rightarrow$ relative(x, y) &           0.102 &                    False \\
+  mother(x, z) $\wedge$ relative(y, z)   $\Rightarrow$ relative(x, y) &           0.104 &                    False \\
+    father(z, y)$\wedge$  father(x, z)   $\Rightarrow$ relative(x, y) &           0.109 &                    False \\
+ relative(y, z) $\wedge$ sibling(x, z)   $\Rightarrow$ relative(x, y) &           0.120 &                     True \\
+ relative(y, z) $\wedge$ sibling(z, x)   $\Rightarrow$ relative(x, y) &           0.120 &                     True \\
+    father(z, x) $\wedge$ spouse(z, y)   $\Rightarrow$ relative(x, y) &           0.122 &                    False \\
+   child(x, z) $\wedge$ relative(z, y)   $\Rightarrow$ relative(x, y) &           0.124 &                     True \\
+    father(z, x) $\wedge$ spouse(y, z)   $\Rightarrow$ relative(x, y) &           0.124 &                    False \\
+ relative(z, y) $\wedge$ sibling(z, x)   $\Rightarrow$ relative(x, y) &           0.127 &                     True \\
+ relative(z, y) $\wedge$ sibling(x, z)   $\Rightarrow$ relative(x, y) &           0.128 &                     True \\
+      child(z, y)$\wedge$  child(x, z)   $\Rightarrow$ relative(x, y) &           0.131 &                     True \\
+  father(z, x) $\wedge$ relative(z, y)   $\Rightarrow$ relative(x, y) &           0.141 &                     True \\
+   child(x, z) $\wedge$ relative(y, z)   $\Rightarrow$ relative(x, y) &           0.148 &                     True \\
+     child(x, z) $\wedge$ father(y, z)   $\Rightarrow$ relative(x, y) &           0.154 &                     True \\
+     child(z, y) $\wedge$ father(z, x)   $\Rightarrow$ relative(x, y) &           0.167 &                     True \\
+  father(z, x) $\wedge$ relative(y, z)   $\Rightarrow$ relative(x, y) &           0.179 &                     True \\
+    father(z, x) $\wedge$ father(y, z)   $\Rightarrow$ relative(x, y) &           0.196 &                     True \\
+  relative(z, x) $\wedge$ spouse(z, y)   $\Rightarrow$ relative(x, y) &           0.206 &                     True \\
+  relative(z, x) $\wedge$ spouse(y, z)   $\Rightarrow$ relative(x, y) &           0.206 &                     True \\
+  mother(z, y) $\wedge$ relative(z, x)   $\Rightarrow$ relative(x, y) &           0.224 &                     True \\
+  mother(y, z) $\wedge$ relative(z, x)   $\Rightarrow$ relative(x, y) &           0.242 &                     True \\
+   child(y, z) $\wedge$ relative(z, x)   $\Rightarrow$ relative(x, y) &           0.273 &                     True \\
+   child(z, y) $\wedge$ relative(z, x)   $\Rightarrow$ relative(x, y) &           0.275 &                     True \\
+  mother(z, y) $\wedge$ relative(x, z)   $\Rightarrow$ relative(x, y) &           0.284 &                     True \\
+  father(y, z) $\wedge$ relative(z, x)   $\Rightarrow$ relative(x, y) &           0.294 &                     True \\
+  father(z, y) $\wedge$ relative(z, x)   $\Rightarrow$ relative(x, y) &           0.301 &                     True \\
+  relative(x, z) $\wedge$ spouse(z, y)   $\Rightarrow$ relative(x, y) &           0.305 &                     True \\
+  relative(x, z) $\wedge$ spouse(y, z)   $\Rightarrow$ relative(x, y) &           0.305 &                     True \\
+   child(y, z) $\wedge$ relative(x, z)   $\Rightarrow$ relative(x, y) &           0.343 &                     True \\
+ relative(z, x) $\wedge$ sibling(y, z)   $\Rightarrow$ relative(x, y) &           0.349 &                     True \\
+  mother(y, z) $\wedge$ relative(x, z)   $\Rightarrow$ relative(x, y) &           0.350 &                     True \\
+ relative(z, x) $\wedge$ sibling(z, y)   $\Rightarrow$ relative(x, y) &           0.351 &                     True \\
+   child(z, y) $\wedge$ relative(x, z)   $\Rightarrow$ relative(x, y) &           0.364 &                     True \\
+  father(z, y) $\wedge$ relative(x, z)   $\Rightarrow$ relative(x, y) &           0.372 &                     True \\
+  father(y, z) $\wedge$ relative(x, z)   $\Rightarrow$ relative(x, y) &           0.378 &                     True \\
+ relative(x, z) $\wedge$ sibling(z, y)   $\Rightarrow$ relative(x, y) &           0.483 &                     True \\
+ relative(x, z) $\wedge$ sibling(y, z)   $\Rightarrow$ relative(x, y) &           0.485 &                     True \\
+                       child(y, x)   $\Rightarrow$ mother(x, y) &           0.535 &                     True \\
+      father(x, z) $\wedge$ spouse(y, z)   $\Rightarrow$ mother(x, y) &           0.702 &                     True \\
+                       child(y, x)   $\Rightarrow$ father(x, y) &           0.770 &                     True \\
+                  relative(y, x)   $\Rightarrow$ relative(x, y) &           0.846 &                     True \\
+      father(z, y) $\wedge$ mother(z, x)   $\Rightarrow$ spouse(x, y) &           0.968 &                     True \\
+                    sibling(y, x)   $\Rightarrow$ sibling(x, y) &           0.990 &                     True \\
+                       mother(y, x)   $\Rightarrow$ child(x, y) &           0.992 &                     True \\
+                      spouse(y, x)   $\Rightarrow$ spouse(x, y) &           0.992 &                     True \\
+                       father(y, x)   $\Rightarrow$ child(x, y) &           0.998 &                     True \\
+\bottomrule
+\caption{All rules mined with AMIE3 from the original family KG, sorted by their calculated PCA confidence in ascending order. The rightmost column indicates whether this rule was found in at least one of the KG extensions made with the RandomBaseline KGE. As the table shows, the rules not found after extending the KG in such a way were among those with lowest PCA confidence.}
+\label{original_rules_found_by_baseline_family}
+\end{longtable}
+
+
 \begin{figure}[htbp]
 \centering
     \centering
@@ -381,6 +461,25 @@ relative(z, y) $\wedge$ relative(x, z)   $\Rightarrow$ relative(x, y) &         
 \caption[Rules mined from the original family KG]{Rules mined from the original family KG, with their corresponding PCA confidences and how many times they were mined from the 48 extensions. Note that all rules with the $relative$ predicate in the consequent have lower PCA confidence and were mined less frequently.}
 \label{family_original_rules_table_PCA}
 \end{longtable}
+
+
+\begin{figure}[htb]
+\centering
+\begin{subfigure}{.5\textwidth}
+  \centering
+  \includegraphics[width=1\linewidth]{figures/appendix/Extension_sizes_models_WN18RR.svg}
+  \caption{WN18RR KG.}
+  \label{fig:rank_extension_wn18rr_boxplot_sub}
+\end{subfigure}%
+\begin{subfigure}{.5\textwidth}
+  \centering
+  \includegraphics[width=1\linewidth]{figures/appendix/Extension_sizes_models_family.svg}
+  \caption{Family KG.}
+  \label{fig:rank_extension_family_boxplot_sub}
+\end{subfigure}
+\caption{Distribution of KG extension sizes over KGE models.}
+\label{rank_extensions_boxplot}
+\end{figure}
 
 
 \section{Propositional logic}

@@ -126,7 +126,7 @@ At the first glance of the boxplots in figure \ref{fig:PCA_models_boxplot} it ma
 
 By looking at figures \ref{rule_dist_models_hbar_family} and \ref{rule_dist_models_hbar_wn18rr} it becomes apparent that there in fact fewer different rules mined from these extensions. In the WN18RR case no new rules were found, and a single original rule was also never mined. The omitted rule,
 \[derivationally\_related\_form(x, y)   \Rightarrow derivationally\_related\_form(y, x)\]
-has the lowest PCA confidence out of all the original rules. Since there already was little support in the KG for the rule, the addition of noise may have obscured too much evidence for the relation \textcolor{red}{\texttt{derivationally\_related\_form}} being symmetric for the algorithm to consider the rule significant. 
+has the lowest PCA confidence out of all the original rules. Since there already was little support in the KG for the rule, the addition of noise may have obscured too much evidence for the relation \textcolor{red}{\texttt{derivationally\_related\_form}} being symmetric for the algorithm to consider the rule significant. See table \ref{original_rules_found_by_baseline_WN18RR} to see all rules mined from the original WN18RR KG, sorted by their PCA confidence.
 % check RandomBaseline_original_rules.ipynb to see if there is a new rule.
 
 \begin{table}[htp]
@@ -157,7 +157,7 @@ ComplEx                                             & 10             & 59\%     
 \label{Tab:table_rules_models_wn18rr}
 \end{table}
 
-The family KG produced similar results, where AMIE3 failed to find 9 original rules in the RandomBaseline-extended KGs. All of these rules were among those with the lowest PCA confidence of the original rules. When the rules with lowest PCA condifence in a set are removed, then the median PCA confidence naturally goes up. This explains how the RandomBaseline rules have a higher median PCA confidence than the original, shown in tables \ref{Tab:table_rules_models_family} and \ref{Tab:table_rules_models_wn18rr}.
+The family KG produced similar results, where AMIE3 failed to find 9 original rules in the RandomBaseline-extended KGs. All of these rules were among those with the lowest PCA confidence of the original rules. Refer to table \ref{original_rules_found_by_baseline_WN18RR} for all rules mined from the original family KG, sorted by their PCA confidence. When the rules with lowest PCA condifence in a set are removed, then the median PCA confidence naturally goes up. This explains how the RandomBaseline rules have a higher median PCA confidence than the original, shown in tables \ref{Tab:table_rules_models_family} and \ref{Tab:table_rules_models_wn18rr}.
 
 As presented in \cref{TransE_sucks}, AMIE3 mines a great deal more rules from KGs extended with TransE. Due to the low mean PCA confidence for these rules (0.038 for WN18RR and 0.089 for the family KG) it is clear that there is little support for the rules in the original KGs. If one however evaluates the TransE rules on the \textit{extended} KGs they were mined from, the PCA confidence increases substantially, as seen in figures \ref{fig:_PCA_models_wn18rr_boxplot_sub} and \ref{fig:_PCA_models_family_boxplot_sub}. So even though most of these rules have little support from the original KGs, it was no mistake that AMIE3 mined so many rules from the TransE-extended KGs.
 
