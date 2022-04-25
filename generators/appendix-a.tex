@@ -133,61 +133,106 @@ DRF(z, x) $\wedge$ SDT(z, y)   $\Rightarrow$ SDT(x, y) &           0.493 &      
 \label{original_rules_found_by_baseline_WN18RR}
 \end{longtable}
 
+TODO: clean up rules
 
 \begin{longtable}{lrl}
 \toprule
-                                                    Rule &  PCA Conf. &  Found \\
+                                                    Rule &  PCA Confidence &  Found\_by\_RandomBaseline \\
 \midrule
-relative(z, y)  $\wedge$ relative(x, z)   $\Rightarrow$ relative(x, y) &           0.100 &                    False \\
-   father(x, z) $\wedge$ sibling(z, y)   $\Rightarrow$ relative(x, y) &           0.101 &                    False \\
-  mother(z, x)$\wedge$ relative(y, z)   $\Rightarrow$ relative(x, y) &           0.101 &                    False \\
-     child(x, z)  $\wedge$ spouse(y, z)   $\Rightarrow$ relative(x, y) &           0.102 &                    False \\
-     child(x, z) $\wedge$ spouse(z, y)   $\Rightarrow$ relative(x, y) &           0.102 &                    False \\
-  mother(x, z) $\wedge$ relative(y, z)   $\Rightarrow$ relative(x, y) &           0.104 &                    False \\
-    father(z, y)$\wedge$  father(x, z)   $\Rightarrow$ relative(x, y) &           0.109 &                    False \\
- relative(y, z) $\wedge$ sibling(x, z)   $\Rightarrow$ relative(x, y) &           0.120 &                     True \\
- relative(y, z) $\wedge$ sibling(z, x)   $\Rightarrow$ relative(x, y) &           0.120 &                     True \\
-    father(z, x) $\wedge$ spouse(z, y)   $\Rightarrow$ relative(x, y) &           0.122 &                    False \\
-   child(x, z) $\wedge$ relative(z, y)   $\Rightarrow$ relative(x, y) &           0.124 &                     True \\
-    father(z, x) $\wedge$ spouse(y, z)   $\Rightarrow$ relative(x, y) &           0.124 &                    False \\
- relative(z, y) $\wedge$ sibling(z, x)   $\Rightarrow$ relative(x, y) &           0.127 &                     True \\
- relative(z, y) $\wedge$ sibling(x, z)   $\Rightarrow$ relative(x, y) &           0.128 &                     True \\
-      child(z, y)$\wedge$  child(x, z)   $\Rightarrow$ relative(x, y) &           0.131 &                     True \\
-  father(z, x) $\wedge$ relative(z, y)   $\Rightarrow$ relative(x, y) &           0.141 &                     True \\
-   child(x, z) $\wedge$ relative(y, z)   $\Rightarrow$ relative(x, y) &           0.148 &                     True \\
-     child(x, z) $\wedge$ father(y, z)   $\Rightarrow$ relative(x, y) &           0.154 &                     True \\
-     child(z, y) $\wedge$ father(z, x)   $\Rightarrow$ relative(x, y) &           0.167 &                     True \\
-  father(z, x) $\wedge$ relative(y, z)   $\Rightarrow$ relative(x, y) &           0.179 &                     True \\
-    father(z, x) $\wedge$ father(y, z)   $\Rightarrow$ relative(x, y) &           0.196 &                     True \\
-  relative(z, x) $\wedge$ spouse(z, y)   $\Rightarrow$ relative(x, y) &           0.206 &                     True \\
-  relative(z, x) $\wedge$ spouse(y, z)   $\Rightarrow$ relative(x, y) &           0.206 &                     True \\
-  mother(z, y) $\wedge$ relative(z, x)   $\Rightarrow$ relative(x, y) &           0.224 &                     True \\
-  mother(y, z) $\wedge$ relative(z, x)   $\Rightarrow$ relative(x, y) &           0.242 &                     True \\
-   child(y, z) $\wedge$ relative(z, x)   $\Rightarrow$ relative(x, y) &           0.273 &                     True \\
-   child(z, y) $\wedge$ relative(z, x)   $\Rightarrow$ relative(x, y) &           0.275 &                     True \\
-  mother(z, y) $\wedge$ relative(x, z)   $\Rightarrow$ relative(x, y) &           0.284 &                     True \\
-  father(y, z) $\wedge$ relative(z, x)   $\Rightarrow$ relative(x, y) &           0.294 &                     True \\
-  father(z, y) $\wedge$ relative(z, x)   $\Rightarrow$ relative(x, y) &           0.301 &                     True \\
-  relative(x, z) $\wedge$ spouse(z, y)   $\Rightarrow$ relative(x, y) &           0.305 &                     True \\
-  relative(x, z) $\wedge$ spouse(y, z)   $\Rightarrow$ relative(x, y) &           0.305 &                     True \\
-   child(y, z) $\wedge$ relative(x, z)   $\Rightarrow$ relative(x, y) &           0.343 &                     True \\
- relative(z, x) $\wedge$ sibling(y, z)   $\Rightarrow$ relative(x, y) &           0.349 &                     True \\
-  mother(y, z) $\wedge$ relative(x, z)   $\Rightarrow$ relative(x, y) &           0.350 &                     True \\
- relative(z, x) $\wedge$ sibling(z, y)   $\Rightarrow$ relative(x, y) &           0.351 &                     True \\
-   child(z, y) $\wedge$ relative(x, z)   $\Rightarrow$ relative(x, y) &           0.364 &                     True \\
-  father(z, y) $\wedge$ relative(x, z)   $\Rightarrow$ relative(x, y) &           0.372 &                     True \\
-  father(y, z) $\wedge$ relative(x, z)   $\Rightarrow$ relative(x, y) &           0.378 &                     True \\
- relative(x, z) $\wedge$ sibling(z, y)   $\Rightarrow$ relative(x, y) &           0.483 &                     True \\
- relative(x, z) $\wedge$ sibling(y, z)   $\Rightarrow$ relative(x, y) &           0.485 &                     True \\
-                       child(y, x)   $\Rightarrow$ mother(x, y) &           0.535 &                     True \\
-      father(x, z) $\wedge$ spouse(y, z)   $\Rightarrow$ mother(x, y) &           0.702 &                     True \\
-                       child(y, x)   $\Rightarrow$ father(x, y) &           0.770 &                     True \\
-                  relative(y, x)   $\Rightarrow$ relative(x, y) &           0.846 &                     True \\
-      father(z, y) $\wedge$ mother(z, x)   $\Rightarrow$ spouse(x, y) &           0.968 &                     True \\
-                    sibling(y, x)   $\Rightarrow$ sibling(x, y) &           0.990 &                     True \\
-                       mother(y, x)   $\Rightarrow$ child(x, y) &           0.992 &                     True \\
-                      spouse(y, x)   $\Rightarrow$ spouse(x, y) &           0.992 &                     True \\
-                       father(y, x)   $\Rightarrow$ child(x, y) &           0.998 &                     True \\
+?c  relative  ?b  ?a  relative  ?c   => ?a  relative  ?b &           0.100 &                    False \\
+   ?a  father  ?c  ?c  sibling  ?b   => ?a  relative  ?b &           0.101 &                    False \\
+  ?c  mother  ?a  ?b  relative  ?c   => ?a  relative  ?b &           0.101 &                    False \\
+     ?a  child  ?c  ?c  spouse  ?b   => ?a  relative  ?b &           0.102 &                    False \\
+     ?a  child  ?c  ?b  spouse  ?c   => ?a  relative  ?b &           0.102 &                    False \\
+  ?a  mother  ?c  ?b  relative  ?c   => ?a  relative  ?b &           0.104 &                    False \\
+    ?c  father  ?b  ?a  father  ?c   => ?a  relative  ?b &           0.109 &                    False \\
+ ?b  relative  ?c  ?a  sibling  ?c   => ?a  relative  ?b &           0.120 &                     True \\
+ ?b  relative  ?c  ?c  sibling  ?a   => ?a  relative  ?b &           0.120 &                     True \\
+    ?c  father  ?a  ?c  spouse  ?b   => ?a  relative  ?b &           0.122 &                    False \\
+   ?a  child  ?c  ?c  relative  ?b   => ?a  relative  ?b &           0.124 &                     True \\
+    ?c  father  ?a  ?b  spouse  ?c   => ?a  relative  ?b &           0.124 &                    False \\
+ ?c  relative  ?b  ?c  sibling  ?a   => ?a  relative  ?b &           0.127 &                     True \\
+ ?c  relative  ?b  ?a  sibling  ?c   => ?a  relative  ?b &           0.128 &                     True \\
+      ?c  child  ?b  ?a  child  ?c   => ?a  relative  ?b &           0.131 &                     True \\
+  ?c  father  ?a  ?c  relative  ?b   => ?a  relative  ?b &           0.141 &                     True \\
+   ?a  child  ?c  ?b  relative  ?c   => ?a  relative  ?b &           0.148 &                     True \\
+     ?a  child  ?c  ?b  father  ?c   => ?a  relative  ?b &           0.154 &                     True \\
+     ?c  child  ?b  ?c  father  ?a   => ?a  relative  ?b &           0.167 &                     True \\
+  ?c  father  ?a  ?b  relative  ?c   => ?a  relative  ?b &           0.179 &                     True \\
+    ?c  father  ?a  ?b  father  ?c   => ?a  relative  ?b &           0.196 &                     True \\
+  ?c  relative  ?a  ?c  spouse  ?b   => ?a  relative  ?b &           0.206 &                     True \\
+  ?c  relative  ?a  ?b  spouse  ?c   => ?a  relative  ?b &           0.206 &                     True \\
+  ?c  mother  ?b  ?c  relative  ?a   => ?a  relative  ?b &           0.224 &                     True \\
+  ?b  mother  ?c  ?c  relative  ?a   => ?a  relative  ?b &           0.242 &                     True \\
+   ?b  child  ?c  ?c  relative  ?a   => ?a  relative  ?b &           0.273 &                     True \\
+   ?c  child  ?b  ?c  relative  ?a   => ?a  relative  ?b &           0.275 &                     True \\
+  ?c  mother  ?b  ?a  relative  ?c   => ?a  relative  ?b &           0.284 &                     True \\
+  ?b  father  ?c  ?c  relative  ?a   => ?a  relative  ?b &           0.294 &                     True \\
+  ?c  father  ?b  ?c  relative  ?a   => ?a  relative  ?b &           0.301 &                     True \\
+  ?a  relative  ?c  ?b  spouse  ?c   => ?a  relative  ?b &           0.305 &                     True \\
+  ?a  relative  ?c  ?c  spouse  ?b   => ?a  relative  ?b &           0.305 &                     True \\
+   ?b  child  ?c  ?a  relative  ?c   => ?a  relative  ?b &           0.343 &                     True \\
+ ?c  relative  ?a  ?b  sibling  ?c   => ?a  relative  ?b &           0.349 &                     True \\
+       ?c  child  ?a  ?c  spouse  ?b   => ?a  father  ?b &           0.350 &                     True \\
+  ?b  mother  ?c  ?a  relative  ?c   => ?a  relative  ?b &           0.350 &                     True \\
+ ?c  relative  ?a  ?c  sibling  ?b   => ?a  relative  ?b &           0.351 &                     True \\
+       ?c  child  ?a  ?b  spouse  ?c   => ?a  father  ?b &           0.351 &                     True \\
+   ?c  child  ?b  ?a  relative  ?c   => ?a  relative  ?b &           0.364 &                     True \\
+  ?c  father  ?b  ?a  relative  ?c   => ?a  relative  ?b &           0.372 &                     True \\
+  ?b  father  ?c  ?a  relative  ?c   => ?a  relative  ?b &           0.378 &                     True \\
+       ?c  child  ?a  ?b  spouse  ?c   => ?a  mother  ?b &           0.382 &                     True \\
+       ?c  child  ?a  ?c  spouse  ?b   => ?a  mother  ?b &           0.386 &                     True \\
+      ?b  child  ?c  ?c  sibling  ?a   => ?a  mother  ?b &           0.422 &                     True \\
+      ?b  child  ?c  ?a  sibling  ?c   => ?a  mother  ?b &           0.423 &                     True \\
+       ?b  child  ?c  ?c  father  ?a   => ?a  spouse  ?b &           0.470 &                     True \\
+       ?a  child  ?c  ?c  father  ?b   => ?a  spouse  ?b &           0.472 &                     True \\
+        ?a  child  ?c  ?b  child  ?c   => ?a  spouse  ?b &           0.472 &                     True \\
+       ?a  child  ?c  ?c  mother  ?b   => ?a  spouse  ?b &           0.478 &                     True \\
+       ?b  child  ?c  ?c  mother  ?a   => ?a  spouse  ?b &           0.481 &                     True \\
+ ?a  relative  ?c  ?c  sibling  ?b   => ?a  relative  ?b &           0.483 &                     True \\
+ ?a  relative  ?c  ?b  sibling  ?c   => ?a  relative  ?b &           0.485 &                     True \\
+                       ?b  child  ?a   => ?a  mother  ?b &           0.535 &                     True \\
+   ?c  sibling  ?a  ?c  sibling  ?b   => ?a  sibling  ?b &           0.565 &                     True \\
+      ?b  child  ?c  ?c  sibling  ?a   => ?a  father  ?b &           0.584 &                     True \\
+      ?b  child  ?c  ?a  sibling  ?c   => ?a  father  ?b &           0.584 &                     True \\
+   ?c  sibling  ?a  ?b  sibling  ?c   => ?a  sibling  ?b &           0.585 &                     True \\
+   ?c  sibling  ?b  ?a  sibling  ?c   => ?a  sibling  ?b &           0.588 &                     True \\
+       ?b  father  ?c  ?a  spouse  ?c   => ?a  child  ?b &           0.588 &                     True \\
+       ?b  father  ?c  ?c  spouse  ?a   => ?a  child  ?b &           0.589 &                     True \\
+   ?a  sibling  ?c  ?b  sibling  ?c   => ?a  sibling  ?b &           0.590 &                     True \\
+     ?a  father  ?c  ?b  father  ?c   => ?a  sibling  ?b &           0.659 &                     True \\
+      ?c  child  ?b  ?a  father  ?c   => ?a  sibling  ?b &           0.662 &                     True \\
+       ?c  child  ?a  ?c  child  ?b   => ?a  sibling  ?b &           0.665 &                     True \\
+      ?c  child  ?a  ?b  father  ?c   => ?a  sibling  ?b &           0.668 &                     True \\
+        ?c  child  ?b  ?c  spouse  ?a   => ?a  child  ?b &           0.688 &                     True \\
+        ?c  child  ?b  ?a  spouse  ?c   => ?a  child  ?b &           0.689 &                     True \\
+      ?a  father  ?c  ?b  spouse  ?c   => ?a  mother  ?b &           0.702 &                     True \\
+      ?c  mother  ?a  ?c  sibling  ?b   => ?a  child  ?b &           0.703 &                     True \\
+      ?c  mother  ?a  ?b  sibling  ?c   => ?a  child  ?b &           0.704 &                     True \\
+     ?a  mother  ?c  ?b  mother  ?c   => ?a  sibling  ?b &           0.707 &                     True \\
+      ?a  father  ?c  ?c  spouse  ?b   => ?a  mother  ?b &           0.709 &                     True \\
+      ?c  child  ?b  ?a  mother  ?c   => ?a  sibling  ?b &           0.709 &                     True \\
+      ?c  child  ?a  ?b  mother  ?c   => ?a  sibling  ?b &           0.710 &                     True \\
+                       ?b  child  ?a   => ?a  father  ?b &           0.770 &                     True \\
+     ?c  mother  ?b  ?c  sibling  ?a   => ?a  mother  ?b &           0.787 &                     True \\
+     ?c  mother  ?b  ?a  sibling  ?c   => ?a  mother  ?b &           0.788 &                     True \\
+       ?b  mother  ?c  ?a  spouse  ?c   => ?a  child  ?b &           0.838 &                     True \\
+       ?b  mother  ?c  ?c  spouse  ?a   => ?a  child  ?b &           0.840 &                     True \\
+                  ?b  relative  ?a   => ?a  relative  ?b &           0.846 &                     True \\
+       ?a  child  ?c  ?c  sibling  ?b   => ?a  child  ?b &           0.851 &                     True \\
+       ?a  child  ?c  ?b  sibling  ?c   => ?a  child  ?b &           0.851 &                     True \\
+      ?a  mother  ?c  ?b  spouse  ?c   => ?a  father  ?b &           0.868 &                     True \\
+      ?a  mother  ?c  ?c  spouse  ?b   => ?a  father  ?b &           0.873 &                     True \\
+      ?c  father  ?a  ?c  mother  ?b   => ?a  spouse  ?b &           0.953 &                     True \\
+      ?c  father  ?a  ?c  sibling  ?b   => ?a  child  ?b &           0.954 &                     True \\
+      ?c  father  ?a  ?b  sibling  ?c   => ?a  child  ?b &           0.955 &                     True \\
+     ?c  father  ?b  ?a  sibling  ?c   => ?a  father  ?b &           0.961 &                     True \\
+     ?c  father  ?b  ?c  sibling  ?a   => ?a  father  ?b &           0.961 &                     True \\
+      ?c  father  ?b  ?c  mother  ?a   => ?a  spouse  ?b &           0.968 &                     True \\
+                    ?b  sibling  ?a   => ?a  sibling  ?b &           0.990 &                     True \\
+                       ?b  mother  ?a   => ?a  child  ?b &           0.992 &                     True \\
+                      ?b  spouse  ?a   => ?a  spouse  ?b &           0.992 &                     True \\
+                       ?b  father  ?a   => ?a  child  ?b &           0.998 &                     True \\
 \bottomrule
 \caption{All rules mined with AMIE3 from the original family KG, sorted by their calculated PCA confidence in ascending order. The rightmost column indicates whether this rule was found in at least one of the KG extensions made with the RandomBaseline KGE. As the table shows, the rules not found after extending the KG in such a way were among those with lowest PCA confidence.}
 \label{original_rules_found_by_baseline_family}
