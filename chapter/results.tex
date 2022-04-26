@@ -46,9 +46,25 @@ Upon examining the number of rules mined per KG extension one immediately sees s
 As discussed in Section \ref{TransE_peaked_in_2013} TransE is not able to learn certain relation qualities, and upon further inspection of the embedding vectors for relations in TransE the vector values all tend toward zero (see \ref{TransE_embedding_family} and \ref{TransE_embedding_WN18RR} if you are curious). This can partially be explained by TransE's tendency to push the embeddings of symmetric relations toward the zero vector and it's lack of ability to effectively embed complex relations. Both issues explained in section \ref{KG_embeddings_section}. It seems that while scoring decently on the performance metrics during model selection, TransE has not properly embedded the relations in the KG. 
 
 Interestingly, the number of rules mined from TransE-extended KGs is not proportional to the number of triples added to the original KG, which is much lower relatively speaking. There is something \textit{particular} about the triples that TransE ranks highly, resulting in the detection of more patterns in the dataset. If we look at the mentioned weaknesses of the TransE embedding model we can reach some plausible explanations. To illustrate this, let us again consider the KG from example \ref{mini_simple_KG_rules}, in which \texttt{Carol} has children \texttt{Ann} and \texttt{Bob}, and \texttt{Ann} and \texttt{Bob} are explicitly stated to be each others siblings. Due to TransE's problems regarding the embedding of complex relations \cite{transH, transR}, \texttt{Ann} and \texttt{Bob} are likely to be identically represented in the embedding space. According to the results, each relation in the family KG is represented as a null-vector in the TransE embedding. Thus all relations are considered essentially equivalent to each other. Hence, we find ourselves in a situation where \texttt{Ann} and \texttt{Bob} are equivalent and all relations are equivalent. With these assumptions, meaningless triple such as
-\texttt{(Carol, has\_spouse, Ann)}, \texttt{(Carol, has\_spouse, Bob)} and \texttt{(Bob, has\_child, Ann)} would score highly according to our TransE model. TransE will score all triples with the original relation changed to another highly. This would lead to more triples sharing common entities, resulting in more patterns arising in the data. Therefore any combination of relations in the body and consequent would gain some degree of support in the extended KG, and hence be mined with AMIE3. The meaningless triples mentioned above are simply existing triples in the example KG with the relation switched for another that is by the model considered equivalent. Some resulting nonsense rules from TransE extensions are shown in listing \ref{TransE_nonsense_rules}. Many of these would make sense if the relations were swapped for another, for example if \textit{relative} in the body of rule 3 were swapped with \textit{sibling} the rule would make perfect sense.
+\texttt{(Carol, has\_spouse, Ann)}, \texttt{(Carol, has\_spouse, Bob)} and \texttt{(Bob, has\_child, Ann)} would score highly according to our TransE model. TransE will score all triples with the original relation changed to another highly. This would lead to more triples sharing common entities, resulting in more patterns arising in the data. Therefore any combination of relations in the body and consequent would gain some degree of support in the extended KG, and hence be mined with AMIE3. The meaningless triples mentioned above are simply existing triples in the example KG with the relation switched for another that is by the model considered equivalent. Some resulting nonsense rules from TransE extensions are shown in listing \ref{TransE_nonsense_rules}. Many of these would make sense if the relations were swapped for another, for example if \textit{relative} in the body of rule 3 were swapped with \textit{sibling} the rule would make perfect sense. The second nonsense rule in the listing, $mother(x, y) \Rightarrow child(x, y)$, was also found by DistMult. This makes sense because for DistMult $mother(x,y)$ and $mother(y, x)$ will have the same score, and the rule $mother(y, x) \Rightarrow child(x, y)$ is likely to have considerable support in the dataset. The remaining rules in listing \ref{TransE_nonsense_rules} were only found in TransE-extended KGs.
 
-
+\begin{figure}[htb]
+\centering
+\begin{subfigure}{.5\textwidth}
+  \centering
+  \includesvg[width=1\linewidth]{figures/results/wenn_wn18rr.svg}
+  \caption{WN18RR KG.}
+  \label{venn_wn18rr}
+\end{subfigure}%
+\begin{subfigure}{.5\textwidth}
+  \centering
+  \includesvg[width=1\linewidth]{figures/results/wenn_family.svg}
+  \caption{Family KG.}
+  \label{venn_family}
+\end{subfigure}
+\caption{Distribution of KG extension sizes over rank cutoff values.}
+\label{venn}
+\end{figure}
 
 
 Of the rules mined, \textcolor{red}{97}\% (WN18RR) and \textcolor{red}{76}\% (family KG) originate from KGs extended using TransE. The large number of rules produced marginalize those mined using other embedding models. Due to this and the fact that the trained TransE model has poor relational embeddings, we will include rules mined from KGs extended with TransE only when examining embedding models, but not when looking at entity selection methods or rank cutoff values.
