@@ -4,9 +4,11 @@
 
 The \textit{area under the precision-recall curve} (AUC-PR) is a metric appropriate for evaluating the performance of KG embedding models \cite{jahn2021reasoning}. A precision-recall curve is a plot of the precision over the y-axis and recall over the x-axis. AUC-PR is thus the area under this curve and describes how good a model is at predicting the positive class. This metric could have been used in the thesis for evaluation of the KG embedding models, but was omitted as it requires context for interpretation. A model that assigns a random score to a triple will result in a horizontal line based on the distribution of classified triples (positive or negative). Therefore a AUC-PR score of 0.5 is good if 99\% of the classified triples are negative, but if the triples are evenly distributed then a AUC-PC score of 0.5 would indicate that the model classified no better than randomly.
 
-LIMITATION:
+
 We have used the PCA when generating and evaluating rules, which as we know is merely an approximation of the truth. Just because a single child of a mother is listed in Wikidata does not mean that this woman did not have more children, these missing children were perhaps just not as famous and thus not mentioned in the database.
 
+
+Rule mining approaches have been especially popular due to their explainablity, and the induced knowledge can lead to interesting new knowledge. It is however also prone to errors that occur when creating rules based on bias or errors in the data. For example, in Wikidata5M 99\% of all football players are men, leading to the erroneous rule that if a person is a football player, then they are a man. This is of course not an accurate rule by our understanding, but it captures the bias in the data.
 
 
 \section{Mining ontologies through queries}
