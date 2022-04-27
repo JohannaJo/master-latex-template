@@ -255,152 +255,6 @@ TODO: clean up rules
     \caption[Dist. of all sets of mined rules, excluding TransE.]{Distribution of all mined rule sets, excluding the sets mined from KGs extended using TransE. Each rule set is labeled with the entity selection strategy, embedding model and rank cutoff that was used for that particular KG extension. We can observe that no new rules are mined when the RandomBaseline was used to extend the KGs.}
     \label{all_sets_w_out_TransE}
 \end{figure}
-\iffalse
-\begin{table}
-\begin{tabular}{lrr}
-\toprule
-                                                                                                      Rule &  Frequencies &  PCA Confidence \\
-\midrule
-                            y  DRF  x   $\Rightarrow$ x  DRF  y &           48 &        1.000000 \\
-                   x  \_hypernym  z  z  SDTO  y   $\Rightarrow$ x  SDTO  y &           36 &        0.828871 \\
-                   z  \_hypernym  x  z  SDTO  y   $\Rightarrow$ x  SDTO  y &           34 &        0.726667 \\
-                   x  \_has\_part  z  z  SDTO  y   $\Rightarrow$ x  SDTO  y &           24 &        0.809524 \\
-          x  IH  z  z  SDTO  y   $\Rightarrow$ x  SDTO  y &           24 &        0.886525 \\
-x  DRF  z  z  SDTO  y   $\Rightarrow$ x  SDTO  y &           24 &        0.492857 \\
-z  DRF  x  z  SDTO  y   $\Rightarrow$ x  SDTO  y &           24 &        0.492857 \\
-                   z  \_has\_part  x  z  SDTO  y   $\Rightarrow$ x  SDTO  y &           24 &        0.771739 \\
-                                               x  \_has\_part  z  y  \_hypernym  z   $\Rightarrow$ x  \_has\_part  y &           21 &        0.104016 \\
-                                      x  \_has\_part  z  y  IH  z   $\Rightarrow$ x  \_has\_part  y &           19 &        0.532544 \\
-\bottomrule
-\end{tabular}
-\caption{Rules mined from the original WN18RR KG, with their corresponding PCA confidences and how many times they were mined from the 48 extensions. DRF = ``\textit{derivationally related form}", STDO = ``\textit{synset domain topic of}" and IH = ``\textit{instance hypernym}".}
-\label{wn18rr_original_rules_table_frequencies}
-\end{table}
-
-\begin{table}
-\begin{tabular}{lrr}
-\toprule
-                                                                                                      Rule &  Frequencies &  PCA Confidence \\
-\midrule
-                            y  DRF  x   $\Rightarrow$ x  DRF  y &           48 &        1.000000 \\
-          x  IH  z  z  SDTO  y   $\Rightarrow$ x  SDTO  y &           24 &        0.886525 \\
-                   x  \_hypernym  z  z  SDTO  y   $\Rightarrow$ x  SDTO  y &           36 &        0.828871 \\
-                   x  \_has\_part  z  z  SDTO  y   $\Rightarrow$ x  SDTO  y &           24 &        0.809524 \\
-                   z  \_has\_part  x  z  SDTO  y   $\Rightarrow$ x  SDTO  y &           24 &        0.771739 \\
-                   z  \_hypernym  x  z  SDTO  y   $\Rightarrow$ x  SDTO  y &           34 &        0.726667 \\
-                                      x  \_has\_part  z  y  IH  z   $\Rightarrow$ x  \_has\_part  y &           19 &        0.532544 \\
-x  DRF  z  z  SDTO  y   $\Rightarrow$ x  SDTO  y &           24 &        0.492857 \\
-z  DRF  x  z  SDTO  y   $\Rightarrow$ x  SDTO  y &           24 &        0.492857 \\
-                                               x  \_has\_part  z  y  \_hypernym  z   $\Rightarrow$ x  \_has\_part  y &           21 &        0.104016 \\
-\bottomrule
-\end{tabular}
-https://www.overleaf.com/project/6065c0290955e6097131b67b\caption{Rules mined from the original WN18RR KG, with their corresponding PCA confidences and how many times they were mined from the 48 extensions. DRF = ``\textit{derivationally related form}", STDO = ``\textit{synset domain topic of}" and IH = ``\textit{instance hypernym}".}
-\label{wn18rr_original_rules_table_PCA}
-\end{table}
-
-\begin{longtable}{lrr}
-\toprule
-                                                    Rule &  Frequencies &  PCA Confidence \\
-\midrule
-                  relative(y, x)   $\Rightarrow$ relative(x, y) &           48 &        0.846306 \\
-      mother(x, z) $\wedge$ spouse(z, y)   $\Rightarrow$ father(x, y) &           48 &        0.872686 \\
-       child(z, x) $\wedge$ spouse(z, y)   $\Rightarrow$ father(x, y) &           48 &        0.350117 \\
-      mother(z, x) $\wedge$ sibling(y, z)   $\Rightarrow$ child(x, y) &           48 &        0.704016 \\
-        child(x, z) $\wedge$ child(y, z)   $\Rightarrow$ spouse(x, y) &           48 &        0.471973 \\
-      child(y, z) $\wedge$ sibling(x, z)   $\Rightarrow$ father(x, y) &           48 &        0.584069 \\
-      mother(z, x) $\wedge$ sibling(z, y)   $\Rightarrow$ child(x, y) &           48 &        0.703385 \\
-      child(y, z) $\wedge$ sibling(z, x)   $\Rightarrow$ father(x, y) &           48 &        0.583590 \\
-       child(z, x) $\wedge$ spouse(y, z)   $\Rightarrow$ father(x, y) &           48 &        0.351479 \\
-       child(x, z) $\wedge$ father(z, y)   $\Rightarrow$ spouse(x, y) &           48 &        0.471666 \\
-      mother(x, z) $\wedge$ spouse(y, z)   $\Rightarrow$ father(x, y) &           48 &        0.867655 \\
-       child(z, x) $\wedge$ spouse(z, y)   $\Rightarrow$ mother(x, y) &           48 &        0.386296 \\
-       child(y, z) $\wedge$ mother(z, x)   $\Rightarrow$ spouse(x, y) &           48 &        0.480628 \\
-       child(y, z) $\wedge$ father(z, x)   $\Rightarrow$ spouse(x, y) &           48 &        0.469716 \\
-      child(y, z) $\wedge$ sibling(z, x)   $\Rightarrow$ mother(x, y) &           48 &        0.422363 \\
-      father(x, z) $\wedge$ spouse(y, z)   $\Rightarrow$ mother(x, y) &           48 &        0.701812 \\
-     mother(z, y) $\wedge$ sibling(z, x)   $\Rightarrow$ mother(x, y) &           48 &        0.787401 \\
-     mother(z, y) $\wedge$ sibling(x, z)   $\Rightarrow$ mother(x, y) &           48 &        0.787816 \\
-       child(z, x) $\wedge$ spouse(y, z)   $\Rightarrow$ mother(x, y) &           48 &        0.382227 \\
-      child(y, z) $\wedge$ sibling(x, z)   $\Rightarrow$ mother(x, y) &           48 &        0.422559 \\
-       child(x, z) $\wedge$ mother(z, y)   $\Rightarrow$ spouse(x, y) &           48 &        0.477785 \\
-      father(x, z) $\wedge$ spouse(z, y)   $\Rightarrow$ mother(x, y) &           48 &        0.708957 \\
-       mother(y, z) $\wedge$ spouse(x, z)   $\Rightarrow$ child(x, y) &           48 &        0.838288 \\
-     father(z, y) $\wedge$ sibling(x, z)   $\Rightarrow$ father(x, y) &           48 &        0.961023 \\
-      father(z, x) $\wedge$ sibling(z, y)   $\Rightarrow$ child(x, y) &           48 &        0.954328 \\
-        child(z, y) $\wedge$ spouse(x, z)   $\Rightarrow$ child(x, y) &           48 &        0.688723 \\
-       child(z, x) $\wedge$ child(z, y)   $\Rightarrow$ sibling(x, y) &           48 &        0.664745 \\
-   sibling(z, x) $\wedge$ sibling(z, y)   $\Rightarrow$ sibling(x, y) &           48 &        0.564657 \\
-     father(x, z) $\wedge$ father(y, z)   $\Rightarrow$ sibling(x, y) &           48 &        0.658865 \\
-   sibling(z, y) $\wedge$ sibling(x, z)   $\Rightarrow$ sibling(x, y) &           48 &        0.588151 \\
-   sibling(x, z) $\wedge$ sibling(y, z)   $\Rightarrow$ sibling(x, y) &           48 &        0.590059 \\
-   sibling(z, x) $\wedge$ sibling(y, z)   $\Rightarrow$ sibling(x, y) &           48 &        0.584857 \\
-      child(z, y) $\wedge$ father(x, z)   $\Rightarrow$ sibling(x, y) &           48 &        0.662206 \\
-      child(z, x) $\wedge$ father(y, z)   $\Rightarrow$ sibling(x, y) &           48 &        0.668446 \\
-       child(x, z) $\wedge$ sibling(z, y)   $\Rightarrow$ child(x, y) &           48 &        0.850519 \\
-       father(y, z) $\wedge$ spouse(x, z)   $\Rightarrow$ child(x, y) &           48 &        0.588257 \\
-       child(x, z) $\wedge$ sibling(y, z)   $\Rightarrow$ child(x, y) &           48 &        0.851012 \\
-     father(z, y) $\wedge$ sibling(z, x)   $\Rightarrow$ father(x, y) &           48 &        0.961199 \\
-     mother(x, z) $\wedge$ mother(y, z)   $\Rightarrow$ sibling(x, y) &           48 &        0.707149 \\
-       father(y, z) $\wedge$ spouse(z, x)   $\Rightarrow$ child(x, y) &           48 &        0.588533 \\
-      child(z, y) $\wedge$ mother(x, z)   $\Rightarrow$ sibling(x, y) &           48 &        0.709139 \\
-      father(z, x) $\wedge$ sibling(y, z)   $\Rightarrow$ child(x, y) &           48 &        0.954603 \\
-      child(z, x) $\wedge$ mother(y, z)   $\Rightarrow$ sibling(x, y) &           48 &        0.709805 \\
-        child(z, y) $\wedge$ spouse(z, x)   $\Rightarrow$ child(x, y) &           48 &        0.687653 \\
-       mother(y, z) $\wedge$ spouse(z, x)   $\Rightarrow$ child(x, y) &           48 &        0.839947 \\
-                       child(y, x)   $\Rightarrow$ mother(x, y) &           48 &        0.535350 \\
-      father(z, y) $\wedge$ mother(z, x)   $\Rightarrow$ spouse(x, y) &           48 &        0.967952 \\
-      father(z, x) $\wedge$ mother(z, y)   $\Rightarrow$ spouse(x, y) &           48 &        0.953170 \\
-                      spouse(y, x)   $\Rightarrow$ spouse(x, y) &           48 &        0.992355 \\
-                       father(y, x)   $\Rightarrow$ child(x, y) &           48 &        0.998071 \\
-                    sibling(y, x)   $\Rightarrow$ sibling(x, y) &           48 &        0.989634 \\
-                       mother(y, x)   $\Rightarrow$ child(x, y) &           48 &        0.991906 \\
-                       child(y, x)   $\Rightarrow$ father(x, y) &           48 &        0.769746 \\
- relative(z, x) $\wedge$ sibling(y, z)   $\Rightarrow$ relative(x, y) &           40 &        0.348765 \\
- relative(z, x) $\wedge$ sibling(z, y)   $\Rightarrow$ relative(x, y) &           40 &        0.351014 \\
- relative(x, z) $\wedge$ sibling(z, y)   $\Rightarrow$ relative(x, y) &           40 &        0.483459 \\
- relative(x, z) $\wedge$ sibling(y, z)   $\Rightarrow$ relative(x, y) &           40 &        0.484528 \\
- relative(z, y) $\wedge$ sibling(z, x)   $\Rightarrow$ relative(x, y) &           39 &        0.126881 \\
- relative(z, y) $\wedge$ sibling(x, z)   $\Rightarrow$ relative(x, y) &           39 &        0.127978 \\
- relative(y, z) $\wedge$ sibling(x, z)   $\Rightarrow$ relative(x, y) &           38 &        0.120360 \\
- relative(y, z) $\wedge$ sibling(z, x)   $\Rightarrow$ relative(x, y) &           38 &        0.120448 \\
-   child(y, z) $\wedge$ relative(z, x)   $\Rightarrow$ relative(x, y) &           37 &        0.273356 \\
-  father(z, y) $\wedge$ relative(x, z)   $\Rightarrow$ relative(x, y) &           37 &        0.372340 \\
-  relative(x, z) $\wedge$ spouse(z, y)   $\Rightarrow$ relative(x, y) &           37 &        0.305043 \\
-  relative(x, z) $\wedge$ spouse(y, z)   $\Rightarrow$ relative(x, y) &           37 &        0.305043 \\
-  father(y, z) $\wedge$ relative(x, z)   $\Rightarrow$ relative(x, y) &           37 &        0.378085 \\
-   child(z, y) $\wedge$ relative(z, x)   $\Rightarrow$ relative(x, y) &           37 &        0.275454 \\
-   child(y, z) $\wedge$ relative(x, z)   $\Rightarrow$ relative(x, y) &           37 &        0.343180 \\
-  father(y, z) $\wedge$ relative(z, x)   $\Rightarrow$ relative(x, y) &           37 &        0.294304 \\
-  father(z, y) $\wedge$ relative(z, x)   $\Rightarrow$ relative(x, y) &           37 &        0.301061 \\
-   child(z, y) $\wedge$ relative(x, z)   $\Rightarrow$ relative(x, y) &           37 &        0.364472 \\
-  mother(y, z) $\wedge$ relative(x, z)   $\Rightarrow$ relative(x, y) &           36 &        0.350490 \\
-  relative(z, x) $\wedge$ spouse(y, z)   $\Rightarrow$ relative(x, y) &           35 &        0.206044 \\
-  mother(y, z) $\wedge$ relative(z, x)   $\Rightarrow$ relative(x, y) &           33 &        0.241645 \\
-  mother(z, y) $\wedge$ relative(x, z)   $\Rightarrow$ relative(x, y) &           33 &        0.283544 \\
-  father(z, x) $\wedge$ relative(y, z)   $\Rightarrow$ relative(x, y) &           33 &        0.179144 \\
-   child(x, z) $\wedge$ relative(y, z)   $\Rightarrow$ relative(x, y) &           32 &        0.148287 \\
-  relative(z, x) $\wedge$ spouse(z, y)   $\Rightarrow$ relative(x, y) &           32 &        0.205761 \\
-   child(x, z) $\wedge$ relative(z, y)   $\Rightarrow$ relative(x, y) &           31 &        0.123643 \\
-    father(z, x) $\wedge$ father(y, z)   $\Rightarrow$ relative(x, y) &           30 &        0.196078 \\
-  mother(z, y) $\wedge$ relative(z, x)   $\Rightarrow$ relative(x, y) &           30 &        0.224490 \\
-  father(z, x) $\wedge$ relative(z, y)   $\Rightarrow$ relative(x, y) &           30 &        0.140871 \\
-relative(z, y) $\wedge$ relative(x, z)   $\Rightarrow$ relative(x, y) &           29 &        0.100440 \\
-     child(x, z) $\wedge$ father(y, z)   $\Rightarrow$ relative(x, y) &           27 &        0.153584 \\
-     child(z, y) $\wedge$ father(z, x)   $\Rightarrow$ relative(x, y) &           26 &        0.166667 \\
-      child(z, y) $\wedge$ child(x, z)   $\Rightarrow$ relative(x, y) &           25 &        0.130759 \\
-    father(z, x) $\wedge$ spouse(y, z)   $\Rightarrow$ relative(x, y) &           21 &        0.124101 \\
-  mother(x, z) $\wedge$ relative(y, z)   $\Rightarrow$ relative(x, y) &           21 &        0.104492 \\
-  mother(z, x) $\wedge$ relative(y, z)   $\Rightarrow$ relative(x, y) &           18 &        0.101064 \\
-    father(z, x) $\wedge$ spouse(z, y)   $\Rightarrow$ relative(x, y) &           17 &        0.122083 \\
-    father(z, y) $\wedge$ father(x, z)   $\Rightarrow$ relative(x, y) &           16 &        0.108774 \\
-     child(x, z) $\wedge$ spouse(y, z)   $\Rightarrow$ relative(x, y) &           13 &        0.102020 \\
-     child(x, z) $\wedge$ spouse(z, y)   $\Rightarrow$ relative(x, y) &           13 &        0.102020 \\
-   father(x, z) $\wedge$ sibling(z, y)   $\Rightarrow$ relative(x, y) &           10 &        0.100971 \\
-\bottomrule
-\caption{Rules mined from the original family KG, with their corresponding PCA confidences and how many times they were mined from the 48 extensions. Note that all rules with the $relative$ predicate in the consequent have lower PCA confidence and were mined less frequently.}
-\label{family_original_rules_table_frequencies}
-\end{longtable}
-\fi
 
 
 \newpage
@@ -514,16 +368,16 @@ relative(z, y) $\wedge$ relative(x, z)   $\Rightarrow$ relative(x, y) &         
   \centering
   \includesvg[width=1\linewidth]{figures/appendix/Extension_sizes_models_WN18RR.svg}
   \caption{WN18RR KG.}
-  \label{fig:rank_extension_wn18rr_boxplot_sub}
+  \label{fig:model_extension_wn18rr_boxplot_sub}
 \end{subfigure}%
 \begin{subfigure}{.5\textwidth}
   \centering
   \includesvg[width=1\linewidth]{figures/appendix/Extension_sizes_models_family.svg}
   \caption{Family KG.}
-  \label{fig:rank_extension_family_boxplot_sub}
+  \label{fig:model_extension_family_boxplot_sub}
 \end{subfigure}
 \caption{Distribution of KG extension sizes over KGE models.}
-\label{rank_extensions_boxplot}
+\label{model_extensions_boxplot}
 \end{figure}
 
 
