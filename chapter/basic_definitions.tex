@@ -86,7 +86,11 @@ With this type of data organisation one can for example query for a list of all 
 
 
 \subsection{Knowledge base vs knowledge graph}
-The term \textit{knowledge base} was introduced to describe the data used in expert sy
+A knowledge-based system is said to consist of two parts: a \textit{knowledge base} containing the knowledge and an \textit{inference engine} that can be used to derive new facts from or answer questions about the knowledge base. Another important characteristic fr knwoledge basses is the dest
+
+
+called a TBox, and an \emph{assertional} part, called an ABox. The TBox represents knowledge about the structure of the domain, while the ABox has knowledge about specific instances. For example the fact that \emph{cats are  mammals} would be a TBox statement, while \emph{Leo is a cat} would be an ABox statement, as here we are making an assertion about the individual Leo. The combination of a TBox and an ABox is called a \emph{knowledge base} (KB).
+
 TODO:
 
 \subsection{Incompleteness}
