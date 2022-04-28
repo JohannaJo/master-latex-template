@@ -274,21 +274,20 @@ Association rules \cite{agrawal1993mining} are types of ``if-then" statements th
 The goal is to find formal rules that make true predictions that go beyond the explicit information in the knowledge base. If we look back at \cref{KB_predictions} this means we want to maximise B and minimise D. For this we need to know what those areas are, and this is where the problem of missing negative examples from \cref{Integrity_of_KGs} occurs as the area \textbf{KB false} is empty. While it is hard to define what quality if when evaluating rules there are some indicators that can be used. We now consider different measures addressing this problem.
 
 \subsubsection{Support}
-The \textit{support} of a rule is the quantity of correct predictions. If we recall figure \cref{KB_predictions} with KG prediction under incompleteness, the support of a rule $B \rightarrow r(x,y)$ is area A. What counts as an instance of a correct prediction can vary. The authors of AMIE point out that if one chooses the number of instantiations of the rule, then the measure becomes non-monotonic \cite{amie3}. They give an example with the rule:
+The \textit{support} of a rule is the quantity of correct predictions. If we recall figure \cref{KB_predictions} with KG prediction under incompleteness, the support of a rule $B \Rightarrow r(x,y)$ is area A. What counts as an instance of a correct prediction can vary. The authors of AMIE point out that if one chooses the number of instantiations of the rule, then the measure becomes non-monotonic \cite{amie3}. They give an example with the rule:
 \[married\_to(x, y) \Rightarrow married\_to(y, x)\]
-where if $has\_gender(x, male)$ is added to the body, then the number of instantiations in the KG can only decrease because there are stricter requirements for what can be in the body of the rule. If on the other hand $has\_friend(x, z)$ is added to the body then the number of instantiations may increase,because for every $x$ there can be many $z$ possibly resulting in many more instantiations of the rule. In order to preserve monoticity and only a single measure of support for each rule the authors of AMIE define support of a rule $B\Rightarrow r(x, y)$ to be the number of distinct object-subject pairs in the KB that appear in the head and tail:
-\[supp(B\Rightarrow r(x, y)) :=  \# (x, y) : \exists z_1 , ...,z_m : \vec{B} \wedge r(x, y)\]
-
-where $z_1, ..., z_m$ are variables in the body of the rule that don't appear in the head. Now the support of a rule decreases monotonically if more atoms are added to the body and two equivalent rules cannot have different values for support.
+where if $has\_gender(x, male)$ is added to the body, then the number of instantiations in the KG can only decrease because there are stricter requirements for what can be in the body of the rule. If on the other hand $has\_friend(x, z)$ is added to the body then the number of instantiations may increase,because for every $x$ there can be many $z$ possibly resulting in many more instantiations of the rule. In order to preserve monoticity and only a single measure of support for each rule the authors of AMIE define support of a rule $R$ to be the number of true predictions $p$ in the KG $\mathcal{K}$ that the rule makes:
+\[support(R) :=  | \{p : (\mathcal{K} \wedge R \models p)\wedge p \in \mathcal{K} \}|\]
+Now the support of a rule decreases monotonically if more atoms are added to the body and two equivalent rules cannot have different values for support.
 
 \subsubsection{Head coverage}
-Support is not an absolute measurement, rather a relative measurement. It requires the complete size of the KG for the values to have meaning. This is countered with a proportional version of support called \emph{head coverage}. It is the ratio of known true facts about a relation $r$ that are implied by the rule:
-\[hc(B \rightarrow r(x,y)) = \frac{support(B \rightarrow r(x,y))}{\#(x, y) : r(x, y) \in \mathcal{K}}\]
+Support is not an absolute measurement, rather a relative measurement. It requires the complete size of the KG for the values to have meaning. This is countered with a proportional version of support called \emph{head coverage}. Given a rule $B \Rightarrow r(x,y)$, the head coverage is is the ratio instantiations of the head of the rule $r(x, y)$ that are predicted by the rule:
+\[hc(B \Rightarrow r(x,y)) = \frac{support(B \Rightarrow r(x,y))}{|\{(x, y) : r(x, y) \in \mathcal{K}}|\]
 Head coverage is fully correlated with support, and hence is also monotonic. We now have an absolute measurement of significance, but this is not a measure of quality of a rule, only relevance. For this we need confidence measures.
 
 
-\subsubsection{Standard Confidence} Confidence is the proportion of a rule's true predictions out of all its predictions. In order to determine if a new fact is true or false, one must make assumptions about the facts missing from the KG. The \textit{standard confidence} adopts the CWA and labels all facts not already present in the KG as false. Thus, the standard confidence of a rule is the ratio of its predictions that are in the KG:
-\[conf(\vec{B}\Rightarrow r(x, y)) := \frac{supp(\vec{B}\Rightarrow r(x, y))}{\#(x, y):\exists z_1 ,..., z_m : \vec{B}}\]
+\subsubsection{Standard Confidence} Confidence is the proportion of a rule's true predictions out of all its predictions. In order to determine if a new fact is true or false, one must make assumptions about the facts missing from the KG. The \textit{standard confidence} adopts the CWA and labels all facts not already present in the KG as false. Thus, the standard confidence of a rule $R$ in a KG $\mathcal{K}$ is the ratio of its predictions that are in the KG:
+\[conf(R) := \frac{support(R)}{support(R) + | \{p : (\mathcal{K} \wedge R \models p)\wedge p \not\in \mathcal{K} \}|}\]
 
 If we take the KG from example \ref{mini_KG_rules} and the rule $has\_child(x, y) \Rightarrow has\_parent(y, x)$, then the rule implies two datapoints: \texttt{(Ann, has\_parent, Carol)} and \texttt{(Bob, has\_parent, Carol)}. The first triple is in the KG, while the second is not, therefore the rule has predicted one correct and one incorrect triple, thus the standard confidence is 0.5.
 
@@ -297,13 +296,13 @@ If one wants to mine rules that only describe the data at hand, and has a relati
 
 
 \subsubsection{PCA Confidence}
-This measurement for confidence differs from standard confidence in its definition of what is a false prediction. Under standard confidence any triple outside the KG is a false prediction, while this confidence metric adopts PCA, introduced in section \ref{Integrity_of_KGs}. The definition of a false prediction is thus more conservative, so not all triples outside the KG are considered false. The PCA confidence of the rule is the ration of its predictions that are not labeled as false by the PCA \cite{amie}:
-\[pcaconf(\vec{B}\Rightarrow r(x, y)) := \frac{supp(\vec{B}\Rightarrow r(x, y))}{\#(x, y):\exists z_1 ,..., z_m, y' : \vec{B} \wedge r(x, y')}\]
+This measurement for confidence differs from standard confidence in its definition of what is a false prediction. Under standard confidence any triple outside the KG is a false prediction, while this confidence metric adopts PCA, introduced in section \ref{Integrity_of_KGs}. The definition of a false prediction is thus more conservative, so not all triples outside the KG are considered false. The PCA confidence of the rule $R$ is the ration of its predictions that are not labeled as false by the PCA \cite{amie}:
+\[pcaconf(B\Rightarrow r(x, y)) := \frac{support(B\Rightarrow r(x, y))}{|\{(x, y):\exists y' : B \wedge r(x, y')\}|}\]
 
 Again, given the KG from example \ref{mini_KG_rules} and the rule $has\_child(x, y) \Rightarrow has\_parent(y, x)$, the rule implies two datapoints: \texttt{(Ann, has\_parent, Carol)} and \texttt{(Bob, has\_parent, Carol)}. The first is in the KG, therefore correct, while the latter is outside the KG. As there are no \texttt{has\_parent} triples with \texttt{Bob} as the subject in the KG, we cannot under the PCA assume that \texttt{(Bob, has\_parent, Carol)} is a false triple. Hence, the PCA confidence of the rule is 1.0, in contrast to the standard confidence of 0.5.
 
 This is the standard PCA confidence measure, but it could of course also be calculated on the head entity of the consequent instead of the tail, ie.: 
-\[pcaconf_{head}(\vec{B}\Rightarrow r(x, y)) := \frac{supp(\vec{B}\Rightarrow r(x, y))}{\#(x, y):\exists z_1 ,..., z_m, x' : \vec{B} \wedge r(x', y)}\]
+\[pcaconf_h(B\Rightarrow r(x, y)) := \frac{support(B\Rightarrow r(x, y))}{|\{(x, y):\exists x' : B \wedge r(x', y)\}|}\]
 
 Note that the PCA confidence calculated on the \textit{tail} of the consequent is the metric used throughout this thesis to indicate the quality of rules.
 
