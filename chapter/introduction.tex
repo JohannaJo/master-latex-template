@@ -1,4 +1,6 @@
 \chapter{Introduction}
+\section{Context and motivation}
+
 
 Knowledge bases that are large and interesting are generally not complete. They may for example be extracted from natural language resources and may contain facts that are wrong or exhibit gaps in their knowledge. Most of the data that is present, however, is correct and hence implicitly contain meaningful rules. For example the Wikidata dataset that contains information about many individuals will implicitly contain the fact that siblings tend to have the same mother:
 \[siblingOf(a, b) \wedge motherOf(c, a) \Rightarrow motherOf(c, b)\]
@@ -16,3 +18,14 @@ This work inspired the idea of using KG embedding models to improve rule-bases, 
 \end{figure}
 
 This thesis assumes that the reader is familiar with basic machine learning concepts, such as training, testing and overfitting. For an introduction or refresher to machine learning basics, chapter 5 in the book \textit{Deep Learning}, by Goodfellow et al. \cite{goodfellow} covers the topic quite well. The entire book is publicly available at \href{https://www.deeplearningbook.org/}{https://www.deeplearningbook.org/}.
+
+
+\section{Thesis outline}
+The outline for the rest of the thesis is as follows: \newline \newline \newline
+\textbf{Chapter 2 - Background} provides reader with background knowledge required for a proper understanding of the work. \newline
+\newline
+\textbf{Chapter 3 - Rule mining on extended knowledge graphs} explains the methodology and material used for experiments. \newline
+\newline
+\textbf{Chapter 4 - Results} presents and discusses the findings of the experiment. \newline \newline
+\textbf{Chapter 5 - Related work} provides the reader with an overview of works related to the thesis. \newline \newline
+\textbf{Chapter 6 - Discussion} evaluates and discusses the work in general and explains an earlier approach explored during research.
