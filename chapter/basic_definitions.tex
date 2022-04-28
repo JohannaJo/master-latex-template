@@ -297,12 +297,12 @@ If one wants to mine rules that only describe the data at hand, and has a relati
 
 \subsubsection{PCA Confidence}
 This measurement for confidence differs from standard confidence in its definition of what is a false prediction. Under standard confidence any triple outside the KG is a false prediction, while this confidence metric adopts PCA, introduced in section \ref{Integrity_of_KGs}. The definition of a false prediction is thus more conservative, so not all triples outside the KG are considered false. The PCA confidence of the rule $R$ is the ration of its predictions that are not labeled as false by the PCA \cite{amie}:
-\[pcaconf(B\Rightarrow r(x, y)) := \frac{support(B\Rightarrow r(x, y))}{|\{(x, y):\exists y' : B \wedge r(x, y')\}|}\]
+\[pca-conf(B\Rightarrow r(x, y)) := \frac{support(B\Rightarrow r(x, y))}{|\{(x, y):\exists y' : B \wedge r(x, y')\}|}\]
 
 Again, given the KG from example \ref{mini_KG_rules} and the rule $has\_child(x, y) \Rightarrow has\_parent(y, x)$, the rule implies two datapoints: \texttt{(Ann, has\_parent, Carol)} and \texttt{(Bob, has\_parent, Carol)}. The first is in the KG, therefore correct, while the latter is outside the KG. As there are no \texttt{has\_parent} triples with \texttt{Bob} as the subject in the KG, we cannot under the PCA assume that \texttt{(Bob, has\_parent, Carol)} is a false triple. Hence, the PCA confidence of the rule is 1.0, in contrast to the standard confidence of 0.5.
 
 This is the standard PCA confidence measure, but it could of course also be calculated on the head entity of the consequent instead of the tail, ie.: 
-\[pcaconf_h(B\Rightarrow r(x, y)) := \frac{support(B\Rightarrow r(x, y))}{|\{(x, y):\exists x' : B \wedge r(x', y)\}|}\]
+\[pca-conf_h(B\Rightarrow r(x, y)) := \frac{support(B\Rightarrow r(x, y))}{|\{(x, y):\exists x' : B \wedge r(x', y)\}|}\]
 
 Note that the PCA confidence calculated on the \textit{tail} of the consequent is the metric used throughout this thesis to indicate the quality of rules.
 
