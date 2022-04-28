@@ -86,12 +86,9 @@ With this type of data organisation one can for example query for a list of all 
 
 
 \subsection{Knowledge base vs knowledge graph}
-A knowledge-based system is said to consist of two parts: a \textit{knowledge base} containing the knowledge and an \textit{inference engine} that can be used to derive new facts from or answer questions about the knowledge base. Another important characteristic fr knwoledge basses is the dest
+A knowledge-based system is said to consist of two parts: a \textit{knowledge base} containing the knowledge and an \textit{inference engine} that can be used to derive new facts from or answer questions about the knowledge base \cite{akerkar2009knowledge}. KBs often have both a terminological component and assertional component, respectively called the \textit{TBox} and \textit{ABox} \cite{brachman1989overview}.The TBox represents knowledge about the structure of the domain, while the ABox has knowledge about specific instances. For example the fact that \emph{cats are  mammals} would be a TBox statement, while \emph{Leo is a cat} would be an ABox statement, as here we are making an assertion about the individual Leo.
 
-
-called a TBox, and an \emph{assertional} part, called an ABox. The TBox represents knowledge about the structure of the domain, while the ABox has knowledge about specific instances. For example the fact that \emph{cats are  mammals} would be a TBox statement, while \emph{Leo is a cat} would be an ABox statement, as here we are making an assertion about the individual Leo. The combination of a TBox and an ABox is called a \emph{knowledge base} (KB).
-
-TODO:
+KGs can be thought of as KBs with a graph-structured data-model, but often lacking the strict terminological schema. Where the combination of a TBox and ABox in a KB allows the inference engine to derive a potentially infinite number of facts, the lack of rigid structure in a KG results in restricted opportunities for reasoning in a KG. This has led to various approaches for KG completion, some of which are mentioned in chapter \ref{related_work} of this thesis. The use of a rigid schema has been key to the success of relational databases \cite{codd2002relational}, but leads to a severe bottleneck when dealing with the integration of data from heterogeneous, semi-structured and dynamic sources, such as Wikipedia. Therefore it is not a bug, but a feature for large KGs to not incorporate the strict schema often used in KBs.
 
 \subsection{Incompleteness}
 \label{Integrity_of_KGs}
