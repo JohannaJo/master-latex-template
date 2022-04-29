@@ -44,10 +44,9 @@ Upon examining the number of rules mined per KG extension one immediately sees s
 \label{total_rules_KG_embedding_dist}
 \end{figure}
 
-As discussed in Section \ref{TransE_peaked_in_2013} TransE is not able to learn certain relation qualities, and upon further inspection of the embedding vectors for relations in TransE the vector values all tend toward zero (see \ref{TransE_embedding_family} and \ref{TransE_embedding_WN18RR} if you are curious). This can partially be explained by TransE's tendency to push the embeddings of symmetric relations toward the zero vector and it's lack of ability to effectively embed complex relations. Both issues explained in section \ref{KG_embeddings_section}. It seems that while scoring decently on the performance metrics during model selection, TransE has not properly embedded the relations in the KG. 
+As discussed in Section \ref{TransE_peaked_in_2013} TransE is not able to learn certain relation qualities, and upon further inspection of the embedding vectors for relations in TransE the vector values all tend toward zero (see \ref{TransE_embedding_family} and \ref{TransE_embedding_WN18RR}). This can partially be explained by TransE's tendency to push the embeddings of symmetric relations toward the zero vector and it's lack of ability to effectively embed complex relations. Both issues explained in section \ref{KG_embeddings_section}. It seems that while scoring decently on the performance metrics during model selection, TransE has not properly embedded the relations in the KG. 
 
-Interestingly, the number of rules mined from TransE-extended KGs is not proportional to the number of triples added to the original KG, which is much lower relatively speaking. There is something \textit{particular} about the triples that TransE ranks highly, resulting in the detection of more patterns in the dataset. If we look at the mentioned weaknesses of the TransE embedding model we can reach some plausible explanations. To illustrate this, let us again consider the KG from example \ref{mini_simple_KG_rules}, in which \texttt{Carol} has children \texttt{Ann} and \texttt{Bob}, and \texttt{Ann} and \texttt{Bob} are explicitly stated to be each others siblings. Due to TransE's problems regarding the embedding of complex relations \cite{transH, transR}, \texttt{Ann} and \texttt{Bob} are likely to be identically represented in the embedding space. According to the results, each relation in the family KG is represented as a null-vector in the TransE embedding. Thus all relations are considered essentially equivalent to each other. Hence, we find ourselves in a situation where \texttt{Ann} and \texttt{Bob} are equivalent and all relations are equivalent. With these assumptions, meaningless triple such as
-\texttt{(Carol, has\_spouse, Ann)}, \texttt{(Carol, has\_spouse, Bob)} and \texttt{(Bob, has\_child, Ann)} would score highly according to our TransE model. TransE will score all triples with the original relation changed to another highly. This would lead to more triples sharing common entities, resulting in more patterns arising in the data. Therefore any combination of relations in the body and consequent would gain some degree of support in the extended KG, and hence be mined with AMIE3. The meaningless triples mentioned above are simply existing triples in the example KG with the relation switched for another that is by the model considered equivalent. Some resulting nonsense rules from TransE extensions are shown in listing \ref{TransE_nonsense_rules}. Many of these would make sense if the relations were swapped for another, for example if \textit{relative} in the body of rule 3 were swapped with \textit{sibling} the rule would make perfect sense. The second nonsense rule in the listing, $mother(x, y) \Rightarrow child(x, y)$, was also found by DistMult. This makes sense, because for DistMult the two triples \texttt{(a, mother, b)} and \texttt{(a, mother, b)} will have the same score for all entities \texttt{a} and \texttt{b}, and the rule $mother(y, x) \Rightarrow child(x, y)$ is likely to have considerable support in the dataset. The remaining rules in listing \ref{TransE_nonsense_rules} were only found in TransE-extended KGs.
+Interestingly, the number of rules mined from TransE-extended KGs is not proportional to the number of triples added to the original KG, which is much lower relatively speaking. There is something \textit{particular} about the triples that TransE ranks highly, resulting in the introduction of more patterns in the dataset. If we look at the mentioned weaknesses of the TransE embedding model we can reach some plausible explanations.
 
 \begin{figure}[htb]
 \centering
@@ -63,12 +62,14 @@ Interestingly, the number of rules mined from TransE-extended KGs is not proport
   \caption{Family KG.}
   \label{venn_family}
 \end{subfigure}
-\caption{Distribution of KG extension sizes over rank cutoff values.}
+\caption[New rules grouped by which KGEs]{Distribution of new rules grouped by which KGE was used to created the extended KG from which the rule was mined. Duplicates are removed.}
 \label{venn}
 \end{figure}
 
+To illustrate this, let us again consider the KG from example \ref{mini_simple_KG_rules}, in which \texttt{Carol} has children \texttt{Ann} and \texttt{Bob}, and \texttt{Ann} and \texttt{Bob} are explicitly stated to be each others siblings. Due to TransE's problems regarding the embedding of complex relations \cite{transH, transR}, \texttt{Ann} and \texttt{Bob} are likely to be identically represented in the embedding space. According to the results, each relation in the family KG is represented as a null-vector in the TransE embedding. Thus all relations are considered essentially equivalent to each other. Hence, we find ourselves in a situation where \texttt{Ann} and \texttt{Bob} are equivalent and all relations are equivalent. With these assumptions, meaningless triples such as
+\texttt{(Carol, has\_spouse, Ann)}, \texttt{(Carol, has\_spouse, Bob)} and \texttt{(Bob, has\_child, Ann)} would score highly according to our TransE model. TransE will assign a high score to all original triples with the relation swapped for another. This would lead to more triples sharing common entities, resulting in more patterns arising in the data. Therefore any combination of relations in the body and consequent would gain some degree of support in the extended KG, and hence be mined with AMIE3. The meaningless triples mentioned above are simply existing triples in the example KG with the relation switched for another that is by the model considered equivalent. 
 
-Of the rules mined, \textcolor{red}{97}\% (WN18RR) and \textcolor{red}{76}\% (family KG) originate from KGs extended using TransE. The large number of rules produced marginalize those mined using other embedding models. Due to this and the fact that the trained TransE model has poor relational embeddings, we will include rules mined from KGs extended with TransE only when examining embedding models, but not when looking at entity selection methods or rank cutoff values.
+Some resulting nonsense rules from TransE extensions are shown in listing \ref{TransE_nonsense_rules}. Many of these would make sense if the relations were swapped for another, for example if \textit{relative} in the body of rule 3 were swapped with \textit{sibling} the rule would make perfect sense. The second nonsense rule in the listing, $mother(x, y) \Rightarrow child(x, y)$, was also found by DistMult. This makes sense, because for DistMult the two triples \texttt{(a, mother, b)} and \texttt{(a, mother, b)} will have the same score for all entities \texttt{a} and \texttt{b}, and the rule $mother(y, x) \Rightarrow child(x, y)$ is likely to have considerable support in the dataset. The remaining rules in listing \ref{TransE_nonsense_rules} were only found in TransE-extended KGs.
 
 \begin{lstlisting}[mathescape=true, float, caption={Selection of nonsense rules mined from KGs extended with TransE.},captionpos=b, label={TransE_nonsense_rules}]
 $spouse(x, y)  \Rightarrow father(x, y)$
@@ -83,12 +84,16 @@ $mother(z, y) \wedge mother(x, z) \Rightarrow child(x, y)$
 $sibling(y, x) \wedge spouse(x, y) \Rightarrow father(x, y)$
 \end{lstlisting}
 
+Of the rules mined, \textcolor{red}{97}\% (WN18RR) and \textcolor{red}{76}\% (family KG) originate from KGs extended using TransE. The large number of rules produced marginalize those mined using other embedding models. Due to this and the fact that the trained TransE model has poor relational embeddings, we will include rules mined from KGs extended with TransE only when examining embedding models, but not when looking at entity selection methods or rank cutoff values.
+
+
 
 
 
 
 \section{Effect of parameters}
 In this section we will examine the effects of each of the three main parameters in the KG extension process. Note that when looking at rules with a certain parameter the sets of rules will be a concatenation of all cases where that parameter was used. For example, if we look at the rules mined with ComplEx as the KG embedding model, then this group will contain rules mined from 12 different KG extensions because we need to look at all the combinations of entity selection methods and rank cutoff values ($4\times3=12$). This is differentiated from the case where we look at rules mined from a single extended KG, which we will do in \cref{Rule_comparison}.
+
 \begin{figure}[htbp]
 \centering
 \begin{subfigure}{1\textwidth}
@@ -104,7 +109,7 @@ In this section we will examine the effects of each of the three main parameters
   \caption{WN18RR KG}
   \label{rule_dist_models_hbar_wn18rr}
 \end{subfigure}
-\caption[Rules and their types over KG embedding models]{Distribution of rules over KG embedding models, not counting duplicate rules that were mined from multiple KGs. Note that the bar for TransE extends far beyond the chart, so the unusually high number of different rules mined from TransE extensions is not properly shown here.}
+\caption[Rules and their types over KG embedding models]{Distribution of rules over KG embedding models, not counting duplicate rules that were mined from multiple KGs. Note that the bar for TransE extends far beyond the chart, so the unusually high number of different rules mined from TransE extensions is not properly shown here. The single original rule not found by DistMult in the family KG is $child(x, y) \Rightarrow mother(y,x)$. This rule has the second lowest PCA confidence of all the original family KG rules.}
 \label{rule_dist_models_hbar}
 \end{figure}
 
@@ -141,9 +146,9 @@ At the first glance of the boxplots in figure \ref{fig:PCA_models_boxplot} it ma
 \label{fig:PCA_models_boxplot}
 \end{figure}
 
-By looking at figures \ref{rule_dist_models_hbar_family} and \ref{rule_dist_models_hbar_wn18rr} it becomes apparent that there in fact fewer different rules mined from these extensions. In the WN18RR case no new rules were found, and a single original rule was also never mined. The omitted rule,
-\[derivationally\_related\_form(x, y)   \Rightarrow derivationally\_related\_form(y, x)\]
-has the lowest PCA confidence out of all the original rules. Since there already was little support in the KG for the rule, the addition of noise may have obscured too much evidence for the relation \textcolor{red}{\texttt{derivationally\_related\_form}} being symmetric for the algorithm to consider the rule significant. See table \ref{original_rules_found_by_baseline_WN18RR} to see all rules mined from the original WN18RR KG, sorted by their PCA confidence.
+By looking at figure \ref{rule_dist_models_hbar} it becomes apparent that there in fact fewer different rules mined from the RandomBaseline extensions. In the WN18RR case no new rules were found, and a single original rule was also never mined. The omitted rule,
+\[ has\_part(x, z) \wedge hypernym(y, z) \Rightarrow has\_part(x, y)\]
+has the lowest PCA confidence out of all the original rules. Since there already was little support in the KG for the rule, the addition of noise may have obscured too much evidence for the algorithm to consider the rule significant. See table \ref{original_rules_found_by_baseline_WN18RR} to see all rules mined from the original WN18RR KG, sorted by their PCA confidence.
 % check RandomBaseline_original_rules.ipynb to see if there is a new rule.
 
 \begin{table}[htp]
@@ -179,9 +184,7 @@ The family KG produced similar results, where AMIE3 failed to find 9 original ru
 As presented in \cref{TransE_sucks}, AMIE3 mines a great deal more rules from KGs extended with TransE. Due to the low mean PCA confidence for these rules (0.038 for WN18RR and 0.089 for the family KG) it is clear that there is little support for the rules in the original KGs. If one however evaluates the TransE rules on the \textit{extended} KGs they were mined from, the PCA confidence increases substantially, as seen in figures \ref{fig:_PCA_models_wn18rr_boxplot_sub} and \ref{fig:_PCA_models_family_boxplot_sub}. So even though most of these rules have little support from the original KGs, it was no mistake that AMIE3 mined so many rules from the TransE-extended KGs.
 
 
-DistMult and ComplEx are closely related embedding models as they have similar scoring functions (the scoring function of ComplEx corresponds to that of DistMult but with real embeddings), and perform similarly on benchmark datasets \cite{complEx}. As mentioned in \cref{TransE_peaked_in_2013}, DistMult is not able to represent asymmetric relations. Although AMIE3 can only mine Horn rules, thereby a rule defining the asymmetry of a relation cannot be mined, this may still affect the the quality of the embedding and thus the KG extension. From the results it seems that ComplEx is a somewhat stricter model, in the sense that it ranks candidate triples lower against corrupted triples than DistMult does. This is evidenced by the fact that the KG extension sizes are larger for DistMult than for ComplEx; DistMult is admitting more candidates. For example, of the candidates generated with the entity selection method "probabilistic" from the WN18RR KG, DistMult assigned \textcolor{red}{1468} candidates rank 1 while ComplEx only did this for \textcolor{red}{866} candidates. As a result, more rules are mined from DistMult-extended KGs.
-
-The combined set of rules found from ComplEx-extended KGs include all the original rules, both for WN18RR and the family KG.  This is almost also the case for DistMult, but it fails to find the original rule $child(x, y) \Rightarrow mother(y,x)$ in the family KG. This rule has the second lowest PCA confidence of all the original family KG rules.
+DistMult and ComplEx are closely related embedding models as they have similar scoring functions (the scoring function of ComplEx corresponds to that of DistMult but with real embeddings), and perform similarly on benchmark datasets \cite{complEx}. As mentioned in \cref{TransE_peaked_in_2013}, DistMult is not able to represent asymmetric relations. Although AMIE3 can only mine Horn rules, thereby a rule defining the asymmetry of a relation cannot be mined, this may still affect the the quality of the embedding and thus the KG extension. From the results it seems that ComplEx is a somewhat stricter model, in the sense that it ranks candidate triples lower against corrupted triples than DistMult does. This is evidenced by the fact that the KG extension sizes are larger for DistMult than for ComplEx; DistMult is admitting more candidates. For example, of the candidates generated with the entity selection method "probabilistic" from the WN18RR KG, DistMult assigned \textcolor{red}{1468} candidates rank 1 while ComplEx only did this for \textcolor{red}{866} candidates. As a result, more rules are mined from DistMult-extended KGs. 
 
 \newpage
 \subsection{Effect of entity selection method}
