@@ -1,4 +1,149 @@
+\chapter{Original rules}
+\begin{longtable}{lrl}
+\toprule
+                                                                                                      Rule &  PCA Conf. &  Found \\
+\midrule
+                                               has\_part(x, z) $\wedge$ hypernym(y, z)   $\Rightarrow$ has\_part(x, y) &           0.104 &                    False \\
+DRF(x, z) $\wedge$ SDT(z, y)   $\Rightarrow$ SDT(x, y) &           0.493 &                     True \\
+DRF(z, x) $\wedge$ SDT(z, y)   $\Rightarrow$ SDT(x, y) &           0.493 &                     True \\
+                                      has\_part(x, z) $\wedge$ IH(y, z)   $\Rightarrow$ has\_part(x, y) &           0.533 &                     True \\
+                   hypernym(z, x) $\wedge$ SDT(z, y)   $\Rightarrow$ SDT(x, y) &           0.727 &                     True \\
+                   has\_part(z, x) $\wedge$ SDT(z, y)   $\Rightarrow$ SDT(x, y) &           0.772 &                     True \\
+                   has\_part(x, z) $\wedge$ SDT(z, y)   $\Rightarrow$ SDT(x, y) &           0.810 &                     True \\
+                   hypernym(x, z) $\wedge$ SDT(z, y)   $\Rightarrow$ SDT(x, y) &           0.829 &                     True \\
+          IH(x, z) $\wedge$ SDT(z, y)   $\Rightarrow$ SDT(x, y) &           0.887 &                     True \\
+                            DRF(y, x)   $\Rightarrow$ DRF(x, y) &           1.000 &                     True \\
+\bottomrule
+\caption[Original rules listed WN18RR KG]{All rules mined with AMIE3 from the original WN18RR KG, sorted by their calculated PCA confidence in ascending order. The rightmost column indicates whether this rule was found in at least one of the KG extensions made with the RandomBaseline KGE. As the table shows, the rule not found after extending the KG in such a way is that with lowest PCA confidence. \textbf{DRF} = \textit{derivationally\_related\_form}, \textbf{IH} = \textit{instance\_hypernym} and \textbf{SDT} = \textit{synset\_domain\_topic of}.}
+\label{original_rules_found_by_baseline_WN18RR}
+\end{longtable}
+
+TODO: clean up rules
+
+\begin{longtable}{lrl}
+\toprule
+                                                    Rule &  PCA Confidence &  Found \\
+\midrule
+?c  relative  ?b  ?a  relative  ?c   $\Rightarrow$ ?a  relative  ?b &           0.100 &                    False \\
+   ?a  father  ?c  ?c  sibling  ?b   $\Rightarrow$ ?a  relative  ?b &           0.101 &                    False \\
+  ?c  mother  ?a  ?b  relative  ?c   $\Rightarrow$ ?a  relative  ?b &           0.101 &                    False \\
+     ?a  child  ?c  ?c  spouse  ?b   $\Rightarrow$ ?a  relative  ?b &           0.102 &                    False \\
+     ?a  child  ?c  ?b  spouse  ?c   $\Rightarrow$ ?a  relative  ?b &           0.102 &                    False \\
+  ?a  mother  ?c  ?b  relative  ?c   $\Rightarrow$ ?a  relative  ?b &           0.104 &                    False \\
+    ?c  father  ?b  ?a  father  ?c   $\Rightarrow$ ?a  relative  ?b &           0.109 &                    False \\
+ ?b  relative  ?c  ?a  sibling  ?c   $\Rightarrow$ ?a  relative  ?b &           0.120 &                     True \\
+ ?b  relative  ?c  ?c  sibling  ?a   $\Rightarrow$ ?a  relative  ?b &           0.120 &                     True \\
+    ?c  father  ?a  ?c  spouse  ?b   $\Rightarrow$ ?a  relative  ?b &           0.122 &                    False \\
+   ?a  child  ?c  ?c  relative  ?b   $\Rightarrow$ ?a  relative  ?b &           0.124 &                     True \\
+    ?c  father  ?a  ?b  spouse  ?c   $\Rightarrow$ ?a  relative  ?b &           0.124 &                    False \\
+ ?c  relative  ?b  ?c  sibling  ?a   $\Rightarrow$ ?a  relative  ?b &           0.127 &                     True \\
+ ?c  relative  ?b  ?a  sibling  ?c   $\Rightarrow$ ?a  relative  ?b &           0.128 &                     True \\
+      ?c  child  ?b  ?a  child  ?c   $\Rightarrow$ ?a  relative  ?b &           0.131 &                     True \\
+  ?c  father  ?a  ?c  relative  ?b   $\Rightarrow$ ?a  relative  ?b &           0.141 &                     True \\
+   ?a  child  ?c  ?b  relative  ?c   $\Rightarrow$ ?a  relative  ?b &           0.148 &                     True \\
+     ?a  child  ?c  ?b  father  ?c   $\Rightarrow$ ?a  relative  ?b &           0.154 &                     True \\
+     ?c  child  ?b  ?c  father  ?a   $\Rightarrow$ ?a  relative  ?b &           0.167 &                     True \\
+  ?c  father  ?a  ?b  relative  ?c   $\Rightarrow$ ?a  relative  ?b &           0.179 &                     True \\
+    ?c  father  ?a  ?b  father  ?c   $\Rightarrow$ ?a  relative  ?b &           0.196 &                     True \\
+  ?c  relative  ?a  ?c  spouse  ?b   $\Rightarrow$ ?a  relative  ?b &           0.206 &                     True \\
+  ?c  relative  ?a  ?b  spouse  ?c   $\Rightarrow$ ?a  relative  ?b &           0.206 &                     True \\
+  ?c  mother  ?b  ?c  relative  ?a   $\Rightarrow$ ?a  relative  ?b &           0.224 &                     True \\
+  ?b  mother  ?c  ?c  relative  ?a   $\Rightarrow$ ?a  relative  ?b &           0.242 &                     True \\
+   ?b  child  ?c  ?c  relative  ?a   $\Rightarrow$ ?a  relative  ?b &           0.273 &                     True \\
+   ?c  child  ?b  ?c  relative  ?a   $\Rightarrow$ ?a  relative  ?b &           0.275 &                     True \\
+  ?c  mother  ?b  ?a  relative  ?c   $\Rightarrow$ ?a  relative  ?b &           0.284 &                     True \\
+  ?b  father  ?c  ?c  relative  ?a   $\Rightarrow$ ?a  relative  ?b &           0.294 &                     True \\
+  ?c  father  ?b  ?c  relative  ?a   $\Rightarrow$ ?a  relative  ?b &           0.301 &                     True \\
+  ?a  relative  ?c  ?b  spouse  ?c   $\Rightarrow$ ?a  relative  ?b &           0.305 &                     True \\
+  ?a  relative  ?c  ?c  spouse  ?b   $\Rightarrow$ ?a  relative  ?b &           0.305 &                     True \\
+   ?b  child  ?c  ?a  relative  ?c   $\Rightarrow$ ?a  relative  ?b &           0.343 &                     True \\
+ ?c  relative  ?a  ?b  sibling  ?c   $\Rightarrow$ ?a  relative  ?b &           0.349 &                     True \\
+       ?c  child  ?a  ?c  spouse  ?b   $\Rightarrow$ ?a  father  ?b &           0.350 &                     True \\
+  ?b  mother  ?c  ?a  relative  ?c   $\Rightarrow$ ?a  relative  ?b &           0.350 &                     True \\
+ ?c  relative  ?a  ?c  sibling  ?b   $\Rightarrow$ ?a  relative  ?b &           0.351 &                     True \\
+       ?c  child  ?a  ?b  spouse  ?c   $\Rightarrow$ ?a  father  ?b &           0.351 &                     True \\
+   ?c  child  ?b  ?a  relative  ?c   $\Rightarrow$ ?a  relative  ?b &           0.364 &                     True \\
+  ?c  father  ?b  ?a  relative  ?c   $\Rightarrow$ ?a  relative  ?b &           0.372 &                     True \\
+  ?b  father  ?c  ?a  relative  ?c   $\Rightarrow$ ?a  relative  ?b &           0.378 &                     True \\
+       ?c  child  ?a  ?b  spouse  ?c   $\Rightarrow$ ?a  mother  ?b &           0.382 &                     True \\
+       ?c  child  ?a  ?c  spouse  ?b   $\Rightarrow$ ?a  mother  ?b &           0.386 &                     True \\
+      ?b  child  ?c  ?c  sibling  ?a   $\Rightarrow$ ?a  mother  ?b &           0.422 &                     True \\
+      ?b  child  ?c  ?a  sibling  ?c   $\Rightarrow$ ?a  mother  ?b &           0.423 &                     True \\
+       ?b  child  ?c  ?c  father  ?a   $\Rightarrow$ ?a  spouse  ?b &           0.470 &                     True \\
+       ?a  child  ?c  ?c  father  ?b   $\Rightarrow$ ?a  spouse  ?b &           0.472 &                     True \\
+        ?a  child  ?c  ?b  child  ?c   $\Rightarrow$ ?a  spouse  ?b &           0.472 &                     True \\
+       ?a  child  ?c  ?c  mother  ?b   $\Rightarrow$ ?a  spouse  ?b &           0.478 &                     True \\
+       ?b  child  ?c  ?c  mother  ?a   $\Rightarrow$ ?a  spouse  ?b &           0.481 &                     True \\
+ ?a  relative  ?c  ?c  sibling  ?b   $\Rightarrow$ ?a  relative  ?b &           0.483 &                     True \\
+ ?a  relative  ?c  ?b  sibling  ?c   $\Rightarrow$ ?a  relative  ?b &           0.485 &                     True \\
+                       ?b  child  ?a   $\Rightarrow$ ?a  mother  ?b &           0.535 &                     True \\
+   ?c  sibling  ?a  ?c  sibling  ?b   $\Rightarrow$ ?a  sibling  ?b &           0.565 &                     True \\
+      ?b  child  ?c  ?c  sibling  ?a   $\Rightarrow$ ?a  father  ?b &           0.584 &                     True \\
+      ?b  child  ?c  ?a  sibling  ?c   $\Rightarrow$ ?a  father  ?b &           0.584 &                     True \\
+   ?c  sibling  ?a  ?b  sibling  ?c   $\Rightarrow$ ?a  sibling  ?b &           0.585 &                     True \\
+   ?c  sibling  ?b  ?a  sibling  ?c   $\Rightarrow$ ?a  sibling  ?b &           0.588 &                     True \\
+       ?b  father  ?c  ?a  spouse  ?c   $\Rightarrow$ ?a  child  ?b &           0.588 &                     True \\
+       ?b  father  ?c  ?c  spouse  ?a   $\Rightarrow$ ?a  child  ?b &           0.589 &                     True \\
+   ?a  sibling  ?c  ?b  sibling  ?c   $\Rightarrow$ ?a  sibling  ?b &           0.590 &                     True \\
+     ?a  father  ?c  ?b  father  ?c   $\Rightarrow$ ?a  sibling  ?b &           0.659 &                     True \\
+      ?c  child  ?b  ?a  father  ?c   $\Rightarrow$ ?a  sibling  ?b &           0.662 &                     True \\
+       ?c  child  ?a  ?c  child  ?b   $\Rightarrow$ ?a  sibling  ?b &           0.665 &                     True \\
+      ?c  child  ?a  ?b  father  ?c   $\Rightarrow$ ?a  sibling  ?b &           0.668 &                     True \\
+        ?c  child  ?b  ?c  spouse  ?a   $\Rightarrow$ ?a  child  ?b &           0.688 &                     True \\
+        ?c  child  ?b  ?a  spouse  ?c   $\Rightarrow$ ?a  child  ?b &           0.689 &                     True \\
+      ?a  father  ?c  ?b  spouse  ?c   $\Rightarrow$ ?a  mother  ?b &           0.702 &                     True \\
+      ?c  mother  ?a  ?c  sibling  ?b   $\Rightarrow$ ?a  child  ?b &           0.703 &                     True \\
+      ?c  mother  ?a  ?b  sibling  ?c   $\Rightarrow$ ?a  child  ?b &           0.704 &                     True \\
+     ?a  mother  ?c  ?b  mother  ?c   $\Rightarrow$ ?a  sibling  ?b &           0.707 &                     True \\
+      ?a  father  ?c  ?c  spouse  ?b   $\Rightarrow$ ?a  mother  ?b &           0.709 &                     True \\
+      ?c  child  ?b  ?a  mother  ?c   $\Rightarrow$ ?a  sibling  ?b &           0.709 &                     True \\
+      ?c  child  ?a  ?b  mother  ?c   $\Rightarrow$ ?a  sibling  ?b &           0.710 &                     True \\
+                       ?b  child  ?a   $\Rightarrow$ ?a  father  ?b &           0.770 &                     True \\
+     ?c  mother  ?b  ?c  sibling  ?a   $\Rightarrow$ ?a  mother  ?b &           0.787 &                     True \\
+     ?c  mother  ?b  ?a  sibling  ?c   $\Rightarrow$ ?a  mother  ?b &           0.788 &                     True \\
+       ?b  mother  ?c  ?a  spouse  ?c   $\Rightarrow$ ?a  child  ?b &           0.838 &                     True \\
+       ?b  mother  ?c  ?c  spouse  ?a   $\Rightarrow$ ?a  child  ?b &           0.840 &                     True \\
+                  ?b  relative  ?a   $\Rightarrow$ ?a  relative  ?b &           0.846 &                     True \\
+       ?a  child  ?c  ?c  sibling  ?b   $\Rightarrow$ ?a  child  ?b &           0.851 &                     True \\
+       ?a  child  ?c  ?b  sibling  ?c   $\Rightarrow$ ?a  child  ?b &           0.851 &                     True \\
+      ?a  mother  ?c  ?b  spouse  ?c   $\Rightarrow$ ?a  father  ?b &           0.868 &                     True \\
+      ?a  mother  ?c  ?c  spouse  ?b   $\Rightarrow$ ?a  father  ?b &           0.873 &                     True \\
+      ?c  father  ?a  ?c  mother  ?b   $\Rightarrow$ ?a  spouse  ?b &           0.953 &                     True \\
+      ?c  father  ?a  ?c  sibling  ?b   $\Rightarrow$ ?a  child  ?b &           0.954 &                     True \\
+      ?c  father  ?a  ?b  sibling  ?c   $\Rightarrow$ ?a  child  ?b &           0.955 &                     True \\
+     ?c  father  ?b  ?a  sibling  ?c   $\Rightarrow$ ?a  father  ?b &           0.961 &                     True \\
+     ?c  father  ?b  ?c  sibling  ?a   $\Rightarrow$ ?a  father  ?b &           0.961 &                     True \\
+      ?c  father  ?b  ?c  mother  ?a   $\Rightarrow$ ?a  spouse  ?b &           0.968 &                     True \\
+                    ?b  sibling  ?a   $\Rightarrow$ ?a  sibling  ?b &           0.990 &                     True \\
+                       ?b  mother  ?a   $\Rightarrow$ ?a  child  ?b &           0.992 &                     True \\
+                      ?b  spouse  ?a   $\Rightarrow$ ?a  spouse  ?b &           0.992 &                     True \\
+                       ?b  father  ?a   $\Rightarrow$ ?a  child  ?b &           0.998 &                     True \\
+\bottomrule
+\caption[Original rules listed family KG]{All rules mined with AMIE3 from the original family KG, sorted by their calculated PCA confidence in ascending order. The rightmost column indicates whether this rule was found in at least one of the KG extensions made with the RandomBaseline KGE. As the table shows, the rules not found after extending the KG in such a way were among those with lowest PCA confidence.}
+\label{original_rules_found_by_baseline_family}
+\end{longtable}
+
+
 \chapter{Results}
+
+\begin{figure}[htbp]
+\centering
+    \centering
+    \includesvg[inkscapelatex=false,width=0.6\textwidth,keepaspectratio]{figures/appendix/all_sets.svg}
+    \caption[Dist. of all sets of mined rules.]{Distribution of all mined rule sets. Each rule set is labeled with the entity selection strategy, embedding model and rank cutoff that was used for that particular KG extension. As mentioned in section \ref{TransE_sucks} can see that when the KGs are extended using TransE the number of new rules that are mined increases drastically.}
+    \label{all_sets}
+\end{figure}
+
+
+\begin{figure}[htbp]
+\centering
+    \centering
+    \includesvg[inkscapelatex=false,width=0.75\textwidth,keepaspectratio]{figures/appendix/all_sets_w_out_TransE.svg}
+    \caption[Dist. of all sets of mined rules, excluding TransE.]{Distribution of all mined rule sets, excluding the sets mined from KGs extended using TransE. Each rule set is labeled with the entity selection strategy, embedding model and rank cutoff that was used for that particular KG extension. We can observe that no new rules are mined when the RandomBaseline was used to extend the KGs.}
+    \label{all_sets_w_out_TransE}
+\end{figure}
+
+
 \begin{longtable}{llllll}
 \textbf{child} & \textbf{father} & \textbf{mother} & \textbf{relative} & \textbf{sibling} & \textbf{spouse} \\ \hline
 0.009  & -0.010 & -0.010 & -0.001   & 0.000   & 0.000  \\
@@ -51,7 +196,7 @@
 0.002  & -0.002 & -0.002 & -0.001   & 0.000   & 0.000  \\
 0.003  & -0.003 & -0.002 & -0.001   & 0.000   & 0.001  \\
 0.007  & -0.007 & -0.007 & 0.001    & 0.000   & 0.000  \\ \hline
-\caption{TransE's 50-dimensional embedding vectors for the different relations in the family dataset, rounded to the third decimal. This table shows that the vectors for all relations are close to the zero-vector.}
+\caption[TransE embedding vector family KG]{TransE's 50-dimensional embedding vectors for the different relations in the family dataset, rounded to the third decimal. This table shows that the vectors for all relations are close to the zero-vector.}
 \label{TransE_embedding_family}
 \end{longtable}
 
@@ -108,152 +253,9 @@
 0.000        & 0.005              & -0.002            & -0.092      & -0.045      & -0.006       \\
 0.000        & 0.001              & 0.011             & -0.058      & -0.005      & -0.023       \\
 0.000        & 0.004              & -0.013            & -0.041      & 0.021       & -0.046      \\ \hline
-\caption{TransE's 50-dimensional embedding vectors for the different relations in the WN18RR dataset, rounded to the third decimal. This table shows that the vectors for all relations are close to the zero-vector. \textbf{DRF} = \textit{derivationally\_related\_form}, \textbf{IH} = \textit{instance\_hypernym}, \textbf{MM} = \textit{member\_meronym} and \textbf{SDT} = \textit{synset\_domain\_topic of}.}
+\caption[TransE embedding vector WN18RR KG]{TransE's 50-dimensional embedding vectors for the different relations in the WN18RR dataset, rounded to the third decimal. This table shows that the vectors for all relations are close to the zero-vector. \textbf{DRF} = \textit{derivationally\_related\_form}, \textbf{IH} = \textit{instance\_hypernym}, \textbf{MM} = \textit{member\_meronym} and \textbf{SDT} = \textit{synset\_domain\_topic of}.}
 \label{TransE_embedding_WN18RR}
 \end{longtable}
-
-\begin{longtable}{lrl}
-\toprule
-                                                                                                      Rule &  PCA Conf. &  Found \\
-\midrule
-                                               has\_part(x, z) $\wedge$ hypernym(y, z)   $\Rightarrow$ has\_part(x, y) &           0.104 &                    False \\
-DRF(x, z) $\wedge$ SDT(z, y)   $\Rightarrow$ SDT(x, y) &           0.493 &                     True \\
-DRF(z, x) $\wedge$ SDT(z, y)   $\Rightarrow$ SDT(x, y) &           0.493 &                     True \\
-                                      has\_part(x, z) $\wedge$ IH(y, z)   $\Rightarrow$ has\_part(x, y) &           0.533 &                     True \\
-                   hypernym(z, x) $\wedge$ SDT(z, y)   $\Rightarrow$ SDT(x, y) &           0.727 &                     True \\
-                   has\_part(z, x) $\wedge$ SDT(z, y)   $\Rightarrow$ SDT(x, y) &           0.772 &                     True \\
-                   has\_part(x, z) $\wedge$ SDT(z, y)   $\Rightarrow$ SDT(x, y) &           0.810 &                     True \\
-                   hypernym(x, z) $\wedge$ SDT(z, y)   $\Rightarrow$ SDT(x, y) &           0.829 &                     True \\
-          IH(x, z) $\wedge$ SDT(z, y)   $\Rightarrow$ SDT(x, y) &           0.887 &                     True \\
-                            DRF(y, x)   $\Rightarrow$ DRF(x, y) &           1.000 &                     True \\
-\bottomrule
-\caption{All rules mined with AMIE3 from the original WN18RR KG, sorted by their calculated PCA confidence in ascending order. The rightmost column indicates whether this rule was found in at least one of the KG extensions made with the RandomBaseline KGE. As the table shows, the rule not found after extending the KG in such a way is that with lowest PCA confidence. \textbf{DRF} = \textit{derivationally\_related\_form}, \textbf{IH} = \textit{instance\_hypernym} and \textbf{SDT} = \textit{synset\_domain\_topic of}.}
-\label{original_rules_found_by_baseline_WN18RR}
-\end{longtable}
-
-TODO: clean up rules
-
-\begin{longtable}{lrl}
-\toprule
-                                                    Rule &  PCA Confidence &  Found\_by\_RandomBaseline \\
-\midrule
-?c  relative  ?b  ?a  relative  ?c   => ?a  relative  ?b &           0.100 &                    False \\
-   ?a  father  ?c  ?c  sibling  ?b   => ?a  relative  ?b &           0.101 &                    False \\
-  ?c  mother  ?a  ?b  relative  ?c   => ?a  relative  ?b &           0.101 &                    False \\
-     ?a  child  ?c  ?c  spouse  ?b   => ?a  relative  ?b &           0.102 &                    False \\
-     ?a  child  ?c  ?b  spouse  ?c   => ?a  relative  ?b &           0.102 &                    False \\
-  ?a  mother  ?c  ?b  relative  ?c   => ?a  relative  ?b &           0.104 &                    False \\
-    ?c  father  ?b  ?a  father  ?c   => ?a  relative  ?b &           0.109 &                    False \\
- ?b  relative  ?c  ?a  sibling  ?c   => ?a  relative  ?b &           0.120 &                     True \\
- ?b  relative  ?c  ?c  sibling  ?a   => ?a  relative  ?b &           0.120 &                     True \\
-    ?c  father  ?a  ?c  spouse  ?b   => ?a  relative  ?b &           0.122 &                    False \\
-   ?a  child  ?c  ?c  relative  ?b   => ?a  relative  ?b &           0.124 &                     True \\
-    ?c  father  ?a  ?b  spouse  ?c   => ?a  relative  ?b &           0.124 &                    False \\
- ?c  relative  ?b  ?c  sibling  ?a   => ?a  relative  ?b &           0.127 &                     True \\
- ?c  relative  ?b  ?a  sibling  ?c   => ?a  relative  ?b &           0.128 &                     True \\
-      ?c  child  ?b  ?a  child  ?c   => ?a  relative  ?b &           0.131 &                     True \\
-  ?c  father  ?a  ?c  relative  ?b   => ?a  relative  ?b &           0.141 &                     True \\
-   ?a  child  ?c  ?b  relative  ?c   => ?a  relative  ?b &           0.148 &                     True \\
-     ?a  child  ?c  ?b  father  ?c   => ?a  relative  ?b &           0.154 &                     True \\
-     ?c  child  ?b  ?c  father  ?a   => ?a  relative  ?b &           0.167 &                     True \\
-  ?c  father  ?a  ?b  relative  ?c   => ?a  relative  ?b &           0.179 &                     True \\
-    ?c  father  ?a  ?b  father  ?c   => ?a  relative  ?b &           0.196 &                     True \\
-  ?c  relative  ?a  ?c  spouse  ?b   => ?a  relative  ?b &           0.206 &                     True \\
-  ?c  relative  ?a  ?b  spouse  ?c   => ?a  relative  ?b &           0.206 &                     True \\
-  ?c  mother  ?b  ?c  relative  ?a   => ?a  relative  ?b &           0.224 &                     True \\
-  ?b  mother  ?c  ?c  relative  ?a   => ?a  relative  ?b &           0.242 &                     True \\
-   ?b  child  ?c  ?c  relative  ?a   => ?a  relative  ?b &           0.273 &                     True \\
-   ?c  child  ?b  ?c  relative  ?a   => ?a  relative  ?b &           0.275 &                     True \\
-  ?c  mother  ?b  ?a  relative  ?c   => ?a  relative  ?b &           0.284 &                     True \\
-  ?b  father  ?c  ?c  relative  ?a   => ?a  relative  ?b &           0.294 &                     True \\
-  ?c  father  ?b  ?c  relative  ?a   => ?a  relative  ?b &           0.301 &                     True \\
-  ?a  relative  ?c  ?b  spouse  ?c   => ?a  relative  ?b &           0.305 &                     True \\
-  ?a  relative  ?c  ?c  spouse  ?b   => ?a  relative  ?b &           0.305 &                     True \\
-   ?b  child  ?c  ?a  relative  ?c   => ?a  relative  ?b &           0.343 &                     True \\
- ?c  relative  ?a  ?b  sibling  ?c   => ?a  relative  ?b &           0.349 &                     True \\
-       ?c  child  ?a  ?c  spouse  ?b   => ?a  father  ?b &           0.350 &                     True \\
-  ?b  mother  ?c  ?a  relative  ?c   => ?a  relative  ?b &           0.350 &                     True \\
- ?c  relative  ?a  ?c  sibling  ?b   => ?a  relative  ?b &           0.351 &                     True \\
-       ?c  child  ?a  ?b  spouse  ?c   => ?a  father  ?b &           0.351 &                     True \\
-   ?c  child  ?b  ?a  relative  ?c   => ?a  relative  ?b &           0.364 &                     True \\
-  ?c  father  ?b  ?a  relative  ?c   => ?a  relative  ?b &           0.372 &                     True \\
-  ?b  father  ?c  ?a  relative  ?c   => ?a  relative  ?b &           0.378 &                     True \\
-       ?c  child  ?a  ?b  spouse  ?c   => ?a  mother  ?b &           0.382 &                     True \\
-       ?c  child  ?a  ?c  spouse  ?b   => ?a  mother  ?b &           0.386 &                     True \\
-      ?b  child  ?c  ?c  sibling  ?a   => ?a  mother  ?b &           0.422 &                     True \\
-      ?b  child  ?c  ?a  sibling  ?c   => ?a  mother  ?b &           0.423 &                     True \\
-       ?b  child  ?c  ?c  father  ?a   => ?a  spouse  ?b &           0.470 &                     True \\
-       ?a  child  ?c  ?c  father  ?b   => ?a  spouse  ?b &           0.472 &                     True \\
-        ?a  child  ?c  ?b  child  ?c   => ?a  spouse  ?b &           0.472 &                     True \\
-       ?a  child  ?c  ?c  mother  ?b   => ?a  spouse  ?b &           0.478 &                     True \\
-       ?b  child  ?c  ?c  mother  ?a   => ?a  spouse  ?b &           0.481 &                     True \\
- ?a  relative  ?c  ?c  sibling  ?b   => ?a  relative  ?b &           0.483 &                     True \\
- ?a  relative  ?c  ?b  sibling  ?c   => ?a  relative  ?b &           0.485 &                     True \\
-                       ?b  child  ?a   => ?a  mother  ?b &           0.535 &                     True \\
-   ?c  sibling  ?a  ?c  sibling  ?b   => ?a  sibling  ?b &           0.565 &                     True \\
-      ?b  child  ?c  ?c  sibling  ?a   => ?a  father  ?b &           0.584 &                     True \\
-      ?b  child  ?c  ?a  sibling  ?c   => ?a  father  ?b &           0.584 &                     True \\
-   ?c  sibling  ?a  ?b  sibling  ?c   => ?a  sibling  ?b &           0.585 &                     True \\
-   ?c  sibling  ?b  ?a  sibling  ?c   => ?a  sibling  ?b &           0.588 &                     True \\
-       ?b  father  ?c  ?a  spouse  ?c   => ?a  child  ?b &           0.588 &                     True \\
-       ?b  father  ?c  ?c  spouse  ?a   => ?a  child  ?b &           0.589 &                     True \\
-   ?a  sibling  ?c  ?b  sibling  ?c   => ?a  sibling  ?b &           0.590 &                     True \\
-     ?a  father  ?c  ?b  father  ?c   => ?a  sibling  ?b &           0.659 &                     True \\
-      ?c  child  ?b  ?a  father  ?c   => ?a  sibling  ?b &           0.662 &                     True \\
-       ?c  child  ?a  ?c  child  ?b   => ?a  sibling  ?b &           0.665 &                     True \\
-      ?c  child  ?a  ?b  father  ?c   => ?a  sibling  ?b &           0.668 &                     True \\
-        ?c  child  ?b  ?c  spouse  ?a   => ?a  child  ?b &           0.688 &                     True \\
-        ?c  child  ?b  ?a  spouse  ?c   => ?a  child  ?b &           0.689 &                     True \\
-      ?a  father  ?c  ?b  spouse  ?c   => ?a  mother  ?b &           0.702 &                     True \\
-      ?c  mother  ?a  ?c  sibling  ?b   => ?a  child  ?b &           0.703 &                     True \\
-      ?c  mother  ?a  ?b  sibling  ?c   => ?a  child  ?b &           0.704 &                     True \\
-     ?a  mother  ?c  ?b  mother  ?c   => ?a  sibling  ?b &           0.707 &                     True \\
-      ?a  father  ?c  ?c  spouse  ?b   => ?a  mother  ?b &           0.709 &                     True \\
-      ?c  child  ?b  ?a  mother  ?c   => ?a  sibling  ?b &           0.709 &                     True \\
-      ?c  child  ?a  ?b  mother  ?c   => ?a  sibling  ?b &           0.710 &                     True \\
-                       ?b  child  ?a   => ?a  father  ?b &           0.770 &                     True \\
-     ?c  mother  ?b  ?c  sibling  ?a   => ?a  mother  ?b &           0.787 &                     True \\
-     ?c  mother  ?b  ?a  sibling  ?c   => ?a  mother  ?b &           0.788 &                     True \\
-       ?b  mother  ?c  ?a  spouse  ?c   => ?a  child  ?b &           0.838 &                     True \\
-       ?b  mother  ?c  ?c  spouse  ?a   => ?a  child  ?b &           0.840 &                     True \\
-                  ?b  relative  ?a   => ?a  relative  ?b &           0.846 &                     True \\
-       ?a  child  ?c  ?c  sibling  ?b   => ?a  child  ?b &           0.851 &                     True \\
-       ?a  child  ?c  ?b  sibling  ?c   => ?a  child  ?b &           0.851 &                     True \\
-      ?a  mother  ?c  ?b  spouse  ?c   => ?a  father  ?b &           0.868 &                     True \\
-      ?a  mother  ?c  ?c  spouse  ?b   => ?a  father  ?b &           0.873 &                     True \\
-      ?c  father  ?a  ?c  mother  ?b   => ?a  spouse  ?b &           0.953 &                     True \\
-      ?c  father  ?a  ?c  sibling  ?b   => ?a  child  ?b &           0.954 &                     True \\
-      ?c  father  ?a  ?b  sibling  ?c   => ?a  child  ?b &           0.955 &                     True \\
-     ?c  father  ?b  ?a  sibling  ?c   => ?a  father  ?b &           0.961 &                     True \\
-     ?c  father  ?b  ?c  sibling  ?a   => ?a  father  ?b &           0.961 &                     True \\
-      ?c  father  ?b  ?c  mother  ?a   => ?a  spouse  ?b &           0.968 &                     True \\
-                    ?b  sibling  ?a   => ?a  sibling  ?b &           0.990 &                     True \\
-                       ?b  mother  ?a   => ?a  child  ?b &           0.992 &                     True \\
-                      ?b  spouse  ?a   => ?a  spouse  ?b &           0.992 &                     True \\
-                       ?b  father  ?a   => ?a  child  ?b &           0.998 &                     True \\
-\bottomrule
-\caption{All rules mined with AMIE3 from the original family KG, sorted by their calculated PCA confidence in ascending order. The rightmost column indicates whether this rule was found in at least one of the KG extensions made with the RandomBaseline KGE. As the table shows, the rules not found after extending the KG in such a way were among those with lowest PCA confidence.}
-\label{original_rules_found_by_baseline_family}
-\end{longtable}
-
-
-\begin{figure}[htbp]
-\centering
-    \centering
-    \includesvg[inkscapelatex=false,width=0.6\textwidth,keepaspectratio]{figures/appendix/all_sets.svg}
-    \caption[Dist. of all sets of mined rules.]{Distribution of all mined rule sets. Each rule set is labeled with the entity selection strategy, embedding model and rank cutoff that was used for that particular KG extension. As mentioned in section \ref{TransE_sucks} can see that when the KGs are extended using TransE the number of new rules that are mined increases drastically.}
-    \label{all_sets}
-\end{figure}
-
-
-\begin{figure}[htbp]
-\centering
-    \centering
-    \includesvg[inkscapelatex=false,width=0.75\textwidth,keepaspectratio]{figures/appendix/all_sets_w_out_TransE.svg}
-    \caption[Dist. of all sets of mined rules, excluding TransE.]{Distribution of all mined rule sets, excluding the sets mined from KGs extended using TransE. Each rule set is labeled with the entity selection strategy, embedding model and rank cutoff that was used for that particular KG extension. We can observe that no new rules are mined when the RandomBaseline was used to extend the KGs.}
-    \label{all_sets_w_out_TransE}
-\end{figure}
-
 
 \newpage
 \begin{longtable}{lrr}
