@@ -14,7 +14,7 @@ DRF(z, x) $\wedge$ SDT(z, y)   $\Rightarrow$ SDT(x, y) &           0.493 &      
           IH(x, z) $\wedge$ SDT(z, y)   $\Rightarrow$ SDT(x, y) &           0.887 &                     True \\
                             DRF(y, x)   $\Rightarrow$ DRF(x, y) &           1.000 &                     True \\
 \bottomrule
-\caption[Original rules listed WN18RR KG]{All rules mined with AMIE3 from the original WN18RR KG, sorted by their calculated PCA confidence in ascending order. The rightmost column indicates whether this rule was found in at least one of the KG extensions made with the RandomBaseline KGE. As the table shows, the rule not found after extending the KG in such a way is that with lowest PCA confidence. \textbf{DRF} = \textit{derivationally\_related\_form}, \textbf{IH} = \textit{instance\_hypernym} and \textbf{SDT} = \textit{synset\_domain\_topic of}.}
+\caption[Original rules listed WN18RR KG]{All rules mined with AMIE3 from the original WN18RR \gls{kg}, sorted by their calculated PCA confidence in ascending order. The rightmost column indicates whether this rule was found in at least one of the \gls{kg} extensions made with the RandomBaseline KGE. As the table shows, the rule not found after extending the \gls{kg} in such a way is that with lowest PCA confidence. \textbf{DRF} = \textit{derivationally\_related\_form}, \textbf{IH} = \textit{instance\_hypernym} and \textbf{SDT} = \textit{synset\_domain\_topic of}.}
 \label{original_rules_found_by_baseline_WN18RR}
 \end{longtable}
 
@@ -119,7 +119,7 @@ TODO: clean up rules
                       ?b  spouse  ?a   $\Rightarrow$ ?a  spouse  ?b &           0.992 &                     True \\
                        ?b  father  ?a   $\Rightarrow$ ?a  child  ?b &           0.998 &                     True \\
 \bottomrule
-\caption[Original rules listed family KG]{All rules mined with AMIE3 from the original family KG, sorted by their calculated PCA confidence in ascending order. The rightmost column indicates whether this rule was found in at least one of the KG extensions made with the RandomBaseline KGE. As the table shows, the rules not found after extending the KG in such a way were among those with lowest PCA confidence.}
+\caption[Original rules listed family KG]{All rules mined with AMIE3 from the original family \gls{kg}, sorted by their calculated PCA confidence in ascending order. The rightmost column indicates whether this rule was found in at least one of the \gls{kg} extensions made with the RandomBaseline KGE. As the table shows, the rules not found after extending the \gls{kg} in such a way were among those with lowest PCA confidence.}
 \label{original_rules_found_by_baseline_family}
 \end{longtable}
 
@@ -130,7 +130,7 @@ TODO: clean up rules
 \centering
     \centering
     \includesvg[inkscapelatex=false,width=0.6\textwidth,keepaspectratio]{figures/appendix/all_sets.svg}
-    \caption[Dist. of all sets of mined rules.]{Distribution of all mined rule sets. Each rule set is labeled with the entity selection strategy, embedding model and rank cutoff that was used for that particular KG extension. As mentioned in section \ref{TransE_sucks} can see that when the KGs are extended using TransE the number of new rules that are mined increases drastically.}
+    \caption[Dist. of all sets of mined rules.]{Distribution of all mined rule sets. Each rule set is labeled with the entity selection strategy, embedding model and rank cutoff that was used for that particular \gls{kg} extension. As mentioned in section \ref{TransE_sucks} can see that when the \glspl{kg} are extended using TransE the number of new rules that are mined increases drastically.}
     \label{all_sets}
 \end{figure}
 
@@ -139,7 +139,7 @@ TODO: clean up rules
 \centering
     \centering
     \includesvg[inkscapelatex=false,width=0.75\textwidth,keepaspectratio]{figures/appendix/all_sets_w_out_TransE.svg}
-    \caption[Dist. of all sets of mined rules, excluding TransE.]{Distribution of all mined rule sets, excluding the sets mined from KGs extended using TransE. Each rule set is labeled with the entity selection strategy, embedding model and rank cutoff that was used for that particular KG extension. We can observe that no new rules are mined when the RandomBaseline was used to extend the KGs.}
+    \caption[Dist. of all sets of mined rules, excluding TransE.]{Distribution of all mined rule sets, excluding the sets mined from \glspl{kg} extended using TransE. Each rule set is labeled with the entity selection strategy, embedding model and rank cutoff that was used for that particular \gls{kg} extension. We can observe that no new rules are mined when the RandomBaseline was used to extend the \glspl{kg}.}
     \label{all_sets_w_out_TransE}
 \end{figure}
 
@@ -357,7 +357,7 @@ TODO: clean up rules
    father(x, z) $\wedge$ sibling(z, y)   $\Rightarrow$ relative(x, y) &           10 &        0.100971 \\
 relative(z, y) $\wedge$ relative(x, z)   $\Rightarrow$ relative(x, y) &           29 &        0.100440 \\
 \bottomrule
-\caption[Rules mined from the original family KG]{Rules mined from the original family KG, with their corresponding PCA confidences and how many times they were mined from the 48 extensions. Note that all rules with the $relative$ predicate in the consequent have lower PCA confidence and were mined less frequently.}
+\caption[Rules mined from the original family KG]{Rules mined from the original family \gls{kg}, with their corresponding PCA confidences and how many times they were mined from the 48 extensions. Note that all rules with the $relative$ predicate in the consequent have lower PCA confidence and were mined less frequently.}
 \label{family_original_rules_table_PCA}
 \end{longtable}
 
@@ -367,13 +367,13 @@ relative(z, y) $\wedge$ relative(x, z)   $\Rightarrow$ relative(x, y) &         
 \begin{subfigure}{.5\textwidth}
   \centering
   \includesvg[width=1\linewidth]{figures/appendix/Extension_sizes_models_WN18RR.svg}
-  \caption{WN18RR KG.}
+  \caption{WN18RR \gls{kg}.}
   \label{fig:model_extension_wn18rr_boxplot_sub}
 \end{subfigure}%
 \begin{subfigure}{.5\textwidth}
   \centering
   \includesvg[width=1\linewidth]{figures/appendix/Extension_sizes_models_family.svg}
-  \caption{Family KG.}
+  \caption{Family \gls{kg}.}
   \label{fig:model_extension_family_boxplot_sub}
 \end{subfigure}
 \caption{Distribution of KG extension sizes over KGE models.}
