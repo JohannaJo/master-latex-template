@@ -5,16 +5,16 @@ This chapter begins by presenting some of the central questions mentioned in the
 We study how the extension of \gls{kg} affects rule mining, and the role of extension methods in the process. Some central questions here are:
 \begin{enumerate}
     \item Does adding new plausible facts lead to new rules being mined? 
-    \item How does the PCA confidence of these rules compare to the rules mined from the original KG?
+    \item How does the \gls{pca} confidence of these rules compare to the rules mined from the original \gls{kg}?
     \item Can the rules mined from the original \gls{kg} also be mined after the \gls{kg} is extended?
 \end{enumerate}
 Regarding extension methods we looked at three parameters:
 \begin{itemize}
     \item the \textit{entity selection strategy} for candidate generation
     \item the \textit{\gls{kge} model architecture} for ranking candidates
-    \item the \textit{rank cutoff value} for admitting candidates to the KG
+    \item the \textit{rank cutoff value} for admitting candidates to the \gls{kg}
 \end{itemize}
-and their role in the quantity and PCA confidence of the rules that are mined.
+and their role in the quantity and \gls{pca} confidence of the rules that are mined.
 
 \section{Overview of results}
 This section gives a brief overview of the results and focuses on the fact that the \gls{kge} choice has a considerable influence on the number of rules being mined. The majority of rules were mined from TransE-extended \glspl{kg}, and were rules that upon inspection had little meaning to them. As speculated in section \ref{selected_KG_embedding_models}, the findings show that the TransE model was not a success, and this section justifies why results from this model are omitted in some later parts of the data analysis.
@@ -24,7 +24,7 @@ In the \gls{kg} extension process there are 48 \footnote{4 (\gls{kge} models) $\
 
 \subsection{Rule set sizes and mean PCA confidence}
 \label{TransE_sucks} 
-Upon examining the number of rules mined per \gls{kg} extension one immediately sees some startling results, displayed clearly in figure \ref{total_rules_KG_embedding_dist}. Most rule sets do not differ drastically in size, apart from those where TransE was used, where these rule sets are \textit{exceptionally} larger. See \cref{all_sets} for a more detailed overview of the results for all \gls{kg} extensions. When looking at the mean PCA confidence of the rules sets one also notes that the score for the TransE sets are mostly around 0.1, while the remaining rule sets have a score on average around 0.5.
+Upon examining the number of rules mined per \gls{kg} extension one immediately sees some startling results, displayed clearly in figure \ref{total_rules_KG_embedding_dist}. Most rule sets do not differ drastically in size, apart from those where TransE was used, where these rule sets are \textit{exceptionally} larger. See \cref{all_sets} for a more detailed overview of the results for all \gls{kg} extensions. When looking at the mean \gls{pca} confidence of the rules sets one also notes that the score for the TransE sets are mostly around 0.1, while the remaining rule sets have a score on average around 0.5.
 
 \begin{figure}[htbp]
 \centering
@@ -109,12 +109,12 @@ In this section we will examine the effects of each of the three main parameters
   \caption{WN18RR KG}
   \label{rule_dist_models_hbar_wn18rr}
 \end{subfigure}
-\caption[Rules and their types over KGE models]{Distribution of rules over \gls{kge} models, not counting duplicate rules that were mined from multiple \glspl{kg}. Note that the bar for TransE extends far beyond the chart, so the unusually high number of different rules mined from TransE extensions is not properly shown here. The single original rule not found by DistMult in the family \gls{kg} is $child(x, y) \Rightarrow mother(y,x)$. This rule has the second lowest PCA confidence of all the original family \gls{kg} rules.}
+\caption[Rules and their types over KGE models]{Distribution of rules over \gls{kge} models, not counting duplicate rules that were mined from multiple \glspl{kg}. Note that the bar for TransE extends far beyond the chart, so the unusually high number of different rules mined from TransE extensions is not properly shown here. The single original rule not found by DistMult in the family \gls{kg} is $child(x, y) \Rightarrow mother(y,x)$. This rule has the second lowest \gls{pca} confidence of all the original family \gls{kg} rules.}
 \label{rule_dist_models_hbar}
 \end{figure}
 
 \subsection{Effect of KG embedding model}
-At the first glance of the boxplots in figure \ref{fig:PCA_models_boxplot} it may seem odd that the PCA confidence of rules mined from RandomBaseline extensions is so high. Boxplots are used to represent the spread of data through their quartlies \cite{dutoit2012graphical}. The box itself covers $Q_1-Q_3$, with the horizontal line in the box marking the median. The median PCA confidence for the original rules is indicated by the dashed line across the plots. The boxplots used in this thesis also have \textit{whiskers}, which are the lines extending vertically out of the box. Whiskers give an indication of the variability of the data outside the upper and lower quartiles (respectively $Q_1$ and $Q_3$). Points beyond the whiskers are considered outliers.
+At the first glance of the boxplots in figure \ref{fig:PCA_models_boxplot} it may seem odd that the \gls{pca} confidence of rules mined from RandomBaseline extensions is so high. Boxplots are used to represent the spread of data through their quartlies \cite{dutoit2012graphical}. The box itself covers $Q_1-Q_3$, with the horizontal line in the box marking the median. The median \gls{pca} confidence for the original rules is indicated by the dashed line across the plots. The boxplots used in this thesis also have \textit{whiskers}, which are the lines extending vertically out of the box. Whiskers give an indication of the variability of the data outside the upper and lower quartiles (respectively $Q_1$ and $Q_3$). Points beyond the whiskers are considered outliers.
 
 \begin{figure}[htbp]
 \centering
@@ -142,13 +142,13 @@ At the first glance of the boxplots in figure \ref{fig:PCA_models_boxplot} it ma
   \caption{Extended family KG}
   \label{fig:_PCA_models_family_boxplot_sub}
 \end{subfigure}
-\caption[Dist. of PCA conf. rules by KGE models]{Distribution of PCA confidence of mined rules by \gls{kge} models. PCA confidence scores are calculated on the original \gls{kg} (\ref{fig:PCA-models_wn18rr_boxplot_sub}, \ref{fig:models_family_boxplot_sub}) and the extended \gls{kg} from which the rules are mined (\ref{fig:_PCA_models_wn18rr_boxplot_sub}, \ref{fig:_PCA_models_family_boxplot_sub}). A rule can be mined from multiple \glspl{kg}, therefore this graph shows duplicates. The dashed line represents the median PCA confidence of the rules mined from the original \gls{kg}.}
+\caption[Dist. of PCA conf. rules by KGE models]{Distribution of \gls{pca} confidence of mined rules by \gls{kge} models. \gls{pca} confidence scores are calculated on the original \gls{kg} (\ref{fig:PCA-models_wn18rr_boxplot_sub}, \ref{fig:models_family_boxplot_sub}) and the extended \gls{kg} from which the rules are mined (\ref{fig:_PCA_models_wn18rr_boxplot_sub}, \ref{fig:_PCA_models_family_boxplot_sub}). A rule can be mined from multiple \glspl{kg}, therefore this graph shows duplicates. The dashed line represents the median \gls{pca} confidence of the rules mined from the original \gls{kg}.}
 \label{fig:PCA_models_boxplot}
 \end{figure}
 
 By looking at figure \ref{rule_dist_models_hbar} it becomes apparent that there are few different rules mined from the RandomBaseline extensions. In the WN18RR case no new rules were found, and a single original rule was also never mined. The omitted rule,
 \[ has\_part(x, z) \wedge hypernym(y, z) \Rightarrow has\_part(x, y)\]
-has the lowest PCA confidence out of all the original rules. Since there already was little support in the \gls{kg} for the rule, the addition of noise may have obscured too much evidence for the algorithm to consider the rule significant. See table \ref{original_rules_found_by_baseline_WN18RR} to see all rules mined from the original WN18RR \gls{kg}, sorted by their PCA confidence.
+has the lowest \gls{pca} confidence out of all the original rules. Since there already was little support in the \gls{kg} for the rule, the addition of noise may have obscured too much evidence for the algorithm to consider the rule significant. See table \ref{original_rules_found_by_baseline_WN18RR} to see all rules mined from the original WN18RR \gls{kg}, sorted by their \gls{pca} confidence.
 % check RandomBaseline_original_rules.ipynb to see if there is a new rule.
 
 \begin{table}[htp]
@@ -179,20 +179,20 @@ ComplEx                                             & 10             & 59\%     
 \label{Tab:table_rules_models_wn18rr}
 \end{table}
 
-The family \gls{kg} produced similar results, where AMIE3 failed to find 9 original rules in the RandomBaseline-extended \glspl{kg}. All of these rules were among those with the lowest PCA confidence of the original rules. Refer to table \ref{original_rules_found_by_baseline_WN18RR} for all rules mined from the original family \gls{kg}, sorted by their PCA confidence. When the rules with lowest PCA condifence in a set are removed, then the median PCA confidence naturally goes up. This explains how the RandomBaseline rules have a higher median PCA confidence than the original, shown in tables \ref{Tab:table_rules_models_family} and \ref{Tab:table_rules_models_wn18rr}.
+The family \gls{kg} produced similar results, where AMIE3 failed to find 9 original rules in the RandomBaseline-extended \glspl{kg}. All of these rules were among those with the lowest \gls{pca} confidence of the original rules. Refer to table \ref{original_rules_found_by_baseline_WN18RR} for all rules mined from the original family \gls{kg}, sorted by their \gls{pca} confidence. When the rules with lowest \gls{pca} condifence in a set are removed, then the median \gls{pca} confidence naturally goes up. This explains how the RandomBaseline rules have a higher median \gls{pca} confidence than the original, shown in tables \ref{Tab:table_rules_models_family} and \ref{Tab:table_rules_models_wn18rr}.
 
-As presented in \cref{TransE_sucks}, AMIE3 mines a great deal more rules from \glspl{kg} extended with TransE. Due to the low mean PCA confidence for these rules (0.038 for WN18RR and 0.089 for the family KG) it is clear that there is little support for the rules in the original \glspl{kg}. If one however evaluates the TransE rules on the \textit{extended} \glspl{kg} they were mined from, the PCA confidence increases substantially, as seen in figures \ref{fig:_PCA_models_wn18rr_boxplot_sub} and \ref{fig:_PCA_models_family_boxplot_sub}. So even though most of these rules have little support from the original \glspl{kg}, it was no mistake that AMIE3 mined so many rules from the TransE-extended \glspl{kg}.
+As presented in \cref{TransE_sucks}, AMIE3 mines a great deal more rules from \glspl{kg} extended with TransE. Due to the low mean \gls{pca} confidence for these rules (0.038 for WN18RR and 0.089 for the family \gls{kg}) it is clear that there is little support for the rules in the original \glspl{kg}. If one however evaluates the TransE rules on the \textit{extended} \glspl{kg} they were mined from, the \gls{pca} confidence increases substantially, as seen in figures \ref{fig:_PCA_models_wn18rr_boxplot_sub} and \ref{fig:_PCA_models_family_boxplot_sub}. So even though most of these rules have little support from the original \glspl{kg}, it was no mistake that AMIE3 mined so many rules from the TransE-extended \glspl{kg}.
 
 
 DistMult and ComplEx are closely related embedding models as they have similar scoring functions (the scoring function of ComplEx corresponds to that of DistMult but with real embeddings), and perform similarly on benchmark datasets \cite{complEx}. As mentioned in \cref{TransE_peaked_in_2013}, DistMult is not able to represent asymmetric relations. Although AMIE3 can only mine Horn rules, thereby a rule defining the asymmetry of a relation cannot be mined, this may still affect the the quality of the embedding and thus the \gls{kg} extension. From the results it seems that ComplEx is a somewhat stricter model, in the sense that it ranks candidate triples lower against corrupted triples than DistMult does. This is evidenced by the fact that the \gls{kg} extension sizes are larger for DistMult than for ComplEx; DistMult is admitting more candidates. For example, of the candidates generated with the entity selection method "probabilistic" from the WN18RR \gls{kg}, DistMult assigned 1468 candidates rank 1 while ComplEx only did this for 866 candidates. As a result, more rules are mined from DistMult-extended \glspl{kg}. 
 
 \newpage
 \subsection{Effect of entity selection method}
-The \textit{probabilistic}, \textit{random}, and the \textit{least frequent} entity selection strategies perform relatively similarly if we look at the PCA confidence box plots in figure \ref{fig:PCA_entity_boxplot}. The \textit{most frequent} strategy, however, performs worse, both on the WN18RR and family \gls{kg}. This is consistent with AmpliGraph's assumption that the most frequent entities are less likely to have missing facts \cite{kge_tutorial}.
+The \textit{probabilistic}, \textit{random}, and the \textit{least frequent} entity selection strategies perform relatively similarly if we look at the \gls{pca} confidence box plots in figure \ref{fig:PCA_entity_boxplot}. The \textit{most frequent} strategy, however, performs worse, both on the WN18RR and family \gls{kg}. This is consistent with AmpliGraph's assumption that the most frequent entities are less likely to have missing facts \cite{kge_tutorial}.
 
 In the WN18RR \gls{kg} all original rules were found, but in the family \gls{kg} only the \textit{least frequent} strategy resulted in all the original rules being mined. It also resulted in the least new rules being mined, while the \textit{most frequent} strategy led to the most new rules.
 
-Overall it seems like \textit{probabilistic}, \textit{random}, and the \textit{least frequent} entity selection strategies all are appropriate in regard to maintaining PCA confidence. If however the goal is to mine many new rules then \textit{most frequent} apears to be best suited, though at the sacrifice of PCA confidence.
+Overall it seems like \textit{probabilistic}, \textit{random}, and the \textit{least frequent} entity selection strategies all are appropriate in regard to maintaining \gls{pca} confidence. If however the goal is to mine many new rules then \textit{most frequent} apears to be best suited, though at the sacrifice of \gls{pca} confidence.
 
 \begin{figure}[htbp]
 \centering
@@ -220,7 +220,7 @@ Overall it seems like \textit{probabilistic}, \textit{random}, and the \textit{l
   \caption{Extended family KG}
   \label{fig:_PCA_entity_family_boxplot_sub}
 \end{subfigure}
-\caption[Dist. of PCA conf. of rules by entity selection strategies]{Distribution of PCA confidence of mined rules by entity selection strategies. PCA confidence scores are calculated on the original \gls{kg} (\ref{fig:PCA-entity_wn18rr_boxplot_sub}, \ref{fig:models_entity_boxplot_sub}) and the extended \gls{kg} from which the rules are mined (\ref{fig:_PCA_entity_wn18rr_boxplot_sub}, \ref{fig:_PCA_entity_family_boxplot_sub}). A rule can be mined from multiple \glspl{kg}, therefore this graph shows duplicates. The dashed line represents the median PCA confidence of the rules mined from the original \gls{kg}.}
+\caption[Dist. of PCA conf. of rules by entity selection strategies]{Distribution of \gls{pca} confidence of mined rules by entity selection strategies. \gls{pca} confidence scores are calculated on the original \gls{kg} (\ref{fig:PCA-entity_wn18rr_boxplot_sub}, \ref{fig:models_entity_boxplot_sub}) and the extended \gls{kg} from which the rules are mined (\ref{fig:_PCA_entity_wn18rr_boxplot_sub}, \ref{fig:_PCA_entity_family_boxplot_sub}). A rule can be mined from multiple \glspl{kg}, therefore this graph shows duplicates. The dashed line represents the median \gls{pca} confidence of the rules mined from the original \gls{kg}.}
 \label{fig:PCA_entity_boxplot}
 \end{figure}
 
@@ -337,7 +337,7 @@ Probabilistic                                             & 10             & 45\
 
 \newpage
 \subsection{Effect of rank cutoff value}
-Rank cutoff values determine which candidates are admitted to the \gls{kg}. Only those with rank on the cutoff or above are accepted. Therefore, the lower the rank cutoff, the more candidates are added to the \gls{kg}. The box plots in \cref{rank_extensions_boxplot} show evidence of this. The tables \ref{Tab:table_rules_ranks_wn18rr} and \ref{Tab:table_rules_ranks_family} both show that when the rank cutoff was 1, all the original rules were found. Decrease in rank cutoff led to the mining of more new rules, but  also led to some original rules not being mined, especially in the WN18RR case. PCA confidence-wise the rank cutoff values had a slightly different effect on the two datasets. In the WN18RR dataset there was little difference in PCA confidence over the ranks when calculated over the original \gls{kg}, while for the family \gls{kg} the PCA confidence was increased at rank cutoff 4 and 7, with no change at rank cutoff 1. When calculated over the \gls{kg} extensions, rank 1 and 4 did worse than the mean of the original rules, while rank cutoff 7 did significantly better. On the family \gls{kg} PCA confidence calculated on the extended \glspl{kg} led to little variety over the rank values. Rank 1 resulted on the same median as the original rules, rank 4 just above and rank 7 just below. Overall it seems like if the goal is to find many new rules, then a higher rank cutoff values is more appropriate.
+Rank cutoff values determine which candidates are admitted to the \gls{kg}. Only those with rank on the cutoff or above are accepted. Therefore, the lower the rank cutoff, the more candidates are added to the \gls{kg}. The box plots in \cref{rank_extensions_boxplot} show evidence of this. The tables \ref{Tab:table_rules_ranks_wn18rr} and \ref{Tab:table_rules_ranks_family} both show that when the rank cutoff was 1, all the original rules were found. Decrease in rank cutoff led to the mining of more new rules, but  also led to some original rules not being mined, especially in the WN18RR case. \gls{pca} confidence-wise the rank cutoff values had a slightly different effect on the two datasets. In the WN18RR dataset there was little difference in \gls{pca} confidence over the ranks when calculated over the original \gls{kg}, while for the family \gls{kg} the \gls{pca} confidence was increased at rank cutoff 4 and 7, with no change at rank cutoff 1. When calculated over the \gls{kg} extensions, rank 1 and 4 did worse than the mean of the original rules, while rank cutoff 7 did significantly better. On the family \gls{kg} \gls{pca} confidence calculated on the extended \glspl{kg} led to little variety over the rank values. Rank 1 resulted on the same median as the original rules, rank 4 just above and rank 7 just below. Overall it seems like if the goal is to find many new rules, then a higher rank cutoff values is more appropriate.
 
 \begin{figure}[htb]
 \centering
@@ -383,7 +383,7 @@ Rank cutoff values determine which candidates are admitted to the \gls{kg}. Only
   \caption{Extended family KG}
   \label{fig:_PCA_rank_family_boxplot_sub}
 \end{subfigure}
-\caption[Dist. of PCA conf. of rules over rank cutoff values]{Distribution of PCA confidence of mined rules over rank cutoff values. PCA confidence scores are calculated on the original \gls{kg} (\ref{fig:PCA-rank_wn18rr_boxplot_sub}, \ref{fig:models_rank_boxplot_sub}) and the extended \gls{kg} from which the rules are mined (\ref{fig:_PCA_rank_wn18rr_boxplot_sub}, \ref{fig:_PCA_rank_family_boxplot_sub}). A rule can be mined from multiple \glspl{kg}, therefore this graph shows duplicates. The dashed line represents the median PCA confidence of the rules mined from the original \gls{kg}.}
+\caption[Dist. of PCA conf. of rules over rank cutoff values]{Distribution of \gls{pca} confidence of mined rules over rank cutoff values. \gls{pca} confidence scores are calculated on the original \gls{kg} (\ref{fig:PCA-rank_wn18rr_boxplot_sub}, \ref{fig:models_rank_boxplot_sub}) and the extended \gls{kg} from which the rules are mined (\ref{fig:_PCA_rank_wn18rr_boxplot_sub}, \ref{fig:_PCA_rank_family_boxplot_sub}). A rule can be mined from multiple \glspl{kg}, therefore this graph shows duplicates. The dashed line represents the median \gls{pca} confidence of the rules mined from the original \gls{kg}.}
 \label{fig:PCA_rank_boxplot}
 \end{figure}
 
@@ -416,15 +416,15 @@ Rank cutoff values determine which candidates are admitted to the \gls{kg}. Only
 \end{table}
     
 \subsection{Summary of effect of parameters}
-The three parameters for \gls{kg} extension were shown to have a varying degree of influence. All entity selection strategies, apart from \textit{most likely}, performed equally well. This was consistent with the assumption of the authors of AmpliGraph, being that the most frequent entities are less likely to have missing facts \cite{ampligraph}. Of the \gls{kge} models, TransE led to a substantially greater number of new rules being mined compared to the other models, but these rules had very low PCA confidence when calculated over the original dataset. ComplEx and DistMult performed similarly in regard to PCA confidence, with slightly more new rules being mined with DistMult due to the model giving candidate triples a higher score than ComplEx did. The rank cutoff value gave expected results, where a value that accepted more new candidate triples led to more new rules being minded. When calculated over the original \gls{kg}, the PCA confidence in rules did not significantly vary among the rank cutoff values. 
+The three parameters for \gls{kg} extension were shown to have a varying degree of influence. All entity selection strategies, apart from \textit{most likely}, performed equally well. This was consistent with the assumption of the authors of AmpliGraph, being that the most frequent entities are less likely to have missing facts \cite{ampligraph}. Of the \gls{kge} models, TransE led to a substantially greater number of new rules being mined compared to the other models, but these rules had very low \gls{pca} confidence when calculated over the original dataset. ComplEx and DistMult performed similarly in regard to \gls{pca} confidence, with slightly more new rules being mined with DistMult due to the model giving candidate triples a higher score than ComplEx did. The rank cutoff value gave expected results, where a value that accepted more new candidate triples led to more new rules being minded. When calculated over the original \gls{kg}, the \gls{pca} confidence in rules did not significantly vary among the rank cutoff values. 
 
 \newpage
 \section{Rule comparison}
 In the WN18RR dataset there was one rule, 
 \[derivationally\_related\_form(y, x) \Rightarrow derivationally\_related\_form(x, y)\]
-which was mined in all 48 \gls{kg} extensions. It has PCA confidence of 1, meaning that there are no data points in WN18RR that do not follow the rule. In table \ref{wn18rr_original_rules_table_PCA} all original rules sorted by their PCA Confidence are listed. How often these rules were mined from \gls{kg} extensions is also listed under the "Frequencies" column. Using Spearman's rank correlation coefficient there was found a correlation coefficient of 0.65 with $p$-value 0.04. These values are positively correlated with the PCA confidence, meaning that as the PCA confidence increases, the frequency also increases. From the family \gls{kg}, 94 original rules were mined, and the corresponding table \ref{family_original_rules_table_PCA} is listed in the appendix. For these rules the PCA confidence and frequencies were also positively correlated with correlation coefficient 0.86 and $p$-value $5.85e^{-29}$. The rule mined the least number of times is
+which was mined in all 48 \gls{kg} extensions. It has \gls{pca} confidence of 1, meaning that there are no data points in WN18RR that do not follow the rule. In table \ref{wn18rr_original_rules_table_PCA} all original rules sorted by their \gls{pca} Confidence are listed. How often these rules were mined from \gls{kg} extensions is also listed under the "Frequencies" column. Using Spearman's rank correlation coefficient there was found a correlation coefficient of 0.65 with $p$-value 0.04. These values are positively correlated with the \gls{pca} confidence, meaning that as the \gls{pca} confidence increases, the frequency also increases. From the family \gls{kg}, 94 original rules were mined, and the corresponding table \ref{family_original_rules_table_PCA} is listed in the appendix. For these rules the \gls{pca} confidence and frequencies were also positively correlated with correlation coefficient 0.86 and $p$-value $5.85e^{-29}$. The rule mined the least number of times is
 \[father(x,z) \wedge sibling(z, y) \Rightarrow relative(x, y)\]
-which only was mined in 10 out of the 48 extensions. Consistently with the correlation between PCA confidence and mining frequency this is the rule with the second lowest PCA confidence. The table \ref{family_original_rules_table_PCA} also shows us that all rules that had the \textit{relative} predicate were not mined for all 48 extensions, and all with different predicates in the antecedent were mined from all extensions. This could be due to the simple fact that \textit{relative} is the least frequently used relation in the \gls{kg}, leading to less supporting data points and correspondingly lower PCA confidence.
+which only was mined in 10 out of the 48 extensions. Consistently with the correlation between \gls{pca} confidence and mining frequency this is the rule with the second lowest \gls{pca} confidence. The table \ref{family_original_rules_table_PCA} also shows us that all rules that had the \textit{relative} predicate were not mined for all 48 extensions, and all with different predicates in the antecedent were mined from all extensions. This could be due to the simple fact that \textit{relative} is the least frequently used relation in the \gls{kg}, leading to less supporting data points and correspondingly lower \gls{pca} confidence.
 
 
 
@@ -432,7 +432,7 @@ which only was mined in 10 out of the 48 extensions. Consistently with the corre
 \begin{table}[htbp]
 \begin{tabular}{lrr}
 \toprule
-                                                                                                      Rule &  Frequencies &  PCA Confidence \\
+                                                                                                      Rule &  Frequencies &  \gls{pca} Confidence \\
 \midrule
                             DRF(y, x)   $\Rightarrow$ DRF(x, y) &           48 &        1.000000 \\
           IH(x, z) $\wedge$ SDTO(z, y)   $\Rightarrow$ SDTO(x, y) &           24 &        0.886525 \\
@@ -446,16 +446,16 @@ DRF(z, x) $\wedge$ SDTO(z, y)   $\Rightarrow$ SDTO(x, y) &           24 &       
                                                has\_part(x, z) $\wedge$ hypernym(y, z)   $\Rightarrow$ has\_part(x, y) &           21 &        0.104016 \\
 \bottomrule
 \end{tabular}
-\caption[Rules mined from the original WN18RR KG]{Rules mined from the original WN18RR \gls{kg}, with their corresponding PCA confidences and how many times they were mined from the 48 extensions. DRF = ``\textit{derivationally related form}", STDO = ``\textit{synset domain topic of}" and IH = ``\textit{instance hypernym}".}
+\caption[Rules mined from the original WN18RR KG]{Rules mined from the original WN18RR \gls{kg}, with their corresponding \gls{pca} confidences and how many times they were mined from the 48 extensions. DRF = ``\textit{derivationally related form}", STDO = ``\textit{synset domain topic of}" and IH = ``\textit{instance hypernym}".}
 \label{wn18rr_original_rules_table_PCA}
 \end{table}
 
 
 
 \subsection{PCA distribution}
-For both the WN18RR and family \gls{kg} the PCA confidence of the original rules is relatively spread out. A few rules have a PCA confidence of 1 or close to 1, and none have PCA confidence below 0.1. This makes sense, because this would imply the absence of supporting datapoints and thus AMIE3 would never mine the rule. The majority of new rules on the other hand \textit{do} however have a PCA confidence of 0. This means that most, if not all, the support for new rules lies in the extension of the \gls{kg}. If all sets of supporting datapoints are dependent on the extension, then when PCA confidence is measured on the original \gls{kg} this new rule would get a PCA confidence score of 0. If one looks closely at figure \ref{fig:PCA_rule_dist_new_original_family_sub} one can see that two new rules do have PCA confidence above 0.2. These were however also rejected by AMIE3 because the PCA body size (the number of instances of that rule) is so small that the PCA confidence calculated is not very reliable.
+For both the WN18RR and family \gls{kg} the \gls{pca} confidence of the original rules is relatively spread out. A few rules have a \gls{pca} confidence of 1 or close to 1, and none have \gls{pca} confidence below 0.1. This makes sense, because this would imply the absence of supporting datapoints and thus AMIE3 would never mine the rule. The majority of new rules on the other hand \textit{do} however have a \gls{pca} confidence of 0. This means that most, if not all, the support for new rules lies in the extension of the \gls{kg}. If all sets of supporting datapoints are dependent on the extension, then when \gls{pca} confidence is measured on the original \gls{kg} this new rule would get a \gls{pca} confidence score of 0. If one looks closely at figure \ref{fig:PCA_rule_dist_new_original_family_sub} one can see that two new rules do have \gls{pca} confidence above 0.2. These were however also rejected by AMIE3 because the \gls{pca} body size (the number of instances of that rule) is so small that the \gls{pca} confidence calculated is not very reliable.
 
-When plotting the PCA confidence of new rules calculated over the \glspl{kg} from which they were mined, the new rules become somewhat more evenly distributed along the PCA confidence interval. Figures \ref{fig:_PCA_rule_dist_new_original_wn18rr_sub} and \ref{fig:_PCA_rule_dist_new_original_family_sub} shows this, where the PCA confidence of the new rules here is not calculated over the original \gls{kg}, rather the \gls{kg} from which they were mined that gave them the best PCA confidence score. This method was chosen to highlight the extent to which the extensions changes the PCA confidence of new rules.
+When plotting the \gls{pca} confidence of new rules calculated over the \glspl{kg} from which they were mined, the new rules become somewhat more evenly distributed along the \gls{pca} confidence interval. Figures \ref{fig:_PCA_rule_dist_new_original_wn18rr_sub} and \ref{fig:_PCA_rule_dist_new_original_family_sub} shows this, where the \gls{pca} confidence of the new rules here is not calculated over the original \gls{kg}, rather the \gls{kg} from which they were mined that gave them the best \gls{pca} confidence score. This method was chosen to highlight the extent to which the extensions changes the \gls{pca} confidence of new rules.
 
 \begin{figure}[htbp]
 \centering
@@ -483,7 +483,7 @@ When plotting the PCA confidence of new rules calculated over the \glspl{kg} fro
     \caption{Family - Extended KG}
   \label{fig:_PCA_rule_dist_new_original_family_sub}
 \end{subfigure}
-\caption[PCA conf. dist. of new and original rules.]{Distribution of PCA confidence of original rules and new rules. In subfigures \ref{fig:PCA_rule_dist_new_original_wn18rr_sub} and \ref{fig:PCA_rule_dist_new_original_family_sub} the PCA confidence is calculated over the original \gls{kg}. For subfigures \ref{fig:_PCA_rule_dist_new_original_wn18rr_sub} and \ref{fig:_PCA_rule_dist_new_original_family_sub} the PCA confidence is the best score calculated over the extended \gls{kg} from which the new rules was mined. The PCA confidence of original rules is always calculated over the original \gls{kg}.}
+\caption[PCA conf. dist. of new and original rules.]{Distribution of \gls{pca} confidence of original rules and new rules. In subfigures \ref{fig:PCA_rule_dist_new_original_wn18rr_sub} and \ref{fig:PCA_rule_dist_new_original_family_sub} the \gls{pca} confidence is calculated over the original \gls{kg}. For subfigures \ref{fig:_PCA_rule_dist_new_original_wn18rr_sub} and \ref{fig:_PCA_rule_dist_new_original_family_sub} the \gls{pca} confidence is the best score calculated over the extended \gls{kg} from which the new rules was mined. The \gls{pca} confidence of original rules is always calculated over the original \gls{kg}.}
 \label{fig:PCA_rule_dist_new_original}
 \end{figure}
 
@@ -493,7 +493,7 @@ When plotting the PCA confidence of new rules calculated over the \glspl{kg} fro
 We restate the central questions for the experiment posed at the beginning of this chapter. These questions were:
 \begin{enumerate}
     \item Does adding new plausible facts lead to new rules being mined? 
-    \item How does the PCA confidence of these rules compare to the rules mined from the original KG?
+    \item How does the \gls{pca} confidence of these rules compare to the rules mined from the original KG?
     \item Can the rules mined from the original \gls{kg} also be mined after the \gls{kg} is extended?
 \end{enumerate}
 
@@ -506,9 +506,9 @@ Questions 1 is the simplest, and our experiment has clearly shown that, yes, add
                              relative(x, z) $\wedge$ relative(y, z) $\Rightarrow$ relative(x, y) \\
                             father(x, z) $\wedge$ mother(y, z) $\Rightarrow$ sibling(x, y) \\
                              \end{center}
-At close inspection these rules are relatively poor, and as seen in figure \ref{fig:PCA_rule_dist_new_original} the PCA confidence of new rules was most often zero or close to zero when calculated over the original \gls{kg}. However, when measured on the extended \glspl{kg} from which they were mined, the scores were significantly better and had similar distributions to the original rules, which answers question 2. In regard to question 3, a strong correlation was found between the PCA confidence of original rules and how often the rule was mined from extended \glspl{kg}. The higher the PCA confidence, the more likely the rule will be mined from the extended \gls{kg}.
+At close inspection these rules are relatively poor, and as seen in figure \ref{fig:PCA_rule_dist_new_original} the \gls{pca} confidence of new rules was most often zero or close to zero when calculated over the original \gls{kg}. However, when measured on the extended \glspl{kg} from which they were mined, the scores were significantly better and had similar distributions to the original rules, which answers question 2. In regard to question 3, a strong correlation was found between the \gls{pca} confidence of original rules and how often the rule was mined from extended \glspl{kg}. The higher the \gls{pca} confidence, the more likely the rule will be mined from the extended \gls{kg}.
 
-%In regard to the influence the parameters had on the outcomes of the experiment, the chosen \gls{kge} model clearly had the most influence. TransE performed ever worse than the baseline model, resulting in unusually many nonsense rules being mined in comparison to the embedding models. ComplEx and DistMult resulted in fewer rules with higher PCA confidence, with ComplEx being more conservative in the ranking of candidate triples. All entity selection methods gave similar resluts, apart from \textit{most frequent} which resulted in 
+%In regard to the influence the parameters had on the outcomes of the experiment, the chosen \gls{kge} model clearly had the most influence. TransE performed ever worse than the baseline model, resulting in unusually many nonsense rules being mined in comparison to the embedding models. ComplEx and DistMult resulted in fewer rules with higher \gls{pca} confidence, with ComplEx being more conservative in the ranking of candidate triples. All entity selection methods gave similar resluts, apart from \textit{most frequent} which resulted in 
 
 \section{Limitations of experiment}
 \label{experiment_limitations}

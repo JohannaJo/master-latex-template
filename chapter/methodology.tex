@@ -113,7 +113,7 @@ The AmpliGraph documentation was a main inspiration when deciding which hyperpar
 For the implementation of model selection AmpliGraph's \texttt{select\_best\_mode\_ranking} was used. It is a model selection routine that allows for both grid and random search. At the end of each model selection process, the final model for each embedding type is retrained on the concatenation of the train and validation set, before it is eventually evaluated on the test set. The \texttt{eta} hyperparameter denotes the number of negative examples to be generated at training for each positive example, a process described in section \ref{KG_embeddings}. % As the training data only contains positive examples, negative ones are generated.  In the training process corrupted triples are generated according to the strategy proposed by Bordes et al, which maintains the local closed world assumption \cite{TransE}.
 
 \subsection{Model selection results}
-The final model of all three embedding architectures had good results on the WN18RR dataset, and even better results on the family \gls{kg}. Each model had an MRR score above 0.9 on the family \gls{kg} and around 0.6 on the WN18RR. TransE seemed to perform slightly worse than DistMult and ComplEx on the family \gls{kg}. On the WN18RR dataset TransE had a lower hits@1 score, while it outperformed both DistMult and ComplEx in both hits@3 and hits@10.
+The final model of all three embedding architectures had good results on the WN18RR dataset, and even better results on the family \gls{kg}. Each model had an \gls{mrr} score above 0.9 on the family \gls{kg} and around 0.6 on the WN18RR. TransE seemed to perform slightly worse than DistMult and ComplEx on the family \gls{kg}. On the WN18RR dataset TransE had a lower hits@1 score, while it outperformed both DistMult and ComplEx in both hits@3 and hits@10.
 \begin{table}[htbp]
 \centering
 \begin{tabular}{|l||ccccc||ccccc|}
@@ -135,7 +135,7 @@ The final model of all three embedding architectures had good results on the WN1
 \begin{subfigure}{.5\textwidth}
   \centering
   \includegraphics[width=1\linewidth]{figures/model_selection/family_mrr.png}
-  \caption{MRR scores}
+  \caption{\gls{mrr} scores}
   \label{fig:model_selection_mrr_family}
 \end{subfigure}%
 \begin{subfigure}{.5\textwidth}
@@ -153,7 +153,7 @@ The final model of all three embedding architectures had good results on the WN1
 \begin{subfigure}{.5\textwidth}
   \centering
   \includegraphics[width=1\linewidth]{figures/model_selection/wn18rr_mrr.png}
-  \caption{MRR scores}
+  \caption{\gls{mrr} scores}
   \label{fig:model_selection_mrr_wn18rr}
 \end{subfigure}%
 \begin{subfigure}{.5\textwidth}
@@ -221,7 +221,7 @@ If we look at listing \ref{entity_selection_KG} as an example \gls{kg} and need 
     \item \textit{least frequent} strategy the entity set would be \{\textit{Dave, Felix, Gina}\},
     \item \textit{probabilistic} strategy the entity set could be \{\textit{Gina, Eve, Felix}\},
 \end{itemize}
-and any three candidates would be selected with the \textit{random} strategy. Note that selection is without replacement. Once the entities were selected, all possible triples were generated with them and the six relations. Then, all the triples already included in the original \gls{kg} were excluded from the resulting candidate triples. If one were to pick the \textit{most frequent} strategy, then the resulting set of candidate triples would be that depicted in \cref{canidate_triples_most_frequent}. Of course the more candidate triples there are to choose from, the better the extension will be because then there is a higher chance of plausible facts being suggested. Again, computational limitations restricted this. After trying different candidate set sizes it was eventually decided that selecting 1000 entities for candidate triple generation was a feasible number. This meant that $ 1000 \times 6 \times 1000 = 6 \times 10^6 $ triples (minus those that already appeared in the KG) were considered for each \gls{kg} extension.
+and any three candidates would be selected with the \textit{random} strategy. Note that selection is without replacement. Once the entities were selected, all possible triples were generated with them and the six relations. Then, all the triples already included in the original \gls{kg} were excluded from the resulting candidate triples. If one were to pick the \textit{most frequent} strategy, then the resulting set of candidate triples would be that depicted in \cref{canidate_triples_most_frequent}. Of course the more candidate triples there are to choose from, the better the extension will be because then there is a higher chance of plausible facts being suggested. Again, computational limitations restricted this. After trying different candidate set sizes it was eventually decided that selecting 1000 entities for candidate triple generation was a feasible number. This meant that $ 1000 \times 6 \times 1000 = 6 \times 10^6 $ triples (minus those that already appeared in the \gls{kg}) were considered for each \gls{kg} extension.
 
 
 \begin{table}[htbp]
@@ -257,15 +257,15 @@ In the final results from the experiments run, each mined rule had two different
 \begin{itemize}
     \item Rule
     \item Metrics
-        \subitem Head Coverage (extended and original KG)
-        \subitem PCA Confidence (extended and original KG)
-        \subitem Positive Examples (extended and original KG)
-        \subitem PCA body size (extended and original KG)
+        \subitem Head Coverage (extended and original \gls{kg})
+        \subitem \gls{pca} Confidence (extended and original \gls{kg})
+        \subitem Positive Examples (extended and original \gls{kg})
+        \subitem \gls{pca} body size (extended and original \gls{kg})
     \item Parameters
         \subitem Entity seleciton method
         \subitem \gls{kge} model
         \subitem Rank cutoff
-    \item Boolean indication for whether rule was also mined from the original KG
+    \item Boolean indication for whether rule was also mined from the original \gls{kg}
 \end{itemize}
 
 With this information one can look at the effect the parameters have on the number of rules mined and how the measured confidence differs when calculated on the extended \gls{kg} versus the original \gls{kg}.
