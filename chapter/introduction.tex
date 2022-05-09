@@ -14,14 +14,24 @@ This work by Meilicke et al. inspired the idea of using \gls{kge} models to impr
     \label{rule_based_and_embedding}
 \end{figure}
 
+\section{Research questions}
 With this idea in mind, the general question to be explored is what role different factors in the \gls{kg} extension process have on the eventual rules that are mined from the extended dataset. The extension process can be summarized as follows: first candidate facts are generated, then the facts are ranked by an embedding model, then facts above a certain threshold are added to the \gls{kg}. So the factors to be evaluated are:
-\begin{enumerate}
+\begin{itemize}
     \item How candidate facts are generated.
     \item How candidates are ranked (choice of \gls{kge} model).
     \item What the rank cutoff is for candidates to be added to the \gls{kg}.
+\end{itemize}
+
+In addition to evaluation of these parameters, the current work explores three central research questions:
+\begin{enumerate}
+    \item Does adding new plausible facts lead to new rules being mined?
+    \item How does the quality (approximated with PCA confidence) of new rules compare to the rules mined from the original \gls{kg}?
+    \item Can the rules mined from the original \gls{kg} also be mined after the \gls{kg} is extended?
 \end{enumerate}
 
-The thesis examines whether adding new plausible facts will lead to new rules being mined and how the quality (approximated with PCA confidence) of these rules compares to that of the rules mined from the original \gls{kg}.
+In order to answer these questions the mentioned \gls{kg}-extension-and-mining pipeline is implemented and the results evaluated. Experiments are conducted on two different datasets, both of which are commonly used for benchmarking \glspl{kge}.
+
+%The thesis examines whether adding new plausible facts will lead to new rules being mined and how the quality (approximated with PCA confidence) of these rules compares to that of the rules mined from the original \gls{kg}.
 
 %The rules describe information about relational data, and hence will only use binary predicates. The rules will also be Horn, meaning that any number of predicates may be used in the body of the rule, but only one predicate is implied in the rule. This form has useful properties in knowledge representation and reasoning. When extracting rules from knowledge graphs they therefore tend to be Horn rules on binary predicates.
 
