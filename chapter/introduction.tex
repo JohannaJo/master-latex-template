@@ -1,25 +1,25 @@
 \chapter{Introduction}
 \section{Context and motivation}
 \Glspl{kg} are an increasingly popular way to represent data \cite{hogan2020knowledge}.
-A \gls{kg} can be often seen as a directed graph with labelled edges where the nodes represent the elements in a domain of interest (e.g. people) and the edges represent a relation between two elements. For instance, a \gls{kg} such as Wikidata, might include the node ``Oslo'' with an outgoing edge labelled ``capital of'' to the node ``Norway''. Knowledge graphs that are large and interesting are generally not complete. They may for example be extracted from natural language resources and may contain facts that are wrong or exhibit gaps in their knowledge. Most of the data that is present, however, is typically correct and hence implicitly contain meaningful rules. For example the Wikidata will implicitly contain the rule that siblings tend to have the same mother:
+A \gls{kg} are often seen as a directed graph with labelled edges where the nodes represent the elements in a domain of interest (e.g. people), and the edges represent a relation between two elements. For instance, a \gls{kg} such as Wikidata might include the node ``Oslo'' with an outgoing edge labelled ``capital of'' to the node ``Norway''. Knowledge graphs that are large and interesting are generally not complete. They may, for example, be extracted from natural language resources and may contain facts that are wrong or exhibit gaps in their knowledge. However, most of the present data is typically correct and implicitly contains meaningful rules. For example, Wikidata will implicitly contain the rule that siblings tend to have the same mother:
 \[has\_sibling(x, z) \wedge has\_mother(z, y) \Rightarrow has\_mother(x, y)\]
-There will of course be exceptions to this rule, but generally it will hold. Such a rule can be used to infer new information in a \gls{kg}, and using a set of such rules to make predictions is the core idea behind rule-based machine learning. There are other statistical methods that are both accurate and scalable when it comes to inferring new facts from \glspl{kg}, but one of the main issues of these approaches is that results usually are not explainable \cite{bonatti2019knowledge}. Rule-based machine learning approaches, on the other hand, provide an explanation in the form of the rules used to make a prediction. Meilicke et al. showed that rule-bases mined with the AMIE+ algorithm are good competitors and often outperform vector embedding models \cite{ensemble}. One explanation for this is that the standard benchmark datasets, such as WN18 and FB15k,  have a great deal of relational regularities, such as symmetry and equivalence. Meilicke et al. also compared the two approaches for triple prediction and found that they complement each other. An ensemble of the two families of approaches gave better results than either of the two alone.
+There will of course be exceptions to this rule, but generally, it will hold. Such a rule can be used to infer new information in a \gls{kg}, and using a set of such rules to make predictions is the core idea behind rule-based machine learning. Other statistical methods are accurate and scalable when it comes to inferring new facts from \glspl{kg}, but one of the main issues of these approaches is that results usually are not explainable \cite{bonatti2019knowledge}. Rule-based machine learning approaches, on the other hand, provide an explanation in the form of the rules used to make a prediction. Meilicke et al. showed that rule bases mined with the AMIE+ algorithm are good competitors and often outperform vector embedding models \cite{ensemble}. One explanation for this is that the standard benchmark datasets, such as WN18 and FB15k,  have many relational regularities, such as symmetry and equivalence. Meilicke et al. also compared the two approaches for triple prediction and found that they complement each other. An ensemble of the two families of methods gave better results than either of the two alone.
 
-This work by Meilicke et al. inspired the idea of using \gls{kge} models to improve rule-bases, or vice versa. The idea is to use one technique to ``extend" the original \gls{kg}, and thereafter train the second one on the extended \gls{kg}. This can be done both ways, as shown in figure \ref{rule_based_and_embedding}. A rule-base as end-result was chosen, ultimately because it results in an explainable model. 
+This work by Meilicke et al. inspired the idea of using \gls{kge} models to improve rule bases or vice versa. The idea is to use one technique to ``extend" the original \gls{kg} and thereafter train the second one on the extended \gls{kg}. The \gls{kg}-extension-and-mining pipeline can be done both ways, as shown in figure \ref{rule_based_and_embedding}. A rule-base as the end result was chosen, ultimately because it results in an explainable model. 
 
 \begin{figure}[htp]
     \centering
     \includesvg[inkscapelatex=false,width=1\textwidth,keepaspectratio]{figures/intro/custergraf-nesten.svg}
-    \caption[Figure representing the process.]{The two versions of \gls{kg} improvement for better model creation. In the top version an embedding of the original \gls{kg} is used to improve the graph, from which a rule base is mined. Red edges represent new links made by the models, which originally weren't present in the \gls{kg}. The second part of the figure represents the same process, but with the rule base used to improve the \gls{kg}, resulting in an embedding of the improved \gls{kg}.}
+    \caption[Figure representing the process.]{The two versions of \gls{kg} improvement for better model creation. In the top version, an embedding of the original \gls{kg} is used to improve the graph, from which a rule base is mined. Red edges represent new links made by the models, which originally weren't present in the \gls{kg}. The bottom half of the figure describes the same process but with the rule base used to improve the \gls{kg}, resulting in an embedding of the improved \gls{kg}.}
     \label{rule_based_and_embedding}
 \end{figure}
 
 \section{Research questions}
-With this idea in mind, the general question to be explored is what role different factors in the \gls{kg} extension process have on the eventual rules that are mined from the extended dataset. The extension process can be summarized as follows: first candidate facts are generated, then the facts are ranked by an embedding model, then facts above a certain threshold are added to the \gls{kg}. So the factors to be evaluated are:
+With this idea in mind, the general question to be explored is what role different factors in the \gls{kg} extension process have on the eventual rules that are mined from the extended dataset. The extension process can be summarized as follows: first, candidate facts are generated, then an embedding model ranks the candidates, and finally facts above a certain threshold are added to the \gls{kg}. So the factors to be evaluated are:
 \begin{itemize}
     \item How candidate facts are generated.
     \item How candidates are ranked (choice of \gls{kge} model).
-    \item What the rank cutoff is for candidates to be added to the \gls{kg}.
+    \item What minimum rank candidates must have to be added to the \gls{kg}.
 \end{itemize}
 
 In addition to evaluation of these parameters, the current work explores three central research questions:
@@ -29,7 +29,7 @@ In addition to evaluation of these parameters, the current work explores three c
     \item Can the rules mined from the original \gls{kg} also be mined after the \gls{kg} is extended?
 \end{enumerate}
 
-In order to answer these questions the mentioned \gls{kg}-extension-and-mining pipeline is implemented and the results evaluated. Experiments are conducted on two different datasets, both of which are commonly used for benchmarking \glspl{kge}.
+To answer these questions, the mentioned \gls{kg}-extension-and-mining pipeline is implemented and the results evaluated. Experiments are conducted on two different datasets, both of which are commonly used for benchmarking \glspl{kge}.
 
 %The thesis examines whether adding new plausible facts will lead to new rules being mined and how the quality (approximated with PCA confidence) of these rules compares to that of the rules mined from the original \gls{kg}.
 
@@ -38,13 +38,13 @@ In order to answer these questions the mentioned \gls{kg}-extension-and-mining p
 
 \section{Thesis outline}
 The outline for the rest of the thesis is as follows: \newline \newline
-\textbf{Chapter 2 - Background} provides reader with background knowledge required for a proper understanding of the work. \newline
+\textbf{Chapter 2 - Background} provides the reader with the background knowledge required for a proper understanding of the work. \newline
 \newline
 \textbf{Chapter 3 - Rule mining on extended knowledge graphs} explains the methodology and material used for experiments. \newline
 \newline
 \textbf{Chapter 4 - Results} presents and discusses the findings of the experiment. \newline \newline
 \textbf{Chapter 5 - Related work} provides the reader with an overview of works related to the thesis. \newline \newline
-\textbf{Chapter 6 - Discussion} evaluates and discusses the work in general and explains an earlier approach explored during research.
+\textbf{Chapter 6 - Discussion} evaluates and discusses the current work and explains an earlier approach explored during research.
 \newline \newline
 
 As a final note, this thesis assumes that the reader is familiar with basic machine learning concepts, such as training, testing and overfitting. For an introduction or refresher to machine learning basics, chapter 5 in the book \textit{Deep Learning}, by Goodfellow et al. \cite{goodfellow} covers the topic quite well. The entire book is publicly available at \href{https://www.deeplearningbook.org/}{https://www.deeplearningbook.org/}.
