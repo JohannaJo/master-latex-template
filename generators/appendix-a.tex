@@ -14,7 +14,7 @@ DRF(z, x) $\wedge$ SDT(z, y)   $\Rightarrow$ SDT(x, y) &           0.493 &      
           IH(x, z) $\wedge$ SDT(z, y)   $\Rightarrow$ SDT(x, y) &           0.887 &                     True \\
                             DRF(y, x)   $\Rightarrow$ DRF(x, y) &           1.000 &                     True \\
 \bottomrule
-\caption[Original rules listed WN18RR KG]{All rules mined with AMIE3 from the original WN18RR \gls{kg}, sorted by their calculated PCA confidence in ascending order. The rightmost column indicates whether this rule was found in at least one of the \gls{kg} extensions made with the RandomBaseline KGE. As the table shows, the rule not found after extending the \gls{kg} in such a way is that with lowest PCA confidence. \textbf{DRF} = \textit{derivationally\_related\_form}, \textbf{IH} = \textit{instance\_hypernym} and \textbf{SDT} = \textit{synset\_domain\_topic of}.}
+\caption[Original rules listed WN18RR KG]{All rules mined with AMIE3 from the original WN18RR \gls{kg}, sorted by their calculated PCA confidence in ascending order. The rightmost column indicates whether this rule was found in at least one of the \gls{kg} extensions made with the RandomBaseline KGE. As the table shows, the rule not found after extending the \gls{kg} in such a way is that with the lowest PCA confidence. \textbf{DRF} = \textit{derivationally\_related\_form}, \textbf{IH} = \textit{instance\_hypernym} and \textbf{SDT} = \textit{synset\_domain\_topic of}.}
 \label{original_rules_found_by_baseline_WN18RR}
 \end{longtable}
 
@@ -117,7 +117,7 @@ relative(z, y) $\wedge$ relative(x, z)   $\Rightarrow$ relative(x, y) &         
                       spouse(y, x)   $\Rightarrow$ spouse(x, y) &           0.992 &                     True \\
                        father(y, x)   $\Rightarrow$ child(x, y) &           0.998 &                     True \\
 \bottomrule
-\caption[Original rules listed family KG]{All rules mined with AMIE3 from the original family \gls{kg}, sorted by their calculated PCA confidence in ascending order. The rightmost column indicates whether this rule was found in at least one of the \gls{kg} extensions made with the RandomBaseline KGE. As the table shows, the rules not found after extending the \gls{kg} in such a way were among those with lowest PCA confidence.}
+\caption[Original rules listed family KG]{All rules mined with AMIE3 from the original family \gls{kg}, sorted by their calculated PCA confidence in ascending order. The rightmost column indicates whether this rule was found in at least one of the \gls{kg} extensions made with the RandomBaseline KGE. As the table shows, the rules not found after extending the \gls{kg} in such a way were among those with the lowest PCA confidence.}
 \label{original_rules_found_by_baseline_family}
 \end{longtable}
 
@@ -128,7 +128,7 @@ relative(z, y) $\wedge$ relative(x, z)   $\Rightarrow$ relative(x, y) &         
 \centering
     \centering
     \includesvg[inkscapelatex=false,width=0.6\textwidth,keepaspectratio]{figures/appendix/all_sets.svg}
-    \caption[Dist. of all sets of mined rules.]{Distribution of all mined rule sets. Each rule set is labeled with the entity selection strategy, embedding model and rank cutoff that was used for that particular \gls{kg} extension. As mentioned in section \ref{TransE_sucks} can see that when the \glspl{kg} are extended using TransE the number of new rules that are mined increases drastically.}
+    \caption[Dist. of all sets of mined rules.]{Distribution of all mined rule sets. Each rule set is labeled with the entity selection strategy, embedding model, and rank cutoff used for that particular \gls{kg} extension. As mentioned in section \ref{TransE_sucks}, we can see that when the \glspl{kg} are extended using TransE, the number of new rules that are mined increases drastically.}
     \label{all_sets}
 \end{figure}
 
@@ -137,7 +137,7 @@ relative(z, y) $\wedge$ relative(x, z)   $\Rightarrow$ relative(x, y) &         
 \centering
     \centering
     \includesvg[inkscapelatex=false,width=0.75\textwidth,keepaspectratio]{figures/appendix/all_sets_w_out_TransE.svg}
-    \caption[Dist. of all sets of mined rules, excluding TransE.]{Distribution of all mined rule sets, excluding the sets mined from \glspl{kg} extended using TransE. Each rule set is labeled with the entity selection strategy, embedding model and rank cutoff that was used for that particular \gls{kg} extension. We can observe that no new rules are mined when the RandomBaseline was used to extend the \glspl{kg}.}
+    \caption[Dist. of all sets of mined rules, excluding TransE.]{Distribution of all mined rule sets, excluding the sets mined from \glspl{kg} extended using TransE. Each rule set is labeled with the entity selection strategy, embedding model, and rank cutoff used for that particular \gls{kg} extension. We can observe that no new rules were mined when the RandomBaseline was used to extend the \glspl{kg}.}
     \label{all_sets_w_out_TransE}
 \end{figure}
 
@@ -380,11 +380,11 @@ relative(z, y) $\wedge$ relative(x, z)   $\Rightarrow$ relative(x, y) &         
 
 \chapter{Propositional logic}
 \label{propositional_logic}
-Propositional logic (PL) is a branch of logic that deals with statements, or ``propositions", that can be either true or false. Propositions can be combined using boolean operators, for example ``and" $\wedge$ (conjunction) and ``or" $\vee$ (disjunction). Atomic propositions are propositions without operators, and are also called \textit{literals}. Literals are boolean variables $v$ or their negation $\neg v$. For example, two literals $v_1, v_2$ can be combined to one proposition $P$ with the ``or" operator:
+Propositional logic (PL) is a branch of logic that deals with statements, or ``propositions", that can be either true or false. Propositions can be combined using boolean operators, for example, ``and" $\wedge$ (conjunction) and ``or" $\vee$ (disjunction). Atomic propositions are propositions without operators, and are also called \textit{literals}. Literals are boolean variables $v$ or their negation $\neg v$. For example, two literals $v_1, v_2$ can be combined into one proposition $P$ with the ``or" operator:
 \[P = \neg v_1 \vee v_2\]
 Now $P$ evaluates to true if $v_1$ is evaluated to false or if $v_2$ is evaluated to true. The proposition $P$ will only evaluate to false if $v_1$ is true \textit{and} $v_2$ is false. A \textit{clause} is a disjunction of literals, so $P$ is a clause. The proposition $P$ is also considered a \textit{Horn clause}, which is a clause where at most one literal is not negated. 
 
-The implication operator is denoted by $\rightarrow$, and can be thought of as an "if-then" operator. The proposition $v_1 \rightarrow v_2$ can be read as ``\textit{if} $v_1$\textit{ is true, then }$v_2$ \textit{is true}". The statement is thus only falsified if $v_1$ is true and $v_2$ is false. If $v_2$ is true then it does not matter what $v_1$ evaluates to, and similarly if $v_1$ is false then it does not matter what $v_2$ evaluates to. If we compare this to the circumstances under which $P$ evaluated to true and false we also see that $P = v_1 \rightarrow v_2 = \neg v_1 \vee v_2$. 
-Thus, in a Horn clauses can be treated as rules, where all the negated literals are in the antecedent (on the left side of the implication arrow) and the single non-negated literal is the consequent (on the right side of the implication arrow). For example the proposition \[Q = v_1 \wedge v_3 \wedge v_4\rightarrow v_2 = \neg v_1 \vee \neg v_3 \vee \neg v_4\vee v_2\] is also a Horn clause. The rule mining algorithm AMIE3 used in this thesis mined rules in the form of Horn clauses. One could also say that it mines a single \textit{Horn sentence}, which is a conjunction of Horn clauses. A Horn sentence is true only if every Horn clause within is evaluated to true.
+The implication operator is denoted by $\rightarrow$, and can be thought of as an "if-then" operator. The proposition $v_1 \rightarrow v_2$ can be read as ``\textit{if} $v_1$\textit{ is true, then }$v_2$ \textit{is true}". The statement is thus only falsified if $v_1$ is true and $v_2$ is false. If $v_2$ is true, then it does not matter what $v_1$ evaluates to, and similarly, if $v_1$ is false, then it does not matter what $v_2$ evaluates to. If we compare this to the circumstances under which $P$ is evaluated to true or false, we also see that $P = v_1 \rightarrow v_2 = \neg v_1 \vee v_2$. 
+Thus, Horn clauses can be treated as rules, where all the negated literals are in the antecedent (on the left side of the implication arrow), and the single non-negated literal is the consequent (on the right side of the implication arrow). For example the proposition \[Q = v_1 \wedge v_3 \wedge v_4\rightarrow v_2 = \neg v_1 \vee \neg v_3 \vee \neg v_4\vee v_2\] is also a Horn clause. The rule mining algorithm AMIE3 used in this thesis mined rules in the form of Horn clauses. One could also say that it mines a single \textit{Horn sentence}, which is a conjunction of Horn clauses. A Horn sentence is true only if every Horn clause within is evaluated to true.
 
-The truth value of propositions is determined by the \textit{valuation} of the literals used. A valuation assigns truth values to each literal. For example under the valuation \[\mathcal{V_{+}}=\{v_1 = false, v_2 = false, v_3 = true, v_4 = true\}\] $Q$ would be true, while under the valuation \[\mathcal{V_{-}}=\{v_1 = true, v_2 = false, v_3 = true, v_4 = true\}\] $Q$ would be false.
+The truth value of propositions is determined by the \textit{valuation} of the literals used. A valuation assigns truth values to each literal. For example, under the valuation \[\mathcal{V_{+}}=\{v_1 = false, v_2 = false, v_3 = true, v_4 = true\}\] $Q$ would be true, while under the valuation \[\mathcal{V_{-}}=\{v_1 = true, v_2 = false, v_3 = true, v_4 = true\}\] $Q$ would be false.
