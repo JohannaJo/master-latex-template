@@ -93,15 +93,14 @@ Each \gls{kge} model has a number of hyperparameters that can be optimised. As t
 
 \begin{table}[htbp]
 \centering
-\begin{tabular}{|l|l|}
-\hline
+\begin{tabular}{l|l}
 \textbf{Hyperparameter}      & \textbf{Values}             \\ \hline
-Batches count       & 50, 100                              \\ \hline
-Epocs               & 50, 100                          \\ \hline
-Embedding dimension                   & 50, 100, 200                     \\ \hline
-$\eta$ (negative sampes @ rate)     & 5, 10, 15                            \\ \hline
-Loss function   & pairwise, nll                         \\ \hline
-Pairwise loss margin    & 0.5, 1, 2                    \\ \hline
+Batches count       & 50, 100                              \\ 
+Epocs               & 50, 100                          \\ 
+Embedding dimension                   & 50, 100, 200                     \\ 
+$\eta$ (negative sampes @ rate)     & 5, 10, 15                            \\ 
+Loss function   & pairwise, nll                         \\ 
+Pairwise loss margin    & 0.5, 1, 2                    
 %Regularizer         & LP                             \\ \hline
 %Learning rate       & Random number in range(0.0001, 0.01) \\ \hline
 \end{tabular}
@@ -111,16 +110,15 @@ Pairwise loss margin    & 0.5, 1, 2                    \\ \hline
 
 \begin{table}[htbp]
 \centering
-\begin{tabular}{|l||ccc||ccc|}
-\hline
-\multicolumn{1}{|c||}{\multirow{2}{*}{\textbf{PARAM.}}} & \multicolumn{3}{c||}{\textbf{WN18RR}}                                                                                  & \multicolumn{3}{c|}{\textbf{Family}}                                                                                  \\ \cline{2-7} 
-\multicolumn{1}{|c||}{}                                 & \multicolumn{1}{c|}{\textbf{TransE}} & \multicolumn{1}{c|}{\textbf{DistMult}} & \multicolumn{1}{c||}{\textbf{ComplEx}} & \multicolumn{1}{c|}{\textbf{TransE}} & \multicolumn{1}{c|}{\textbf{DistMult}} & \multicolumn{1}{c|}{\textbf{ComplEx}} \\ \hline
+\begin{tabular}{l|ccc|ccc}
+\multicolumn{1}{c|}{\multirow{2}{*}{\textbf{PARAM.}}} & \multicolumn{3}{c|}{\textbf{WN18RR}}                                                                                  & \multicolumn{3}{c}{\textbf{Family}}                                                                                  \\ \cline{2-7} 
+\multicolumn{1}{c|}{}                                 & \multicolumn{1}{c|}{\textbf{TransE}} & \multicolumn{1}{c|}{\textbf{DistMult}} & \multicolumn{1}{c|}{\textbf{ComplEx}} & \multicolumn{1}{c|}{\textbf{TransE}} & \multicolumn{1}{c|}{\textbf{DistMult}} & \multicolumn{1}{c}{\textbf{ComplEx}} \\ \hline
 \textbf{Batch size}                                 & 50                                   & 50                                     & 100                                   & 50                                   & 100                                    & 50                                    \\
 \textbf{Epocs}                                         & 50                                   & 100                                    & 100                                   & 50                                   & 50                                     & 100                                   \\
 \textbf{Emb. dim.}                                     & 50                                   & 200                                    & 100                                   & 50                                   & 200                                    & 200                                   \\
 \textbf{$\eta$}                           & 15                                   & 5                                      & 10                                    & 15                                   & 10                                     & 15                                    \\
 \textbf{Loss func.}                                 & nll                                  & nll                                    & pairwise                              & nll                                  & nll                                    & nll                                   \\
-\textbf{P. l. margin}                                & -                                    & -                                      & 0.5                                   & -                                    & -                                      & -                                    \\ \hline
+\textbf{P. l. margin}                                & -                                    & -                                      & 0.5                                   & -                                    & -                                      & -                                    
 \end{tabular}
 \caption[Hyperparameter selection results]{Hyperparameter selection results. The hyperparameter at the bottom of the table, pairwise loss margin, was only applicable for those models that used a pairwise loss function, hence the missing values.}
 \label{hyperparameter_selection_results}
@@ -135,15 +133,15 @@ For the implementation of model selection, AmpliGraph's \texttt{select\_best\_mo
 The final model of all three embedding architectures had good results on the WN18RR dataset, and even better results on the family \gls{kg}. Each model had an \gls{mrr} score above 0.9 on the family \gls{kg} and around 0.6 on the WN18RR. TransE seemed to perform slightly worse than DistMult and ComplEx on the family \gls{kg}. On the WN18RR dataset TransE had a lower hits@1 score, while it outperformed both DistMult and ComplEx in both hits@3 and hits@10.
 \begin{table}[htbp]
 \centering
-\begin{tabular}{|l||ccccc||ccccc|}
-\hline
-{\textbf{DATASET}}                 & \multicolumn{5}{c||}{\textbf{WN18RR}}                                                                                                                                               & \multicolumn{5}{c|}{\textbf{Family KG}}                                                                                                                            \\ \hline
-\multirow{2}{*}{{\textbf{METRIC}}} & \multicolumn{1}{c|}{\multirow{2}{*}{\textbf{MR}}} & \multicolumn{1}{c|}{\multirow{2}{*}{\textbf{MRR}}} & \multicolumn{3}{c||}{\textbf{Hits@}}                                       & \multicolumn{1}{c|}{\multirow{2}{*}{\textbf{MR}}} & \multicolumn{1}{c|}{\multirow{2}{*}{\textbf{MRR}}} & \multicolumn{3}{c|}{\textbf{Hits@}}                                       \\ \cline{4-6} \cline{9-11} 
-                                       & \multicolumn{1}{c|}{}                             & \multicolumn{1}{c|}{}                              & \multicolumn{1}{l|}{\textbf{1}} & \multicolumn{1}{l|}{\textbf{3}} & \multicolumn{1}{l||}{\textbf{10}} & \multicolumn{1}{c|}{}                             & \multicolumn{1}{c|}{}                              & \multicolumn{1}{l|}{\textbf{1}} & \multicolumn{1}{l|}{\textbf{3}} & \multicolumn{1}{l|}{\textbf{10}} \\ \hline
+\begin{tabular}{l||ccccc||ccccc}
+
+{\textbf{DATASET}}                 & \multicolumn{5}{c||}{\textbf{WN18RR}}                                                                                                                                               & \multicolumn{5}{c}{\textbf{Family KG}}                                                                                                                            \\ \hline
+\multirow{2}{*}{{\textbf{METRIC}}} & \multicolumn{1}{c|}{\multirow{2}{*}{\textbf{MR}}} & \multicolumn{1}{c|}{\multirow{2}{*}{\textbf{MRR}}} & \multicolumn{3}{c||}{\textbf{Hits@}}                                       & \multicolumn{1}{c|}{\multirow{2}{*}{\textbf{MR}}} & \multicolumn{1}{c|}{\multirow{2}{*}{\textbf{MRR}}} & \multicolumn{3}{c}{\textbf{Hits@}}                                       \\ \cline{4-6} \cline{9-11} 
+                                       & \multicolumn{1}{c|}{}                             & \multicolumn{1}{c|}{}                              & \multicolumn{1}{l|}{\textbf{1}} & \multicolumn{1}{l|}{\textbf{3}} & \multicolumn{1}{l||}{\textbf{10}} & \multicolumn{1}{c|}{}                             & \multicolumn{1}{c|}{}                              & \multicolumn{1}{l|}{\textbf{1}} & \multicolumn{1}{l|}{\textbf{3}} & \multicolumn{1}{l}{\textbf{10}} \\ \hline
 \textbf{Baseline}       & 495.32     & 0.007      & 0     & 0       & 0.01        & 498.72       & 0     & 0       & 0       & 0.1      \\ 
 \textbf{TransE}  & 34.29  & 0.60       & 0.51                     & 0.66    & 0.76 & 2.59     & 0.93  &0.88  & 0.97   & 0.99   \\ 
 \textbf{DistMult}      & 152.37  & 0.62    & 0.59   & 0.63      & 0.66   & 7.45    & 0.98     & 0.98    & 0.99   & 0.99    \\ 
-\textbf{ComplEx}        & 139.36    & 0.59      & 0.57      & 0.60      & 0.63      & 4.64     & 0.99     & 0.98     & 0.99      & 0.99  \\ \hline
+\textbf{ComplEx}        & 139.36    & 0.59      & 0.57      & 0.60      & 0.63      & 4.64     & 0.99     & 0.98     & 0.99      & 0.99  
 \end{tabular}
 \caption[Test results of selected model.]{Results of selected models evaluated on test set.}
 \end{table}
