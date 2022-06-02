@@ -239,7 +239,7 @@ institution = "University of California, Irvine, School of Information and Compu
   volume={26},
   year={2013}
 }
-
+%
 @article{mikolov2013efficient,
   title={Efficient estimation of word representations in vector space},
   author={Mikolov, Tomas and Chen, Kai and Corrado, Greg and Dean, Jeffrey},
@@ -371,10 +371,11 @@ institution = "University of California, Irvine, School of Information and Compu
   year={2016}
 }
 
-@article{gpro,
-  title={Graph pattern entity ranking model for knowledge graph completion},
+@inproceedings{gpro,
+  title={Graph Pattern Entity Ranking Model for Knowledge Graph Completion},
   author={Ebisu, Takuma and Ichise, Ryutaro},
-  journal={arXiv preprint arXiv:1904.02856},
+  booktitle={Proceedings of the 2019 Conference of the North American Chapter of the Association for Computational Linguistics: Human Language Technologies, Volume 1 (Long and Short Papers)},
+  pages={988--997},
   year={2019}
 }
 
@@ -386,10 +387,13 @@ institution = "University of California, Irvine, School of Information and Compu
 
 % Wikidata
 @article{wang2019kepler,
-  title={KEPLER: A Unified Model for Knowledge Embedding and Pre-trained Language Representation},
-  author={Wang, Xiaozhi and Gao, Tianyu and Zhu, Zhaocheng and Liu, Zhiyuan and Li, Juanzi and Tang, Jian},
-  journal={arXiv preprint arXiv:1911.06136},
-  year={2019}
+  title={KEPLER: A unified model for knowledge embedding and pre-trained language representation},
+  author={Wang, Xiaozhi and Gao, Tianyu and Zhu, Zhaocheng and Zhang, Zhengyan and Liu, Zhiyuan and Li, Juanzi and Tang, Jian},
+  journal={Transactions of the Association for Computational Linguistics},
+  volume={9},
+  pages={176--194},
+  year={2021},
+  publisher={MIT Press}
 }
 
 @article{ali2021pykeen,
@@ -586,11 +590,11 @@ author={
  year = {2013}
 }
 
-@article{wang2018evaluating,
-  title={On evaluating embedding models for knowledge base completion},
+@inproceedings{wang2018evaluating,
+  title={On Evaluating Embedding Models for Knowledge Base Completion},
   author={Wang, Yanjie and Ruffinelli, Daniel and Gemulla, Rainer and Broscheit, Samuel and Meilicke, Christian},
-  journal={arXiv preprint arXiv:1810.07180},
-  year={2018}
+  booktitle={RepL4NLP@ ACL},
+  year={2019}
 }
 
 % Candidate generation
@@ -621,7 +625,7 @@ author={
 
 
 @article{amie_plus,
-  title={Fast rule mining in ontological knowledge bases with AMIE $$+ $$+},
+  title={Fast rule mining in ontological knowledge bases with AMIE+},
   author={Gal{\'a}rraga, Luis and Teflioudi, Christina and Hose, Katja and Suchanek, Fabian M},
   journal={The VLDB Journal},
   volume={24},
@@ -679,11 +683,11 @@ author={
 
 
 %Related works
-@article{rotatE,
-  title={Rotate: Knowledge graph embedding by relational rotation in complex space},
+@inproceedings{rotatE,
+  title={RotatE: Knowledge Graph Embedding by Relational Rotation in Complex Space},
   author={Sun, Zhiqing and Deng, Zhi-Hong and Nie, Jian-Yun and Tang, Jian},
-  journal={arXiv preprint arXiv:1902.10197},
-  year={2019}
+  booktitle={International Conference on Learning Representations},
+  year={2018}
 }
 
 @inproceedings{holE,
@@ -718,12 +722,15 @@ author={
   publisher={Springer}
 }
 
-@article{nguyen2017novel,
+@inproceedings{nguyen2017novel,
   title={A novel embedding model for knowledge base completion based on convolutional neural network},
-  author={Nguyen, Dai Quoc and Nguyen, Tu Dinh and Nguyen, Dat Quoc and Phung, Dinh},
-  journal={arXiv preprint arXiv:1712.02121},
-  year={2017}
+  author={Nguyen, Dai Quoc and Nguyen, Tu Dinh and Nguyen, Dai Quoc and Phung, Dinh},
+  booktitle={NAACL HLT 2018: 2018 Conference of the North American Chapter of the Association for Computational Linguistics: Human Language Technologies-Proceedings of the Conference},
+  pages={327--333},
+  year={2018},
+  organization={Association for Computational Linguistics}
 }
+
 @inproceedings{schlichtkrull2018modeling,
   title={Modeling relational data with graph convolutional networks},
   author={Schlichtkrull, Michael and Kipf, Thomas N and Bloem, Peter and Berg, Rianne van den and Titov, Ivan and Welling, Max},
@@ -750,7 +757,7 @@ author={
   year={2021},
   publisher={Elsevier}
 }
-
+%
 @article{vashishth2019composition,
   title={Composition-based multi-relational graph convolutional networks},
   author={Vashishth, Shikhar and Sanyal, Soumya and Nitin, Vikram and Talukdar, Partha},
@@ -795,10 +802,11 @@ author={
   year={2011}
 }
 
-@article{lin2015modeling,
-  title={Modeling relation paths for representation learning of knowledge bases},
+@inproceedings{lin2015modeling,
+  title={Modeling Relation Paths for Representation Learning of Knowledge Bases},
   author={Lin, Yankai and Liu, Zhiyuan and Luan, Huanbo and Sun, Maosong and Rao, Siwei and Liu, Song},
-  journal={arXiv preprint arXiv:1506.00379},
+  booktitle={Proceedings of the 2015 Conference on Empirical Methods in Natural Language Processing},
+  pages={705--714},
   year={2015}
 }
 
@@ -1006,12 +1014,10 @@ doi="10.1007/978-3-030-60067-9_2",
 url="https://doi.org/10.1007/978-3-030-60067-9_2"
 }
 
-@misc{weiss2019learning,
-      title={Learning Deterministic Weighted Automata with Queries and Counterexamples}, 
-      author={Gail Weiss and Yoav Goldberg and Eran Yahav},
-      year={2019},
-      eprint={1910.13895},
-      archivePrefix={arXiv},
-      primaryClass={cs.LG}
+@article{weiss2019learning,
+  title={Learning deterministic weighted automata with queries and counterexamples},
+  author={Weiss, Gail and Goldberg, Yoav and Yahav, Eran},
+  journal={Advances in Neural Information Processing Systems},
+  volume={32},
+  year={2019}
 }
-
